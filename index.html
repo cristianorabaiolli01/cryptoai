@@ -442,6 +442,11 @@
             pointer-events: none;
         }
         
+        /* Ocultar colunas desktop-only em mobile */
+        .desktop-only {
+            display: table-cell;
+        }
+        
         .scroll-hint.left {
             right: auto;
             left: 10px;
@@ -1414,6 +1419,11 @@
                 scrollbar-color: var(--primary-color) var(--bg-secondary);
             }
             
+            /* Ocultar colunas desktop-only em mobile */
+            .desktop-only {
+                display: none !important;
+            }
+            
             .crypto-table-container::-webkit-scrollbar {
                 height: 8px;
             }
@@ -1773,15 +1783,15 @@
                 <table class="crypto-table">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th class="desktop-only">#</th>
                             <th>Nome</th>
                             <th>Preço</th>
                             <th>24h %</th>
-                            <th>7d %</th>
-                            <th>Cap. de Mercado</th>
-                            <th>Volume (24h)</th>
-                            <th>Circulação</th>
-                            <th>Gráfico 7d</th>
+                            <th class="desktop-only">7d %</th>
+                            <th class="desktop-only">Cap. de Mercado</th>
+                            <th class="desktop-only">Volume (24h)</th>
+                            <th class="desktop-only">Circulação</th>
+                            <th class="desktop-only">Gráfico 7d</th>
                         </tr>
                     </thead>
                     <tbody id="crypto-table-body">
@@ -2013,20 +2023,26 @@
                 if (isMobileData) {
                     // Verificar qual API está sendo usada atualmente
                     const currentAPI = localStorage.getItem('currentMobileAPI') || 'CryptoCompare';
-                    apiIndicator.style.display = 'flex';
                     
-                    if (currentAPI === 'CryptoCompare') {
-                        apiIndicator.className = 'api-indicator cryptocompare';
-                        apiSource.textContent = 'CryptoCompare API';
-                    } else if (currentAPI === 'CoinMarketCap') {
-                        apiIndicator.className = 'api-indicator coinmarketcap';
-                        apiSource.textContent = 'CoinMarketCap API';
-                    } else if (currentAPI === 'CoinGecko') {
-                        apiIndicator.className = 'api-indicator coingecko';
-                        apiSource.textContent = 'CoinGecko API (Chave)';
+                    // Em mobile, não mostrar o indicador azul da API
+                    if (isMobile) {
+                        apiIndicator.style.display = 'none';
                     } else {
-                        apiIndicator.className = 'api-indicator binance';
-                        apiSource.textContent = 'Binance API';
+                        apiIndicator.style.display = 'flex';
+                        
+                        if (currentAPI === 'CryptoCompare') {
+                            apiIndicator.className = 'api-indicator cryptocompare';
+                            apiSource.textContent = 'CryptoCompare API';
+                        } else if (currentAPI === 'CoinMarketCap') {
+                            apiIndicator.className = 'api-indicator coinmarketcap';
+                            apiSource.textContent = 'CoinMarketCap API';
+                        } else if (currentAPI === 'CoinGecko') {
+                            apiIndicator.className = 'api-indicator coingecko';
+                            apiSource.textContent = 'CoinGecko API (Chave)';
+                        } else {
+                            apiIndicator.className = 'api-indicator binance';
+                            apiSource.textContent = 'Binance API';
+                        }
                     }
                 } else {
                     apiIndicator.style.display = 'flex';
@@ -2041,6 +2057,7 @@
                     const currentAPI = localStorage.getItem('currentMobileAPI') || 'CryptoCompare';
                     if (currentAPI === 'CryptoCompare') {
                         footerApi.textContent = 'CryptoCompare API';
+                        footerApi.style.color = '#00bcd4';
                         footerApi.style.color = '#00bcd4';
                         footerApi.style.fontWeight = '600';
                     } else if (currentAPI === 'CoinMarketCap') {
@@ -2459,24 +2476,24 @@
             }
             
             if (filteredData.length === 0) {
+                const colSpan = isMobile ? 3 : 9;
                 cryptoTableBody.innerHTML = `
                     <tr>
-                        <td colspan="9" style="text-align: center; padding: 40px;">
+                        <td colspan="${colSpan}" style="text-align: center; padding: 40px;">
                             <p style="color: #a0a0a0;">Nenhuma criptomoeda encontrada.</p>
                         </td>
                     </tr>
                 `;
-                
-
                 return;
             }
             
             // Adicionar cabeçalho de ordenação para Swing Trade
             let tableHeader = '';
             if (currentFilter === 'swing-trade') {
+                const colSpan = isMobile ? 3 : 9;
                 tableHeader = `
                     <tr class="sorting-header">
-                        <td colspan="9" style="text-align: center; padding: 15px; background: rgba(255, 107, 53, 0.1); border-radius: 8px; margin-bottom: 10px;">
+                        <td colspan="${colSpan}" style="text-align: center; padding: 15px; background: rgba(255, 107, 53, 0.1); border-radius: 8px; margin-bottom: 10px;">
                             <div style="display: flex; align-items: center; justify-content: center; gap: 10px; color: #ff6b35; font-weight: 600;">
                                 <i class="fas fa-sort-amount-down"></i>
                                 <span>Ordenado por Score de Swing Trade (Maior para Menor)</span>
@@ -2506,12 +2523,47 @@
                     `;
                 }
                 
+                if (isMobile) {
+                    // Versão simplificada para mobile: apenas Nome, Preço e 24h%
+                    return `
+                        <tr onclick="showCryptoDetails('${crypto.id}')" style="cursor: pointer;">
+                            <td>
+                            <div class="crypto-name">
+                                <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJNOCA0TDEyIDhMOCAxMkw0IDhMOCA0WiIgZmlsbD0id2hpdGUiPgo8L3N2Zz4KPC9zdmc+Cg=='">
+                                <div class="crypto-info">
+                                    <h3>${crypto.name}</h3>
+                                    <span class="crypto-symbol">${crypto.symbol.toUpperCase()}</span>
+                                    ${swingTradeInfo}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="price">${formatCurrency(crypto.current_price)}</td>
+                        <td>
+                            <span class="percentage ${priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                ${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%
+                            </span>
+                        </td>
+                        <td>
+                            <span class="percentage ${priceChange7d >= 0 ? 'positive' : 'negative'}">
+                                ${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%
+                            </span>
+                        </td>
+                        <td class="price">${formatCurrency(crypto.current_price)}</td>
+                        <td>
+                            <span class="percentage ${priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                ${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            } else {
+                // Versão completa para desktop
                 return `
                     <tr onclick="showCryptoDetails('${crypto.id}')">
                         <td>${crypto.market_cap_rank || 'N/A'}</td>
                         <td>
                             <div class="crypto-name">
-                                <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJNOCA0TDEyIDhMOCAxMkw0IDhMOCA0WiIgZmlsbD0id2hpdGUiPgo8L3N2Zz4KPC9zdmc+Cg=='">
+                                <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJNOCA0TDEyIDhMOCAxMkw0IDhMOCA0WiIgZmlsbD0id2hpdGUiPgo8L3N2Zz4KPC9zdmc+Cg=='">
                                 <div class="crypto-info">
                                     <h3>${crypto.name}</h3>
                                     <span class="crypto-symbol">${crypto.symbol.toUpperCase()}</span>
@@ -2540,12 +2592,15 @@
                         </td>
                     </tr>
                 `;
-            }).join('');
+            }
+        }).join('');
             
 
         
-            // Renderizar gráficos sparkline
-            renderSparklines();
+            // Renderizar gráficos sparkline apenas em desktop
+            if (!isMobile) {
+                renderSparklines();
+            }
         }
         
 
