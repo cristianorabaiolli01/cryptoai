@@ -2035,9 +2035,6 @@
             // Detectar se está usando dados móveis
             detectMobileDataUsage();
             
-            // Atualizar indicador de API inicial
-            updateAPIIndicator();
-            
             // Verificar problemas de rede móvel
             const networkIssue = detectMobileNetworkIssues();
             if (networkIssue) {
@@ -2064,8 +2061,6 @@
                 setupEventListeners();
                 setupAutoUpdate();
             }
-            
-
         }
         
         function setupEventListeners() {
@@ -3225,9 +3220,10 @@
         // Função para retomar atualizações em tempo real
         function resumeRealTimeUpdates() {
             if (!realTimeUpdateInterval) {
+                const realTimeInterval = isMobile ? MOBILE_REAL_TIME_INTERVAL : DESKTOP_REAL_TIME_INTERVAL;
                 realTimeUpdateInterval = setInterval(() => {
                     updateRealTimePrices();
-                }, REAL_TIME_UPDATE_INTERVAL);
+                }, realTimeInterval);
                 console.log('Atualizações em tempo real retomadas');
                 
                 // Mostrar indicador
@@ -3370,7 +3366,6 @@
                         console.log('⏱️ Intervalo de atualização ajustado para 10 minutos (conexão muito lenta)');
                     }
                     
-                    updateAPIIndicator(); // Atualizar indicador de API
                     return true;
                 }
                 
@@ -3385,7 +3380,6 @@
                         console.log('⏱️ Intervalo ajustado para 8 minutos (conexão 2G)');
                     }
                     
-                    updateAPIIndicator(); // Atualizar indicador de API
                     return true;
                 }
             }
@@ -3394,7 +3388,6 @@
             if (isMobile) {
                 isMobileData = true;
                 console.log('📱 Assumindo dados móveis (detecção automática)');
-                updateAPIIndicator(); // Atualizar indicador de API
                 return true;
             }
             
@@ -3449,7 +3442,6 @@
                     await loadGlobalMarketData();
                     saveToCache(data);
                     displayCryptoData();
-                    updateConnectionStatus('online', 'Conectado');
                     console.log('✅ Estratégia 1 (API principal) funcionou');
                     return true;
                 }
@@ -3476,7 +3468,6 @@
                     await loadGlobalMarketData();
                     saveToCache(data);
                     displayCryptoData();
-                    updateConnectionStatus('online', 'Conectado (Dados Limitados)');
                     console.log('✅ Estratégia 2 (API sem sparkline) funcionou');
                     return true;
                 }
@@ -3506,7 +3497,6 @@
             // Estratégia 3: Cache local
             if (loadFromCache()) {
                 displayCryptoData();
-                updateConnectionStatus('cache', 'Dados do Cache');
                 console.log('✅ Estratégia 3 (Cache local) funcionou');
                 return true;
             }
@@ -3514,7 +3504,6 @@
             // Estratégia 4: Dados mock
             if (loadMockData()) {
                 displayCryptoData();
-                updateConnectionStatus('mock', 'Modo Demo');
                 console.log('✅ Estratégia 4 (Dados mock) funcionou');
                 return true;
             }
@@ -3862,8 +3851,7 @@
                         displayCryptoData();
                         
                         localStorage.setItem('currentMobileAPI', 'Binance');
-                        updateConnectionStatus('online', `Conectado (Binance API - Mobile - ${responseTime}ms)`);
-                        updateAPIIndicator();
+
                         console.log('🎉 Dados da Binance carregados com sucesso!');
                         
                         return true;
@@ -4048,8 +4036,7 @@
                         displayCryptoData();
                         
                         localStorage.setItem('currentMobileAPI', 'CoinMarketCap');
-                        updateConnectionStatus('online', `Conectado (CoinMarketCap API - Mobile - ${responseTime}ms)`);
-                        updateAPIIndicator();
+
                         console.log('🎉 Dados da CoinMarketCap carregados com sucesso!'); 
                         return true;
                         
@@ -4165,8 +4152,8 @@
                 await loadGlobalMarketData();
                 
                 localStorage.setItem('currentMobileAPI', 'CoinGecko');
-                updateConnectionStatus('online', `Conectado (CoinGecko API - Chave API - ${responseTime}ms)`);
-                updateAPIIndicator();
+                
+
                 console.log('🎉 Dados da CoinGecko carregados com sucesso usando chave API!');
                 return true;
                 
@@ -4289,8 +4276,8 @@
                                 displayCryptoData();
                                 
                                 localStorage.setItem('currentMobileAPI', 'CryptoCompare');
-                                updateConnectionStatus('online', `Conectado (CryptoCompare API - iPhone - Estratégia de Emergência)`);
-                                updateAPIIndicator();
+        
+        
                                 console.log('🎉 Dados da CryptoCompare carregados com sucesso usando estratégia de emergência!'); 
                                 resolve(true);
                                 
