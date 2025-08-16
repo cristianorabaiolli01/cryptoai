@@ -518,6 +518,7 @@
         .crypto-table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
         }
         
         .crypto-table th {
@@ -532,6 +533,17 @@
             letter-spacing: 0.05em;
             position: relative;
         }
+        
+        /* Larguras específicas para colunas para garantir alinhamento */
+        .crypto-table th:nth-child(1) { width: 8%; }  /* # */
+        .crypto-table th:nth-child(2) { width: 25%; } /* Nome */
+        .crypto-table th:nth-child(3) { width: 15%; } /* Preço */
+        .crypto-table th:nth-child(4) { width: 12%; } /* 24h % */
+        .crypto-table th:nth-child(5) { width: 12%; } /* 7d % */
+        .crypto-table th:nth-child(6) { width: 15%; } /* Cap. de Mercado */
+        .crypto-table th:nth-child(7) { width: 15%; } /* Volume (24h) */
+        .crypto-table th:nth-child(8) { width: 15%; } /* Circulação */
+        .crypto-table th:nth-child(9) { width: 15%; } /* Gráfico 7d */
         
         
         
@@ -1424,6 +1436,11 @@
                 display: none !important;
             }
             
+            /* Larguras específicas para mobile (3 colunas) */
+            .crypto-table th:nth-child(1) { width: 50%; }  /* Nome */
+            .crypto-table th:nth-child(2) { width: 25%; }  /* Preço */
+            .crypto-table th:nth-child(3) { width: 25%; }  /* 24h % */
+            
             .crypto-table-container::-webkit-scrollbar {
                 height: 8px;
             }
@@ -1644,6 +1661,11 @@
                 min-width: 700px; /* Largura mínima para telas muito pequenas */
             }
             
+            /* Larguras específicas para mobile (3 colunas) */
+            .crypto-table th:nth-child(1) { width: 50%; }  /* Nome */
+            .crypto-table th:nth-child(2) { width: 25%; }  /* Preço */
+            .crypto-table th:nth-child(3) { width: 25%; }  /* 24h % */
+            
             .crypto-table th,
             .crypto-table td {
                 padding: 12px 8px;
@@ -1729,18 +1751,6 @@
             </div>
         </div>
     </header>
-    
-    <!-- Status de Conexão -->
-    <div class="connection-status" id="connection-status">
-        <i class="fas fa-circle"></i>
-        <span>Conectando...</span>
-    </div>
-    
-    <!-- Indicador de API -->
-    <div class="api-indicator" id="api-indicator" style="display: none;">
-        <i class="fas fa-exchange-alt"></i>
-        <span id="api-source">API</span>
-    </div>
     
     <!-- Indicador de Atualização em Tempo Real -->
     <div class="real-time-indicator" id="real-time-indicator" style="display: none;">
@@ -1870,6 +1880,10 @@
         let retryCount = 0; // Contador de tentativas
         let isMobileData = false; // Flag para detectar se está usando dados móveis
         
+        // Configuração de atualizações em tempo real para mobile
+        const MOBILE_REAL_TIME_INTERVAL = 15000; // 15 segundos para mobile (mais frequente)
+        const DESKTOP_REAL_TIME_INTERVAL = 10000; // 10 segundos para desktop
+        
         // Detectar se é dispositivo móvel
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
@@ -1881,7 +1895,7 @@
         const totalMarketCap = document.getElementById('total-market-cap');
         const totalVolume = document.getElementById('total-volume');
         const btcDominance = document.getElementById('btc-dominance');
-        const connectionStatus = document.getElementById('connection-status');
+
         const realTimeIndicator = document.getElementById('real-time-indicator');
         
         // Função para verificar se o navegador suporta fetch
@@ -1986,100 +2000,9 @@
         }
         
         // Função para atualizar status de conexão
-        function updateConnectionStatus(status, message) {
-            let statusIcon = 'fas fa-circle';
-            let statusText = message;
-            
-            // Adicionar indicador móvel se aplicável
-            if (isMobile) {
-                statusText += ' 📱';
-                
-                // Adicionar informações de qualidade da conexão para dispositivos móveis
-                if ('connection' in navigator) {
-                    const connection = navigator.connection;
-                    if (connection.effectiveType) {
-                        statusText += ` (${connection.effectiveType})`;
-                    }
-                }
-            }
-            
-            connectionStatus.className = `connection-status ${status}`;
-            connectionStatus.innerHTML = `
-                <i class="${statusIcon}"></i>
-                <span>${statusText}</span>
-            `;
-            
-            // Atualizar indicador de API
-            updateAPIIndicator();
-        }
+
         
-        // Função para atualizar indicador de API
-        function updateAPIIndicator() {
-            const apiIndicator = document.getElementById('api-indicator');
-            const apiSource = document.getElementById('api-source');
-            const footerApi = document.getElementById('footer-api');
-            
-            if (apiIndicator && apiSource) {
-                if (isMobileData) {
-                    // Verificar qual API está sendo usada atualmente
-                    const currentAPI = localStorage.getItem('currentMobileAPI') || 'CryptoCompare';
-                    
-                    // Em mobile, não mostrar o indicador azul da API
-                    if (isMobile) {
-                        apiIndicator.style.display = 'none';
-                    } else {
-                        apiIndicator.style.display = 'flex';
-                        
-                        if (currentAPI === 'CryptoCompare') {
-                            apiIndicator.className = 'api-indicator cryptocompare';
-                            apiSource.textContent = 'CryptoCompare API';
-                        } else if (currentAPI === 'CoinMarketCap') {
-                            apiIndicator.className = 'api-indicator coinmarketcap';
-                            apiSource.textContent = 'CoinMarketCap API';
-                        } else if (currentAPI === 'CoinGecko') {
-                            apiIndicator.className = 'api-indicator coingecko';
-                            apiSource.textContent = 'CoinGecko API (Chave)';
-                        } else {
-                            apiIndicator.className = 'api-indicator binance';
-                            apiSource.textContent = 'Binance API';
-                        }
-                    }
-                } else {
-                    apiIndicator.style.display = 'flex';
-                    apiIndicator.className = 'api-indicator coingecko';
-                    apiSource.textContent = 'CoinGecko API (Chave)';
-                }
-            }
-            
-            // Atualizar footer
-            if (footerApi) {
-                if (isMobileData) {
-                    const currentAPI = localStorage.getItem('currentMobileAPI') || 'CryptoCompare';
-                    if (currentAPI === 'CryptoCompare') {
-                        footerApi.textContent = 'CryptoCompare API';
-                        footerApi.style.color = '#00bcd4';
-                        footerApi.style.color = '#00bcd4';
-                        footerApi.style.fontWeight = '600';
-                    } else if (currentAPI === 'CoinMarketCap') {
-                        footerApi.textContent = 'CoinMarketCap API';
-                        footerApi.style.color = '#ff6b35';
-                        footerApi.style.fontWeight = '600';
-                    } else if (currentAPI === 'CoinGecko') {
-                        footerApi.textContent = 'CoinGecko API (Chave)';
-                        footerApi.style.color = '#00d4aa';
-                        footerApi.style.fontWeight = '600';
-                    } else {
-                        footerApi.textContent = 'Binance API';
-                        footerApi.style.color = '#f0b90b';
-                        footerApi.style.fontWeight = '600';
-                    }
-                } else {
-                    footerApi.textContent = 'CoinGecko API (Chave)';
-                    footerApi.style.color = '#00d4aa';
-                    footerApi.style.fontWeight = '600';
-                }
-            }
-        }
+
         
         // Função para mostrar aviso
         function showWarning(message) {
@@ -2193,7 +2116,6 @@
             // Listeners para mudanças de conectividade (especialmente importante para dispositivos móveis)
             window.addEventListener('online', function() {
                 console.log('Conexão restaurada');
-                updateConnectionStatus('online', 'Conectado');
                 showWarning('✅ Conexão restaurada! Tentando carregar dados atualizados...');
                 
                 // Tentar carregar dados novamente após alguns segundos
@@ -2206,7 +2128,6 @@
             
             window.addEventListener('offline', function() {
                 console.log('Conexão perdida');
-                updateConnectionStatus('offline', 'Offline');
                 showWarning('❌ Conexão perdida. Dados podem estar desatualizados.');
             });
             
@@ -2221,7 +2142,7 @@
                         isMobileData = true;
                         console.log('📱 Mudou para dados móveis');
                         showWarning('📱 Conexão móvel detectada - otimizando para melhor performance');
-                        updateAPIIndicator(); // Atualizar indicador de API
+
                     }
                     
                     // Monitorar qualidade da conexão em tempo real
@@ -2304,7 +2225,7 @@
                             filteredData = [...cryptoData];
                             lastUpdate = cacheData.timestamp;
                             console.log('Dados carregados do localStorage cache');
-                            updateConnectionStatus('cache', 'Dados do Cache');
+
                             return true;
                         }
                     }
@@ -2318,7 +2239,7 @@
                         filteredData = [...cryptoData];
                         lastUpdate = window.memoryCache.timestamp;
                         console.log('Dados carregados do cache em memória');
-                        updateConnectionStatus('cache', 'Dados do Cache (Memória)');
+
                         return true;
                     }
                 }
@@ -2385,7 +2306,6 @@
             totalVolume.textContent = '$45B';
             btcDominance.textContent = '45.2%';
             
-            updateConnectionStatus('mock', 'Modo Demo');
             return true;
         }
         
@@ -2436,7 +2356,7 @@
                 
                 showError(errorMessage);
                 hideLoading();
-                updateConnectionStatus('offline', 'Offline');
+
             } finally {
                 isUpdating = false;
             }
@@ -3022,24 +2942,18 @@
                 }
             }, mainInterval);
             
-            // Atualização em tempo real a cada 10 segundos (apenas para desktop)
-            if (!isMobileData) {
-                realTimeUpdateInterval = setInterval(() => {
-                    updateRealTimePrices();
-                }, REAL_TIME_UPDATE_INTERVAL);
-            }
+            // Atualização em tempo real para todos os dispositivos
+            const realTimeInterval = isMobile ? MOBILE_REAL_TIME_INTERVAL : DESKTOP_REAL_TIME_INTERVAL;
+            realTimeUpdateInterval = setInterval(() => {
+                updateRealTimePrices();
+            }, realTimeInterval);
             
-            // Mostrar indicador de tempo real
+            // Mostrar indicador de tempo real para todos
             if (realTimeIndicator) {
-                realTimeIndicator.style.display = isMobileData ? 'none' : 'flex';
+                realTimeIndicator.style.display = 'flex';
             }
             
-            console.log(`🔄 Atualizações configuradas: ${intervalText} para mobile, 30s para desktop`);
-            
-            // Mostrar aviso sobre o intervalo de atualização
-            if (isMobileData) {
-                showWarning(`📱 Modo Binance ativado - dados atualizados a cada ${intervalText}`);
-            }
+            console.log(`🔄 Atualizações configuradas: ${intervalText} para dados principais, ${realTimeInterval/1000}s para tempo real`);
         }
         
         // Funções utilitárias
