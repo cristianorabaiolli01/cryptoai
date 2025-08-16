@@ -1436,10 +1436,9 @@
                 display: none !important;
             }
             
-            /* Larguras específicas para mobile (3 colunas) */
-            .crypto-table th:nth-child(1) { width: 50%; }  /* Nome */
-            .crypto-table th:nth-child(2) { width: 25%; }  /* Preço */
-            .crypto-table th:nth-child(3) { width: 25%; }  /* 24h % */
+            /* Larguras específicas para mobile (2 colunas) */
+            .crypto-table th:nth-child(1) { width: 60%; }  /* Nome */
+            .crypto-table th:nth-child(2) { width: 40%; }  /* 24h % */
             
             .crypto-table-container::-webkit-scrollbar {
                 height: 8px;
@@ -1456,7 +1455,7 @@
             }
             
             .crypto-table {
-                min-width: 800px; /* Largura mínima para garantir legibilidade */
+                min-width: 600px; /* Largura mínima para 2 colunas mobile */
                 table-layout: fixed; /* Layout fixo para melhor performance */
             }
             
@@ -1658,13 +1657,12 @@
             
             /* Otimizações para tabela em telas muito pequenas */
             .crypto-table {
-                min-width: 700px; /* Largura mínima para telas muito pequenas */
+                min-width: 500px; /* Largura mínima para 2 colunas em telas muito pequenas */
             }
             
-            /* Larguras específicas para mobile (3 colunas) */
-            .crypto-table th:nth-child(1) { width: 50%; }  /* Nome */
-            .crypto-table th:nth-child(2) { width: 25%; }  /* Preço */
-            .crypto-table th:nth-child(3) { width: 25%; }  /* 24h % */
+            /* Larguras específicas para mobile (2 colunas) */
+            .crypto-table th:nth-child(1) { width: 60%; }  /* Nome */
+            .crypto-table th:nth-child(2) { width: 40%; }  /* 24h % */
             
             .crypto-table th,
             .crypto-table td {
@@ -1795,7 +1793,7 @@
                         <tr>
                             <th class="desktop-only">#</th>
                             <th>Nome</th>
-                            <th>Preço</th>
+                            <th class="desktop-only">Preço</th>
                             <th>24h %</th>
                             <th class="desktop-only">7d %</th>
                             <th class="desktop-only">Cap. de Mercado</th>
@@ -2032,20 +2030,6 @@
         });
         
         function initializeApp() {
-            // Detectar se está usando dados móveis
-            detectMobileDataUsage();
-            
-            // Verificar problemas de rede móvel
-            const networkIssue = detectMobileNetworkIssues();
-            if (networkIssue) {
-                showWarning(`⚠️ ${networkIssue}`);
-            }
-            
-            // Mostrar aviso específico para dados móveis
-            if (isMobileData) {
-                showWarning('📱 Dados móveis detectados! Usando exclusivamente CoinGecko API com sua chave autenticada para máxima confiabilidade.');
-            }
-            
             // Adicionar indicador de scroll horizontal para mobile
             if (isMobile) {
                 addScrollIndicator();
@@ -2391,7 +2375,7 @@
             }
             
             if (filteredData.length === 0) {
-                const colSpan = isMobile ? 3 : 9;
+                const colSpan = isMobile ? 2 : 9;
                 cryptoTableBody.innerHTML = `
                     <tr>
                         <td colspan="${colSpan}" style="text-align: center; padding: 40px;">
@@ -2405,7 +2389,7 @@
             // Adicionar cabeçalho de ordenação para Swing Trade
             let tableHeader = '';
             if (currentFilter === 'swing-trade') {
-                const colSpan = isMobile ? 3 : 9;
+                const colSpan = isMobile ? 2 : 9;
                 tableHeader = `
                     <tr class="sorting-header">
                         <td colspan="${colSpan}" style="text-align: center; padding: 15px; background: rgba(255, 107, 53, 0.1); border-radius: 8px; margin-bottom: 10px;">
@@ -2439,38 +2423,26 @@
                 }
                 
                 if (isMobile) {
-                    // Versão simplificada para mobile: apenas Nome, Preço e 24h%
+                    // Versão simplificada para mobile: apenas Nome e 24h%
                     return `
                         <tr onclick="showCryptoDetails('${crypto.id}')" style="cursor: pointer;">
                             <td>
-                            <div class="crypto-name">
-                                <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJNOCA0TDEyIDhMOCAxMkw0IDhMOCA0WiIgZmlsbD0id2hpdGUiPgo8L3N2Zz4KPC9zdmc+Cg=='">
-                                <div class="crypto-info">
-                                    <h3>${crypto.name}</h3>
-                                    <span class="crypto-symbol">${crypto.symbol.toUpperCase()}</span>
-                                    ${swingTradeInfo}
+                                <div class="crypto-name">
+                                    <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJNOCA0TDEyIDhMOCAxMkw0IDhMOCA0WiIgZmlsbD0id2hpdGUiPgo8L3N2Zz4KPC9zdmc+Cg=='">
+                                    <div class="crypto-info">
+                                        <h3>${crypto.name}</h3>
+                                        <span class="crypto-symbol">${crypto.symbol.toUpperCase()}</span>
+                                        ${swingTradeInfo}
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="price">${formatCurrency(crypto.current_price)}</td>
-                        <td>
-                            <span class="percentage ${priceChange24h >= 0 ? 'positive' : 'negative'}">
-                                ${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%
-                            </span>
-                        </td>
-                        <td>
-                            <span class="percentage ${priceChange7d >= 0 ? 'positive' : 'negative'}">
-                                ${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%
-                            </span>
-                        </td>
-                        <td class="price">${formatCurrency(crypto.current_price)}</td>
-                        <td>
-                            <span class="percentage ${priceChange24h >= 0 ? 'positive' : 'negative'}">
-                                ${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%
-                            </span>
-                        </td>
-                    </tr>
-                `;
+                            </td>
+                            <td>
+                                <span class="percentage ${priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                    ${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%
+                                </span>
+                            </td>
+                        </tr>
+                    `;
             } else {
                 // Versão completa para desktop
                 return `
