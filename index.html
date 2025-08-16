@@ -1436,9 +1436,10 @@
                 display: none !important;
             }
             
-            /* Larguras específicas para mobile (2 colunas) */
-            .crypto-table th:nth-child(1) { width: 60%; }  /* Nome */
-            .crypto-table th:nth-child(2) { width: 40%; }  /* 24h % */
+            /* Larguras específicas para mobile (3 colunas) */
+            .crypto-table th:nth-child(1) { width: 25%; }  /* Nome */
+            .crypto-table th:nth-child(2) { width: 37.5%; }  /* 24h % */
+            .crypto-table th:nth-child(3) { width: 37.5%; }  /* 7d % */
             
             .crypto-table-container::-webkit-scrollbar {
                 height: 8px;
@@ -1455,8 +1456,10 @@
             }
             
             .crypto-table {
-                min-width: 600px; /* Largura mínima para 2 colunas mobile */
+                min-width: 700px; /* Largura mínima para 3 colunas mobile */
                 table-layout: fixed; /* Layout fixo para melhor performance */
+                border-collapse: separate;
+                border-spacing: 0;
             }
             
             /* Melhorar legibilidade das linhas no mobile */
@@ -1473,7 +1476,7 @@
             /* Otimizar células para mobile */
             .crypto-table th,
             .crypto-table td {
-                padding: 16px 12px;
+                padding: 16px 16px;
                 font-size: 0.85rem;
                 vertical-align: middle;
                 white-space: nowrap; /* Evitar quebra de linha */
@@ -1524,6 +1527,19 @@
                 font-size: 0.85rem;
                 font-weight: 600;
                 white-space: nowrap;
+                text-align: center;
+                display: inline-block;
+            }
+            
+            /* Melhorar alinhamento das colunas mobile */
+            .crypto-table th:nth-child(2),
+            .crypto-table th:nth-child(3) {
+                text-align: center;
+            }
+            
+            .crypto-table td:nth-child(2),
+            .crypto-table td:nth-child(3) {
+                text-align: center;
             }
             
             /* Otimizar estatísticas para mobile */
@@ -1657,12 +1673,13 @@
             
             /* Otimizações para tabela em telas muito pequenas */
             .crypto-table {
-                min-width: 500px; /* Largura mínima para 2 colunas em telas muito pequenas */
+                min-width: 600px; /* Largura mínima para 3 colunas em telas muito pequenas */
             }
             
-            /* Larguras específicas para mobile (2 colunas) */
-            .crypto-table th:nth-child(1) { width: 60%; }  /* Nome */
-            .crypto-table th:nth-child(2) { width: 40%; }  /* 24h % */
+            /* Larguras específicas para mobile (3 colunas) */
+            .crypto-table th:nth-child(1) { width: 25%; }  /* Nome */
+            .crypto-table th:nth-child(2) { width: 37.5%; }  /* 24h % */
+            .crypto-table th:nth-child(3) { width: 37.5%; }  /* 7d % */
             
             .crypto-table th,
             .crypto-table td {
@@ -1795,7 +1812,7 @@
                             <th>Nome</th>
                             <th class="desktop-only">Preço</th>
                             <th>24h %</th>
-                            <th class="desktop-only">7d %</th>
+                            <th>7d %</th>
                             <th class="desktop-only">Cap. de Mercado</th>
                             <th class="desktop-only">Volume (24h)</th>
                             <th class="desktop-only">Circulação</th>
@@ -2375,7 +2392,7 @@
             }
             
             if (filteredData.length === 0) {
-                const colSpan = isMobile ? 2 : 9;
+                const colSpan = isMobile ? 3 : 9;
                 cryptoTableBody.innerHTML = `
                     <tr>
                         <td colspan="${colSpan}" style="text-align: center; padding: 40px;">
@@ -2389,7 +2406,7 @@
             // Adicionar cabeçalho de ordenação para Swing Trade
             let tableHeader = '';
             if (currentFilter === 'swing-trade') {
-                const colSpan = isMobile ? 2 : 9;
+                const colSpan = isMobile ? 3 : 9;
                 tableHeader = `
                     <tr class="sorting-header">
                         <td colspan="${colSpan}" style="text-align: center; padding: 15px; background: rgba(255, 107, 53, 0.1); border-radius: 8px; margin-bottom: 10px;">
@@ -2422,8 +2439,8 @@
                     `;
                 }
                 
-                if (isMobile) {
-                    // Versão simplificada para mobile: apenas Nome e 24h%
+                                if (isMobile) {
+                    // Versão simplificada para mobile: Nome, 24h% e 7d%
                     return `
                         <tr onclick="showCryptoDetails('${crypto.id}')" style="cursor: pointer;">
                             <td>
@@ -2441,9 +2458,14 @@
                                     ${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%
                                 </span>
                             </td>
+                            <td>
+                                <span class="percentage ${priceChange7d >= 0 ? 'positive' : 'negative'}">
+                                    ${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%
+                                </span>
+                            </td>
                         </tr>
                     `;
-            } else {
+                } else {
                 // Versão completa para desktop
                 return `
                     <tr onclick="showCryptoDetails('${crypto.id}')">
