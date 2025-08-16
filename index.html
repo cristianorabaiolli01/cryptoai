@@ -423,6 +423,53 @@
             scrollbar-color: var(--primary-color) var(--bg-secondary);
         }
         
+        /* Indicador de scroll horizontal para mobile */
+        .scroll-hint {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            background: rgba(99, 102, 241, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInRight 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .scroll-hint.left {
+            right: auto;
+            left: 10px;
+            animation: slideInLeft 0.5s ease;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateY(-50%) translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-50%) translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                transform: translateY(-50%) translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-50%) translateX(0);
+                opacity: 1;
+            }
+        }
+        
         .crypto-table-container::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -1357,15 +1404,33 @@
             
             /* ===== MELHORIAS ESPECÍFICAS PARA MOBILE ===== */
             
-            /* Otimizações da tabela para mobile */
+            /* Otimizações da tabela para mobile com scroll horizontal */
             .crypto-table-container {
                 margin: 15px 0;
                 border-radius: var(--border-radius-xl);
                 overflow-x: auto;
+                -webkit-overflow-scrolling: touch; /* Scroll suave no iOS */
+                scrollbar-width: thin;
+                scrollbar-color: var(--primary-color) var(--bg-secondary);
+            }
+            
+            .crypto-table-container::-webkit-scrollbar {
+                height: 8px;
+            }
+            
+            .crypto-table-container::-webkit-scrollbar-track {
+                background: var(--bg-secondary);
+                border-radius: var(--border-radius-md);
+            }
+            
+            .crypto-table-container::-webkit-scrollbar-thumb {
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+                border-radius: var(--border-radius-md);
             }
             
             .crypto-table {
-                min-width: 600px; /* Garantir largura mínima para legibilidade */
+                min-width: 800px; /* Largura mínima para garantir legibilidade */
+                table-layout: fixed; /* Layout fixo para melhor performance */
             }
             
             /* Melhorar legibilidade das linhas no mobile */
@@ -1385,66 +1450,80 @@
                 padding: 16px 12px;
                 font-size: 0.85rem;
                 vertical-align: middle;
+                white-space: nowrap; /* Evitar quebra de linha */
             }
             
             /* Melhorar exibição do nome da cripto no mobile */
             .crypto-name {
-                min-width: 140px;
-                gap: 10px;
+                min-width: 160px;
+                gap: 12px;
             }
             
             .crypto-icon {
-                width: 36px;
-                height: 36px;
+                width: 40px;
+                height: 40px;
                 border: 2px solid rgba(255, 255, 255, 0.2);
+                flex-shrink: 0; /* Evitar que a imagem encolha */
             }
             
             .crypto-info h3 {
-                font-size: 0.95rem;
+                font-size: 1rem;
                 font-weight: 700;
-                margin-bottom: 3px;
+                margin-bottom: 4px;
                 line-height: 1.2;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             
             .crypto-symbol {
-                font-size: 0.75rem;
-                padding: 3px 6px;
+                font-size: 0.8rem;
+                padding: 4px 8px;
+                white-space: nowrap;
             }
             
             /* Otimizar preços para mobile */
             .price {
-                font-size: 1rem;
+                font-size: 1.1rem;
                 font-weight: 700;
                 color: var(--text-primary);
+                text-align: right;
+                white-space: nowrap;
             }
             
             /* Melhorar porcentagens para mobile */
             .percentage {
-                padding: 6px 10px;
-                min-width: 65px;
-                font-size: 0.8rem;
+                padding: 8px 12px;
+                min-width: 70px;
+                font-size: 0.85rem;
                 font-weight: 600;
+                white-space: nowrap;
             }
             
             /* Otimizar estatísticas para mobile */
             .market-cap, .volume, .circulation {
-                font-size: 0.8rem;
+                font-size: 0.85rem;
                 font-weight: 500;
                 color: var(--text-secondary);
+                text-align: right;
+                white-space: nowrap;
             }
             
             /* Melhorar gráfico sparkline no mobile */
             .sparkline-chart {
-                width: 80px;
-                height: 30px;
+                width: 100px;
+                height: 35px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 border-radius: var(--border-radius-md);
                 background: rgba(255, 255, 255, 0.02);
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
             /* Score de swing trade otimizado para mobile */
             .swing-trade-score {
-                margin-top: 6px;
+                margin-top: 8px;
             }
             
             .score-bar {
@@ -1454,7 +1533,7 @@
             }
             
             .score-text {
-                font-size: 0.75rem;
+                font-size: 0.8rem;
                 font-weight: 600;
             }
             
@@ -1480,13 +1559,13 @@
             
             /* Melhorias nos controles para mobile */
             .filter-btn {
-                padding: 10px 16px;
-                font-size: 0.8rem;
-                min-width: 80px;
+                padding: 12px 18px;
+                font-size: 0.85rem;
+                min-width: 90px;
             }
             
             .swing-trade-btn {
-                min-width: 120px;
+                min-width: 130px;
             }
             
             /* Otimizações para header mobile */
@@ -1517,6 +1596,8 @@
                 right: 10px;
                 text-align: center;
                 font-size: 0.75rem;
+                position: fixed;
+                z-index: 2000;
             }
             
             .real-time-indicator {
@@ -1527,50 +1608,7 @@
                 font-size: 0.75rem;
             }
             
-            /* Botões de teste de conectividade móvel */
-            #mobile-test-btn,
-            #mobile-cache-btn,
-            #mobile-debug-btn {
-                background: rgba(99, 102, 241, 0.2) !important;
-                border: 1px solid rgba(99, 102, 241, 0.3) !important;
-                transition: all 0.3s ease;
-            }
-            
-            #mobile-test-btn:hover,
-            #mobile-cache-btn:hover,
-            #mobile-debug-btn:hover {
-                background: rgba(99, 102, 241, 0.3) !important;
-                transform: translateY(-2px);
-            }
-            
-            #mobile-test-btn button,
-            #mobile-cache-btn button,
-            #mobile-debug-btn button {
-                width: 100%;
-                height: 100%;
-                padding: 8px;
-                border-radius: var(--border-radius-lg);
-            }
-            
-            /* Estilo específico para o botão de limpar cache */
-            #mobile-cache-btn {
-                background: rgba(239, 68, 68, 0.2) !important;
-                border: 1px solid rgba(239, 68, 68, 0.3) !important;
-            }
-            
-            #mobile-cache-btn:hover {
-                background: rgba(239, 68, 68, 0.3) !important;
-            }
-            
-            /* Estilo específico para o botão de debug */
-            #mobile-debug-btn {
-                background: rgba(245, 158, 11, 0.2) !important;
-                border: 1px solid rgba(245, 158, 11, 0.3) !important;
-            }
-            
-            #mobile-debug-btn:hover {
-                background: rgba(245, 158, 11, 0.3) !important;
-            }
+
         }
         
         @media (max-width: 480px) {
@@ -1592,6 +1630,10 @@
             }
             
             /* Otimizações para tabela em telas muito pequenas */
+            .crypto-table {
+                min-width: 700px; /* Largura mínima para telas muito pequenas */
+            }
+            
             .crypto-table th,
             .crypto-table td {
                 padding: 12px 8px;
@@ -1644,6 +1686,8 @@
             .score-text {
                 font-size: 0.7rem;
             }
+            
+
         }
         </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1671,45 +1715,6 @@
                         <span class="stat-label">Dominância BTC</span>
                         <span class="stat-value" id="btc-dominance">0%</span>
                     </div>
-                    <!-- Botão de teste de conectividade para dispositivos móveis -->
-                            <div class="stat-item" id="mobile-test-btn" style="display: none;">
-            <button onclick="testMobileConnectivity()" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 0.8rem;">
-                <i class="fas fa-wifi"></i>
-                <span>Testar Conexão</span>
-            </button>
-        </div>
-        <div class="stat-item" id="mobile-cache-btn" style="display: none;">
-            <button onclick="clearCacheAndRetry()" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 0.8rem;">
-                <i class="fas fa-trash"></i>
-                <span>Limpar Cache</span>
-            </button>
-        </div>
-        <div class="stat-item" id="mobile-debug-btn" style="display: none;">
-            <button onclick="debugConnectivity()" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 0.8rem;">
-                <i class="fas fa-bug"></i>
-                <span>Debug</span>
-            </button>
-        </div>
-        <div class="stat-item" id="mobile-binance-btn" style="display: none;">
-            <button onclick="testBinanceAPI()" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 0.8rem;">
-                <i class="fas fa-exchange-alt"></i>
-                <span>Testar Binance</span>
-            </button>
-        </div>
-        <div class="stat-item" id="mobile-cmc-btn" style="display: none;">
-            <button onclick="testCoinMarketCapAPI()" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 0.8rem;">
-                <i class="fas fa-chart-line"></i>
-                <span>Testar CoinMarketCap</span>
-            </button>
-        </div>
-        <div class="stat-item" id="mobile-cryptocompare-btn" style="display: none;">
-            <button onclick="testCryptoCompareAPI()" style="background: none; border: none; color: inherit; cursor: pointer; font-size: 0.8rem;">
-                <i class="fas fa-mobile-alt"></i>
-                <span>Testar CryptoCompare</span>
-            </button>
-        </div>
-        
-
                 </div>
             </div>
         </div>
@@ -2099,40 +2104,14 @@
                 showWarning(`⚠️ ${networkIssue}`);
             }
             
-            // Mostrar aviso específico para dispositivos móveis
-            showMobileWarning();
-            
-                                       // Mostrar aviso específico para dados móveis
+            // Mostrar aviso específico para dados móveis
             if (isMobileData) {
                 showWarning('📱 Dados móveis detectados! Usando exclusivamente CoinGecko API com sua chave autenticada para máxima confiabilidade.');
             }
             
-            // Mostrar botões para dispositivos móveis
+            // Adicionar indicador de scroll horizontal para mobile
             if (isMobile) {
-                const mobileTestBtn = document.getElementById('mobile-test-btn');
-                const mobileCacheBtn = document.getElementById('mobile-cache-btn');
-                const mobileDebugBtn = document.getElementById('mobile-debug-btn');
-                const mobileBinanceBtn = document.getElementById('mobile-binance-btn');
-                const mobileCmcBtn = document.getElementById('mobile-cmc-btn');
-                const mobileCryptoCompareBtn = document.getElementById('mobile-cryptocompare-btn');
-                if (mobileTestBtn) {
-                    mobileTestBtn.style.display = 'block';
-                }
-                if (mobileCacheBtn) {
-                    mobileCacheBtn.style.display = 'block';
-                }
-                if (mobileDebugBtn) {
-                    mobileDebugBtn.style.display = 'block';
-                }
-                if (mobileBinanceBtn) {
-                    mobileBinanceBtn.style.display = 'block';
-                }
-                if (mobileCmcBtn) {
-                    mobileCmcBtn.style.display = 'block';
-                }
-                if (mobileCryptoCompareBtn) {
-                    mobileCryptoCompareBtn.style.display = 'block';
-                }
+                addScrollIndicator();
             }
             
             // Tentar carregar dados do cache primeiro
@@ -3292,7 +3271,85 @@
         // Adicionar ao objeto window para uso global
         window.stopRealTimeUpdates = stopRealTimeUpdates;
         window.resumeRealTimeUpdates = resumeRealTimeUpdates;
-        window.testMobileConnectivity = testMobileConnectivity;
+        
+        // Função para adicionar indicador de scroll horizontal em mobile
+        function addScrollIndicator() {
+            if (!isMobile) return;
+            
+            const tableContainer = document.querySelector('.crypto-table-container');
+            if (!tableContainer) return;
+            
+            // Criar indicador de scroll direito
+            const rightScrollHint = document.createElement('div');
+            rightScrollHint.className = 'scroll-hint';
+            rightScrollHint.innerHTML = `
+                <i class="fas fa-chevron-right"></i>
+                <span>Deslize →</span>
+            `;
+            
+            // Criar indicador de scroll esquerdo
+            const leftScrollHint = document.createElement('div');
+            leftScrollHint.className = 'scroll-hint left';
+            leftScrollHint.innerHTML = `
+                <i class="fas fa-chevron-left"></i>
+                <span>← Deslize</span>
+            `;
+            
+            tableContainer.appendChild(rightScrollHint);
+            tableContainer.appendChild(leftScrollHint);
+            
+            // Mostrar indicadores inicialmente
+            rightScrollHint.style.display = 'block';
+            leftScrollHint.style.display = 'none';
+            
+            // Adicionar evento de scroll para mostrar/ocultar indicadores
+            tableContainer.addEventListener('scroll', function() {
+                const scrollLeft = this.scrollLeft;
+                const maxScrollLeft = this.scrollWidth - this.clientWidth;
+                
+                // Mostrar/ocultar indicador direito
+                if (scrollLeft >= maxScrollLeft - 10) {
+                    rightScrollHint.style.display = 'none';
+                } else {
+                    rightScrollHint.style.display = 'block';
+                }
+                
+                // Mostrar/ocultar indicador esquerdo
+                if (scrollLeft <= 10) {
+                    leftScrollHint.style.display = 'none';
+                } else {
+                    leftScrollHint.style.display = 'block';
+                }
+            });
+            
+            // Remover indicadores após alguns segundos de inatividade
+            let hideTimeout;
+            const hideIndicators = () => {
+                hideTimeout = setTimeout(() => {
+                    rightScrollHint.style.opacity = '0';
+                    leftScrollHint.style.opacity = '0';
+                    setTimeout(() => {
+                        if (rightScrollHint.parentNode) {
+                            rightScrollHint.parentNode.removeChild(rightScrollHint);
+                        }
+                        if (leftScrollHint.parentNode) {
+                            leftScrollHint.parentNode.removeChild(leftScrollHint);
+                        }
+                    }, 500);
+                }, 8000);
+            };
+            
+            // Resetar timeout quando houver scroll
+            tableContainer.addEventListener('scroll', () => {
+                clearTimeout(hideTimeout);
+                rightScrollHint.style.opacity = '1';
+                leftScrollHint.style.opacity = '1';
+                hideIndicators();
+            });
+            
+            // Iniciar contador para ocultar
+            hideIndicators();
+        }
         
         // Função para detectar problemas de rede móvel
         function detectMobileNetworkIssues() {
@@ -3375,12 +3432,7 @@
             return false;
         }
         
-        // Função para mostrar aviso específico para dispositivos móveis
-        function showMobileWarning() {
-            if (isMobile) {
-                showWarning('💡 Dica: Em conexões móveis lentas, os dados podem demorar mais para carregar. Use o botão "Tentar Novamente" se necessário.');
-            }
-        }
+
         
         // Função para mostrar aviso
         function showWarning(message) {
@@ -3502,13 +3554,6 @@
             return false;
         }
         
-        // Função para mostrar aviso específico para dispositivos móveis
-        function showMobileWarning() {
-            if (isMobile) {
-                showWarning('💡 Dica: Em conexões móveis lentas, os dados podem demorar mais para carregar. Use o botão "Tentar Novamente" se necessário.');
-            }
-        }
-        
         // Função para testar conectividade em dispositivos móveis
         async function testMobileConnectivity() {
             if (!isMobile) return;
@@ -3620,23 +3665,7 @@
             }
         }
         
-        // Função para mostrar aviso específico para dispositivos móveis
-        function showMobileWarning() {
-            if (isMobile) {
-                showWarning('💡 Dica: Em conexões móveis lentas, os dados podem demorar mais para carregar. Use o botão "Tentar Novamente" se necessário.');
-                
-                // Mostrar botões de debug para mobile
-                const mobileTestBtn = document.getElementById('mobile-test-btn');
-                const mobileCacheBtn = document.getElementById('mobile-cache-btn');
-                const mobileDebugBtn = document.getElementById('mobile-debug-btn');
-                const mobileBinanceBtn = document.getElementById('mobile-binance-btn');
-                
-                if (mobileTestBtn) mobileTestBtn.style.display = 'block';
-                if (mobileCacheBtn) mobileCacheBtn.style.display = 'block';
-                if (mobileDebugBtn) mobileDebugBtn.style.display = 'block';
-                if (mobileBinanceBtn) mobileBinanceBtn.style.display = 'block';
-            }
-        }
+
         
         // Função para limpar cache e tentar novamente
         function clearCacheAndRetry() {
