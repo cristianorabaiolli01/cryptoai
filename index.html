@@ -1650,26 +1650,7 @@
                 box-shadow: var(--shadow-sm);
             }
             
-            /* Botão Buy */
-            .buy-btn {
-                background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-                color: white;
-                border: none;
-                padding: 8px 16px;
-                border-radius: var(--border-radius-xl);
-                font-size: 0.875rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: var(--transition-normal);
-                margin-left: 15px;
-                box-shadow: var(--shadow-md);
-            }
-            
-            .buy-btn:hover {
-                background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
-                transform: translateY(-2px);
-                box-shadow: var(--shadow-lg);
-            }
+
             
             /* Colunas de porcentagem (flex: 1 cada) */
             .crypto-card .col-24h,
@@ -2070,11 +2051,7 @@
                 min-width: 100px;
             }
             
-            .buy-btn {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-                margin-left: 10px;
-            }
+
             
             .percentage-mobile {
                 padding: 6px 10px;
@@ -3011,7 +2988,6 @@
                                     <div class="crypto-price-mobile">${formatCurrency(getCurrentPrice(crypto))}</div>
                                     ${swingTradeInfo}
                                 </div>
-                                <button class="buy-btn">Buy</button>
                             </div>
                             <div class="col-24h">
                                 <span class="percentage-mobile ${priceChange24h >= 0 ? 'positive' : 'negative'}">
