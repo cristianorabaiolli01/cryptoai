@@ -481,6 +481,41 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
         
+        /* Ajustes específicos para mobile */
+        @media (max-width: 768px) {
+            .filters {
+                gap: 8px;
+                justify-content: center;
+            }
+            
+            .filter-btn {
+                padding: 8px 12px;
+                font-size: 0.75rem;
+                min-width: 60px;
+                flex: 1;
+                max-width: 80px;
+            }
+            
+            .swing-trade-btn {
+                min-width: 90px;
+                max-width: 100px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .filter-btn {
+                padding: 6px 10px;
+                font-size: 0.7rem;
+                min-width: 50px;
+                max-width: 70px;
+            }
+            
+            .swing-trade-btn {
+                min-width: 80px;
+                max-width: 90px;
+            }
+        }
+        
         .swing-trade-btn.active {
             background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
             box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
@@ -2102,12 +2137,21 @@
             }
             
             .filters {
-                gap: 8px;
+                gap: 6px;
+                justify-content: center;
             }
             
             .filter-btn {
-                padding: 8px 15px;
-                font-size: 0.8rem;
+                padding: 6px 10px;
+                font-size: 0.7rem;
+                min-width: 50px;
+                max-width: 70px;
+                flex: 1;
+            }
+            
+            .swing-trade-btn {
+                min-width: 80px;
+                max-width: 90px;
             }
             
             /* Otimizações para lista mobile em telas muito pequenas */
@@ -3389,6 +3433,47 @@
             
             .swing-trade-desktop {
                 animation: fadeInUp 1.4s ease;
+            }
+            
+            /* CSS específico para mobile - Botões mais compactos */
+            @media (max-width: 768px) {
+                .filters {
+                    gap: 8px;
+                    justify-content: center;
+                }
+                
+                .filter-btn {
+                    padding: 8px 12px;
+                    font-size: 0.75rem;
+                    min-width: 60px;
+                    max-width: 80px;
+                    flex: 1;
+                }
+                
+                .swing-trade-btn {
+                    min-width: 90px;
+                    max-width: 100px;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .filters {
+                    gap: 6px;
+                    justify-content: center;
+                }
+                
+                .filter-btn {
+                    padding: 6px 10px;
+                    font-size: 0.7rem;
+                    min-width: 50px;
+                    max-width: 70px;
+                    flex: 1;
+                }
+                
+                .swing-trade-btn {
+                    min-width: 80px;
+                    max-width: 90px;
+                }
             }
             
 
