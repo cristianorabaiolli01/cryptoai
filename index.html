@@ -1419,17 +1419,345 @@
                 justify-content: center;
             }
             
-            /* ===== MELHORIAS ESPECÍFICAS PARA MOBILE ===== */
-            
-            /* Otimizações da tabela para mobile com scroll horizontal */
+                    /* ===== NOVO LAYOUT MOBILE EM LISTA VERTICAL ===== */
+        
+        /* Layout mobile completamente reorganizado para lista vertical */
+        @media (max-width: 768px) {
+            /* Ocultar elementos desktop */
             .crypto-table-container {
-                margin: 15px 0;
-                border-radius: var(--border-radius-xl);
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch; /* Scroll suave no iOS */
-                scrollbar-width: thin;
-                scrollbar-color: var(--primary-color) var(--bg-secondary);
+                display: none !important;
             }
+            
+            /* Mostrar lista mobile */
+            .crypto-list-mobile {
+                display: block !important;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .header-stats {
+                gap: 20px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                max-width: none;
+            }
+            
+            .filters {
+                justify-content: center;
+            }
+            
+            /* ===== NOVO LAYOUT MOBILE EM LISTA VERTICAL ===== */
+            
+            /* Ocultar tabela desktop em mobile */
+            .crypto-table-container {
+                display: none !important;
+            }
+            
+            /* Mostrar lista mobile */
+            .crypto-list-mobile {
+                display: block !important;
+            }
+            
+            /* Container da lista mobile */
+            .crypto-list-mobile {
+                display: none;
+                background: var(--bg-glass);
+                border-radius: var(--border-radius-2xl);
+                backdrop-filter: blur(20px);
+                overflow: hidden;
+                box-shadow: var(--shadow-2xl);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                margin: 20px 0;
+            }
+            
+            /* Cabeçalho da lista mobile */
+            .mobile-list-header {
+                display: flex;
+                background: rgba(30, 41, 59, 0.8);
+                padding: 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                font-weight: 700;
+                color: var(--text-primary);
+                font-size: 0.875rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+            
+            .mobile-list-header .col-name {
+                flex: 2;
+            }
+            
+            .mobile-list-header .col-24h {
+                flex: 1;
+                text-align: center;
+            }
+            
+            .mobile-list-header .col-7d {
+                flex: 1;
+                text-align: center;
+            }
+            
+            /* Card individual de criptomoeda */
+            .crypto-card {
+                display: flex;
+                align-items: center;
+                padding: 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                transition: var(--transition-normal);
+                cursor: pointer;
+                position: relative;
+                background: transparent;
+            }
+            
+            .crypto-card:last-child {
+                border-bottom: none;
+            }
+            
+            .crypto-card:hover {
+                background: var(--bg-glass-hover);
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-lg);
+            }
+            
+            .crypto-card::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+                background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+                opacity: 0;
+                transition: var(--transition-normal);
+                border-radius: 0 2px 2px 0;
+            }
+            
+            .crypto-card:hover::before {
+                opacity: 1;
+            }
+            
+            /* Coluna do nome (flex: 2) */
+            .crypto-card .col-name {
+                flex: 2;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            /* Ícone de estrela para favoritos */
+            .favorite-star {
+                color: var(--text-muted);
+                font-size: 1.2rem;
+                cursor: pointer;
+                transition: var(--transition-normal);
+                margin-right: 10px;
+            }
+            
+            .favorite-star:hover {
+                color: var(--accent-color);
+                transform: scale(1.1);
+            }
+            
+            .favorite-star.active {
+                color: var(--accent-color);
+            }
+            
+            /* Informações da criptomoeda */
+            .crypto-info-mobile h3 {
+                font-size: 1.125rem;
+                font-weight: 700;
+                margin-bottom: 4px;
+                color: var(--text-primary);
+                background: linear-gradient(135deg, var(--text-primary), var(--primary-light));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            
+            .crypto-symbol-mobile {
+                font-size: 0.875rem;
+                color: var(--text-secondary);
+                font-weight: 600;
+                background: var(--bg-tertiary);
+                padding: 4px 8px;
+                border-radius: var(--border-radius-md);
+                display: inline-block;
+            }
+            
+            /* Botão Buy */
+            .buy-btn {
+                background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: var(--border-radius-xl);
+                font-size: 0.875rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: var(--transition-normal);
+                margin-left: 15px;
+                box-shadow: var(--shadow-md);
+            }
+            
+            .buy-btn:hover {
+                background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-lg);
+            }
+            
+            /* Colunas de porcentagem (flex: 1 cada) */
+            .crypto-card .col-24h,
+            .crypto-card .col-7d {
+                flex: 1;
+                text-align: center;
+            }
+            
+            /* Porcentagens com design melhorado */
+            .percentage-mobile {
+                font-weight: 700;
+                padding: 8px 12px;
+                border-radius: var(--border-radius-xl);
+                font-size: 0.875rem;
+                display: inline-block;
+                min-width: 70px;
+                text-align: center;
+                transition: var(--transition-normal);
+            }
+            
+            .percentage-mobile.positive {
+                background: rgba(16, 185, 129, 0.15);
+                color: var(--success-light);
+                border: 1px solid rgba(16, 185, 129, 0.3);
+            }
+            
+            .percentage-mobile.negative {
+                background: rgba(239, 68, 68, 0.15);
+                color: var(--error-light);
+                border: 1px solid rgba(239, 68, 68, 0.3);
+            }
+            
+            .percentage-mobile:hover {
+                transform: scale(1.05);
+                box-shadow: var(--shadow-md);
+            }
+            
+            /* Score de swing trade para mobile */
+            .swing-trade-score-mobile {
+                margin-top: 8px;
+            }
+            
+            .score-bar-mobile {
+                width: 100%;
+                height: 6px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: var(--border-radius-md);
+                overflow: hidden;
+                margin-bottom: 6px;
+                position: relative;
+                box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            
+            .score-fill-mobile {
+                height: 100%;
+                border-radius: var(--border-radius-md);
+                transition: width var(--transition-slow);
+                position: relative;
+                z-index: 1;
+            }
+            
+            .score-text-mobile {
+                font-size: 0.8rem;
+                font-weight: 600;
+                text-align: center;
+                display: block;
+            }
+            
+            /* Animações para mobile */
+            .crypto-card {
+                animation: fadeInUp 0.4s ease forwards;
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            
+            .crypto-card:nth-child(1) { animation-delay: 0.1s; }
+            .crypto-card:nth-child(2) { animation-delay: 0.2s; }
+            .crypto-card:nth-child(3) { animation-delay: 0.3s; }
+            .crypto-card:nth-child(4) { animation-delay: 0.4s; }
+            .crypto-card:nth-child(5) { animation-delay: 0.5s; }
+            
+            @keyframes fadeInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            /* Melhorias nos controles para mobile */
+            .filter-btn {
+                padding: 12px 18px;
+                font-size: 0.85rem;
+                min-width: 90px;
+            }
+            
+            .swing-trade-btn {
+                min-width: 130px;
+            }
+            
+            /* Otimizações para header mobile */
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo i {
+                font-size: 2rem;
+            }
+            
+            .stat-item {
+                padding: 12px 16px;
+            }
+            
+            .stat-value {
+                font-size: 1.2rem;
+            }
+            
+            .stat-label {
+                font-size: 0.7rem;
+            }
+            
+            /* Melhorias específicas para dispositivos móveis */
+            .connection-status {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                text-align: center;
+                font-size: 0.75rem;
+                position: fixed;
+                z-index: 2000;
+            }
+            
+            .real-time-indicator {
+                top: 60px;
+                right: 10px;
+                left: 10px;
+                text-align: center;
+                font-size: 0.75rem;
+            }
+        }
             
             /* Ocultar colunas desktop-only em mobile */
             .desktop-only {
@@ -1671,70 +1999,40 @@
                 font-size: 0.8rem;
             }
             
-            /* Otimizações para tabela em telas muito pequenas */
-            .crypto-table {
-                min-width: 600px; /* Largura mínima para 3 colunas em telas muito pequenas */
+            /* Otimizações para lista mobile em telas muito pequenas */
+            .crypto-card {
+                padding: 16px;
             }
             
-            /* Larguras específicas para mobile (3 colunas) */
-            .crypto-table th:nth-child(1) { width: 25%; }  /* Nome */
-            .crypto-table th:nth-child(2) { width: 37.5%; }  /* 24h % */
-            .crypto-table th:nth-child(3) { width: 37.5%; }  /* 7d % */
-            
-            .crypto-table th,
-            .crypto-table td {
-                padding: 12px 8px;
-                font-size: 0.75rem;
+            .crypto-info-mobile h3 {
+                font-size: 1rem;
             }
             
-            .crypto-name {
-                min-width: 120px;
-                gap: 8px;
+            .crypto-symbol-mobile {
+                font-size: 0.8rem;
+                padding: 3px 6px;
             }
             
-            .crypto-icon {
-                width: 30px;
-                height: 30px;
+            .buy-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                margin-left: 10px;
             }
             
-            .crypto-info h3 {
-                font-size: 0.85rem;
+            .percentage-mobile {
+                padding: 6px 10px;
+                min-width: 60px;
+                font-size: 0.8rem;
             }
             
-            .crypto-symbol {
-                font-size: 0.7rem;
-                padding: 2px 5px;
-            }
-            
-            .price {
-                font-size: 0.9rem;
-            }
-            
-            .percentage {
-                padding: 4px 8px;
-                min-width: 55px;
-                font-size: 0.75rem;
-            }
-            
-            .market-cap, .volume, .circulation {
-                font-size: 0.75rem;
-            }
-            
-            .sparkline-chart {
-                width: 60px;
-                height: 25px;
-            }
-            
-            .score-bar {
+            .score-bar-mobile {
                 height: 5px;
                 margin-bottom: 4px;
             }
             
-            .score-text {
+            .score-text-mobile {
                 font-size: 0.7rem;
             }
-            
-
         }
         </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1803,7 +2101,7 @@
                 </div>
             </div>
 
-            <!-- Crypto Table -->
+            <!-- Crypto Table (Desktop) -->
             <div class="crypto-table-container">
                 <table class="crypto-table">
                     <thead>
@@ -1823,6 +2121,18 @@
                         <!-- Dados serão inseridos aqui via JavaScript -->
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Crypto List Mobile -->
+            <div class="crypto-list-mobile" id="crypto-list-mobile">
+                <div class="mobile-list-header">
+                    <div class="col-name">Nome</div>
+                    <div class="col-24h">24h %</div>
+                    <div class="col-7d">7d %</div>
+                </div>
+                <div id="crypto-list-body">
+                    <!-- Dados mobile serão inseridos aqui via JavaScript -->
+                </div>
             </div>
 
 
@@ -2047,6 +2357,9 @@
         });
         
         function initializeApp() {
+            // Configurar exibição mobile/desktop
+            setupMobileDesktopDisplay();
+            
             // Adicionar indicador de scroll horizontal para mobile
             if (isMobile) {
                 addScrollIndicator();
@@ -2057,10 +2370,28 @@
                 displayCryptoData();
                 setupEventListeners();
                 setupAutoUpdate();
+                loadFavorites(); // Carregar favoritos salvos
             } else {
                 loadCryptoData();
                 setupEventListeners();
                 setupAutoUpdate();
+                loadFavorites(); // Carregar favoritos salvos
+            }
+        }
+        
+        // Função para configurar exibição mobile/desktop
+        function setupMobileDesktopDisplay() {
+            const tableContainer = document.querySelector('.crypto-table-container');
+            const listContainer = document.querySelector('.crypto-list-mobile');
+            
+            if (isMobile) {
+                // Em mobile, mostrar lista e ocultar tabela
+                if (tableContainer) tableContainer.style.display = 'none';
+                if (listContainer) listContainer.style.display = 'block';
+            } else {
+                // Em desktop, mostrar tabela e ocultar lista
+                if (tableContainer) tableContainer.style.display = 'block';
+                if (listContainer) listContainer.style.display = 'none';
             }
         }
         
@@ -2173,6 +2504,16 @@
                     }
                 });
             }
+            
+            // Listener para mudanças de tamanho de tela (responsive)
+            window.addEventListener('resize', function() {
+                const newIsMobile = window.innerWidth <= 768;
+                if (newIsMobile !== isMobile) {
+                    isMobile = newIsMobile;
+                    setupMobileDesktopDisplay();
+                    console.log('📱 Tamanho de tela mudou, ajustando layout para:', isMobile ? 'Mobile' : 'Desktop');
+                }
+            });
         }
         
         // Sistema de Cache Local
@@ -2392,7 +2733,8 @@
             }
             
             if (filteredData.length === 0) {
-                const colSpan = isMobile ? 3 : 9;
+                // Mensagem para desktop
+                const colSpan = 9;
                 cryptoTableBody.innerHTML = `
                     <tr>
                         <td colspan="${colSpan}" style="text-align: center; padding: 40px;">
@@ -2400,16 +2742,25 @@
                         </td>
                     </tr>
                 `;
+                
+                // Mensagem para mobile
+                const cryptoListBody = document.getElementById('crypto-list-body');
+                if (cryptoListBody) {
+                    cryptoListBody.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #a0a0a0;">
+                            <p>Nenhuma criptomoeda encontrada.</p>
+                        </div>
+                    `;
+                }
                 return;
             }
             
-            // Adicionar cabeçalho de ordenação para Swing Trade
+            // Adicionar cabeçalho de ordenação para Swing Trade (desktop)
             let tableHeader = '';
             if (currentFilter === 'swing-trade') {
-                const colSpan = isMobile ? 3 : 9;
                 tableHeader = `
                     <tr class="sorting-header">
-                        <td colspan="${colSpan}" style="text-align: center; padding: 15px; background: rgba(255, 107, 53, 0.1); border-radius: 8px; margin-bottom: 10px;">
+                        <td colspan="9" style="text-align: center; padding: 15px; background: rgba(255, 107, 53, 0.1); border-radius: 8px; margin-bottom: 10px;">
                             <div style="display: flex; align-items: center; justify-content: center; gap: 10px; color: #ff6b35; font-weight: 600;">
                                 <i class="fas fa-sort-amount-down"></i>
                                 <span>Ordenado por Score de Swing Trade (Maior para Menor)</span>
@@ -2419,6 +2770,7 @@
                 `;
             }
         
+            // Renderizar tabela desktop
             cryptoTableBody.innerHTML = tableHeader + filteredData.map((crypto, index) => {
                 const priceChange24h = crypto.price_change_percentage_24h;
                 const priceChange7d = crypto.price_change_percentage_7d_in_currency;
@@ -2439,40 +2791,13 @@
                     `;
                 }
                 
-                                if (isMobile) {
-                    // Versão simplificada para mobile: Nome, 24h% e 7d%
-                    return `
-                        <tr onclick="showCryptoDetails('${crypto.id}')" style="cursor: pointer;">
-                            <td>
-                                <div class="crypto-name">
-                                    <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJNOCA0TDEyIDhMOCAxMkw0IDhMOCA0WiIgZmlsbD0id2hpdGUiPgo8L3N2Zz4KPC9zdmc+Cg=='">
-                                    <div class="crypto-info">
-                                        <h3>${crypto.name}</h3>
-                                        <span class="crypto-symbol">${crypto.symbol.toUpperCase()}</span>
-                                        ${swingTradeInfo}
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="percentage ${priceChange24h >= 0 ? 'positive' : 'negative'}">
-                                    ${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%
-                                </span>
-                            </td>
-                            <td>
-                                <span class="percentage ${priceChange7d >= 0 ? 'positive' : 'negative'}">
-                                    ${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%
-                                </span>
-                            </td>
-                        </tr>
-                    `;
-                } else {
                 // Versão completa para desktop
                 return `
                     <tr onclick="showCryptoDetails('${crypto.id}')">
                         <td>${crypto.market_cap_rank || 'N/A'}</td>
                         <td>
                             <div class="crypto-name">
-                                <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJNOCA0TDEyIDhMOCAxMkw0IDhMOCA0WiIgZmlsbD0id2hpdGUiPgo8L3N2Zz4KPC9zdmc+Cg=='">
+                                <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJNOCA0TDEyIDhMOCAxMkw0IDhMOCA0WiIgZmlsbD0id2hpdGUiPgo8L3N2Zz4KPC9zdmc+Cg=='">
                                 <div class="crypto-info">
                                     <h3>${crypto.name}</h3>
                                     <span class="crypto-symbol">${crypto.symbol.toUpperCase()}</span>
@@ -2501,11 +2826,58 @@
                         </td>
                     </tr>
                 `;
-            }
-        }).join('');
+            }).join('');
             
-
-        
+            // Renderizar lista mobile
+            const cryptoListBody = document.getElementById('crypto-list-body');
+            if (cryptoListBody) {
+                cryptoListBody.innerHTML = filteredData.map((crypto, index) => {
+                    const priceChange24h = crypto.price_change_percentage_24h;
+                    const priceChange7d = crypto.price_change_percentage_7d_in_currency;
+                    
+                    // Calcular score de swing trade se necessário
+                    let swingTradeInfo = '';
+                    if (currentFilter === 'swing-trade') {
+                        const score = getSwingTradeScore(crypto);
+                        swingTradeInfo = `
+                            <div class="swing-trade-score-mobile">
+                                <div class="score-bar-mobile">
+                                    <div class="score-fill-mobile" style="width: ${score.percentage}%; background: ${getScoreColor(score.percentage)};"></div>
+                                </div>
+                                <span class="score-text-mobile" style="color: ${getScoreColor(score.percentage)};">
+                                    Score: ${score.percentage}%
+                                </span>
+                            </div>
+                        `;
+                    }
+                    
+                    return `
+                        <div class="crypto-card" onclick="showCryptoDetails('${crypto.id}')">
+                            <div class="col-name">
+                                <i class="fas fa-star favorite-star" onclick="event.stopPropagation(); toggleFavorite('${crypto.id}')"></i>
+                                <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJNOCA0TDEyIDhMOCAxMkw0IDhMOCA0WiIgZmlsbD0id2hpdGUiPgo8L3N2Zz4KPC9zdmc+Cg=='">
+                                <div class="crypto-info-mobile">
+                                    <h3>${crypto.name}</h3>
+                                    <span class="crypto-symbol-mobile">${crypto.symbol.toUpperCase()}</span>
+                                    ${swingTradeInfo}
+                                </div>
+                                <button class="buy-btn">Buy</button>
+                            </div>
+                            <div class="col-24h">
+                                <span class="percentage-mobile ${priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                    ${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%
+                                </span>
+                            </div>
+                            <div class="col-7d">
+                                <span class="percentage-mobile ${priceChange7d >= 0 ? 'positive' : 'negative'}">
+                                    ${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
             // Renderizar gráficos sparkline apenas em desktop
             if (!isMobile) {
                 renderSparklines();
@@ -3700,6 +4072,41 @@
         
         // Expor função de debug globalmente
         window.debugConnectivity = debugConnectivity;
+        
+        // Função para alternar favoritos
+        function toggleFavorite(cryptoId) {
+            const star = event.target;
+            star.classList.toggle('active');
+            
+            // Salvar no localStorage
+            let favorites = JSON.parse(localStorage.getItem('cryptoFavorites') || '[]');
+            if (star.classList.contains('active')) {
+                if (!favorites.includes(cryptoId)) {
+                    favorites.push(cryptoId);
+                }
+            } else {
+                favorites = favorites.filter(id => id !== cryptoId);
+            }
+            localStorage.setItem('cryptoFavorites', JSON.stringify(favorites));
+            
+            // Mostrar feedback visual
+            if (star.classList.contains('active')) {
+                showWarning('⭐ Adicionado aos favoritos!');
+            } else {
+                showWarning('💔 Removido dos favoritos');
+            }
+        }
+        
+        // Função para carregar favoritos salvos
+        function loadFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('cryptoFavorites') || '[]');
+            favorites.forEach(cryptoId => {
+                const star = document.querySelector(`[onclick*="${cryptoId}"] .favorite-star`);
+                if (star) {
+                    star.classList.add('active');
+                }
+            });
+        }
         
         // Função para buscar dados da API da Binance (otimizada para mobile)
         async function loadCryptoDataFromBinance() {
