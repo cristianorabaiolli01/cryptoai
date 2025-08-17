@@ -12,36 +12,33 @@
         }
         
         :root {
-            /* Paleta de cores premium e moderna */
+            /* Nova paleta de cores moderna e renovada */
             --primary-color: #6366f1;
-            --primary-light: #818cf8;
             --primary-dark: #4f46e5;
-            --secondary-color: #06b6d4;
-            --secondary-light: #22d3ee;
+            --primary-light: #a5b4fc;
+            --secondary-color: #10b981;
+            --secondary-dark: #059669;
             --accent-color: #f59e0b;
-            --accent-light: #fbbf24;
+            --accent-dark: #d97706;
             
-            /* Cores de fundo com gradientes avançados */
+            /* Cores de fundo renovadas */
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;
             --bg-tertiary: #334155;
-            --bg-glass: rgba(255, 255, 255, 0.05);
-            --bg-glass-hover: rgba(255, 255, 255, 0.1);
+            --bg-card: #1e293b;
+            --bg-glass: rgba(30, 41, 59, 0.8);
             
-            /* Cores de texto refinadas */
+            /* Cores de texto renovadas */
             --text-primary: #f8fafc;
             --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
+            --text-accent: #e2e8f0;
             
-            /* Cores de status premium */
+            /* Cores de status renovadas */
             --success-color: #10b981;
-            --success-light: #34d399;
-            --error-color: #ef4444;
-            --error-light: #f87171;
+            --danger-color: #ef4444;
             --warning-color: #f59e0b;
-            --warning-light: #fbbf24;
             --info-color: #3b82f6;
-            --info-light: #60a5fa;
             
             /* Sistema de sombras avançado */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -337,6 +334,8 @@
             flex-wrap: wrap;
         }
         
+
+        
         .search-box {
             position: relative;
             flex: 1;
@@ -425,38 +424,84 @@
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
-            transform: translateY(-2px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .filter-btn.active::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            animation: shimmer 2s ease-in-out infinite;
+        }
+        
+        .filter-btn.active.swing-trade-btn {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        .filter-btn.active.swing-trade-btn::after {
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color), var(--secondary-color));
         }
         
         .swing-trade-btn {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
             color: white;
             font-weight: 700;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        .swing-trade-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .swing-trade-btn:hover::before {
+            left: 100%;
         }
         
         .swing-trade-btn:hover {
-            background: linear-gradient(135deg, #d97706, #f59e0b);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.5);
+            border-color: rgba(255, 255, 255, 0.3);
         }
         
         .swing-trade-btn.active {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
             box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+            border-color: rgba(255, 255, 255, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        .swing-trade-btn i {
+            margin-right: 8px;
+            animation: bounce 2s infinite;
         }
         
         /* Crypto Table */
         .crypto-table-container {
-            background: var(--bg-glass);
-            border-radius: var(--border-radius-2xl);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
             backdrop-filter: blur(20px);
             overflow: hidden;
-            box-shadow: var(--shadow-2xl);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
             margin: 20px 0;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary-color) var(--bg-secondary);
         }
         
         /* Indicador de scroll horizontal para mobile */
@@ -511,6 +556,8 @@
             }
         }
         
+
+        
         .crypto-table-container::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -559,15 +606,14 @@
         
         .crypto-table th {
             background: rgba(30, 41, 59, 0.8);
-            padding: 24px 20px;
+            padding: 20px;
             text-align: left;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--text-primary);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.875rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            position: relative;
         }
         
         /* Larguras específicas para colunas para garantir alinhamento */
@@ -599,7 +645,7 @@
         .crypto-table td {
             padding: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: var(--transition-normal);
+            vertical-align: middle;
         }
         
         
@@ -612,33 +658,17 @@
         
         .crypto-table tbody tr {
             cursor: pointer;
-            transition: var(--transition-normal);
-            position: relative;
+            transition: background 0.3s ease;
             animation: fadeInUp 0.6s ease forwards;
             opacity: 0;
         }
         
-        .crypto-table tbody tr::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
-            opacity: 0;
-            transition: var(--transition-normal);
-            border-radius: 0 2px 2px 0;
-        }
-        
         .crypto-table tbody tr:hover {
-            background: var(--bg-glass-hover);
-            transform: scale(1.005);
-            box-shadow: var(--shadow-lg);
+            background: rgba(255, 255, 255, 0.05);
         }
         
-        .crypto-table tbody tr:hover::before {
-            opacity: 1;
+        .crypto-table tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
         }
         
         
@@ -661,55 +691,33 @@
             gap: 15px;
         }
         
-        
-        
         .crypto-icon {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            box-shadow: var(--shadow-md);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: var(--transition-normal);
-        }
-        
-        .crypto-table tbody tr:hover .crypto-icon {
-            transform: scale(1.1);
-            border-color: var(--primary-color);
         }
         
         .crypto-info h3 {
             font-size: 1.125rem;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 4px;
             color: var(--text-primary);
-            background: linear-gradient(135deg, var(--text-primary), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transition: var(--transition-normal);
-        }
-        
-        .crypto-table tbody tr:hover .crypto-info h3 {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         
         .crypto-symbol {
             font-size: 0.875rem;
             color: var(--text-secondary);
-            font-weight: 600;
-            background: var(--bg-tertiary);
+            background: rgba(255, 255, 255, 0.1);
             padding: 4px 8px;
-            border-radius: var(--border-radius-md);
+            border-radius: 6px;
             display: inline-block;
         }
         
         
         
         .price {
-            font-weight: 700;
+            font-weight: 600;
             font-size: 1.125rem;
             color: var(--text-primary);
             text-align: right;
@@ -718,33 +726,25 @@
         
         
         .percentage {
-            font-weight: 700;
+            font-weight: 600;
             padding: 8px 16px;
-            border-radius: var(--border-radius-xl);
+            border-radius: 20px;
             font-size: 0.875rem;
             display: inline-block;
             min-width: 80px;
             text-align: center;
-            transition: var(--transition-normal);
         }
-        
-        
         
         .percentage.positive {
             background: rgba(16, 185, 129, 0.15);
-            color: var(--success-light);
+            color: #00d4aa;
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
         
         .percentage.negative {
             background: rgba(239, 68, 68, 0.15);
-            color: var(--error-light);
+            color: #ff6b6b;
             border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-        
-        .percentage:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-md);
         }
         
         .market-cap, .volume, .circulation {
@@ -762,20 +762,31 @@
         
         /* Swing Trade Score */
         .swing-trade-score {
-            margin-top: 8px;
+            margin-top: 12px;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            border-radius: var(--border-radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
         
-        
+        .swing-trade-score:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
         
         .score-bar {
             width: 100%;
-            height: 8px;
+            height: 10px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: var(--border-radius-md);
             overflow: hidden;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             position: relative;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .score-bar::before {
@@ -798,6 +809,7 @@
             position: relative;
             z-index: 1;
             overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
         
         .score-fill::before {
@@ -807,44 +819,93 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             animation: shimmer 2s infinite;
         }
         
         .score-text {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             font-weight: 700;
             text-align: center;
             display: block;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .score-text:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+        
+        .score-text i {
+            margin-right: 6px;
+            color: var(--accent-color);
+            animation: twinkle 1.5s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         
         /* Cabeçalho de ordenação */
         .sorting-header {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(99, 102, 241, 0.1));
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(99, 102, 241, 0.15), rgba(16, 185, 129, 0.1));
             border-radius: var(--border-radius-xl);
             margin: 16px 20px;
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            border: 2px solid rgba(245, 158, 11, 0.3);
+            box-shadow: 
+                0 8px 25px rgba(245, 158, 11, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sorting-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color), var(--secondary-color));
+            animation: shimmer 3s ease-in-out infinite;
         }
         
         .sorting-header td {
             text-align: center;
-            padding: 20px;
+            padding: 24px 20px;
             background: transparent;
+            position: relative;
+            z-index: 1;
         }
         
         .sorting-header div {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             color: var(--accent-color);
-            font-weight: 700;
-            font-size: 1rem;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .sorting-header i {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
             animation: bounce 2s infinite;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        .sorting-header span {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
         }
         
         /* Swing Trade Banner */
@@ -1271,6 +1332,17 @@
             }
         }
         
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
         /* Footer */
         .footer {
             background: rgba(15, 23, 42, 0.8);
@@ -1512,11 +1584,11 @@
             /* Container da lista mobile */
             .crypto-list-mobile {
                 display: none;
-                background: var(--bg-glass);
-                border-radius: var(--border-radius-2xl);
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 16px;
                 backdrop-filter: blur(20px);
                 overflow: hidden;
-                box-shadow: var(--shadow-2xl);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
                 border: 1px solid rgba(255, 255, 255, 0.1);
                 margin: 20px 0;
             }
@@ -1527,7 +1599,7 @@
                 background: rgba(30, 41, 59, 0.8);
                 padding: 20px;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                font-weight: 700;
+                font-weight: 600;
                 color: var(--text-primary);
                 font-size: 0.875rem;
                 text-transform: uppercase;
@@ -1554,10 +1626,8 @@
                 align-items: center;
                 padding: 20px;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-                transition: var(--transition-normal);
+                transition: background 0.3s ease;
                 cursor: pointer;
-                position: relative;
-                background: transparent;
             }
             
             .crypto-card:last-child {
@@ -1565,26 +1635,11 @@
             }
             
             .crypto-card:hover {
-                background: var(--bg-glass-hover);
-                transform: translateY(-2px);
-                box-shadow: var(--shadow-lg);
+                background: rgba(255, 255, 255, 0.05);
             }
             
-            .crypto-card::before {
-                content: '';
-                position: absolute;
-                left: 0;
-                top: 0;
-                bottom: 0;
-                width: 4px;
-                background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
-                opacity: 0;
-                transition: var(--transition-normal);
-                border-radius: 0 2px 2px 0;
-            }
-            
-            .crypto-card:hover::before {
-                opacity: 1;
+            .crypto-card:nth-child(even) {
+                background: rgba(255, 255, 255, 0.02);
             }
             
             /* Coluna do nome (flex: 2) */
@@ -1637,17 +1692,16 @@
             
             .crypto-price-mobile {
                 font-size: 1.125rem;
-                font-weight: 700;
+                font-weight: 600;
                 color: var(--text-primary);
                 margin: 8px 0;
                 padding: 6px 12px;
-                background: var(--bg-glass);
+                background: rgba(255, 255, 255, 0.1);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: var(--border-radius-md);
+                border-radius: 8px;
                 display: inline-block;
                 text-align: center;
                 min-width: 120px;
-                box-shadow: var(--shadow-sm);
             }
             
 
@@ -1661,47 +1715,54 @@
             
             /* Porcentagens com design melhorado */
             .percentage-mobile {
-                font-weight: 700;
+                font-weight: 600;
                 padding: 8px 12px;
-                border-radius: var(--border-radius-xl);
+                border-radius: 20px;
                 font-size: 0.875rem;
                 display: inline-block;
                 min-width: 70px;
                 text-align: center;
-                transition: var(--transition-normal);
             }
             
             .percentage-mobile.positive {
                 background: rgba(16, 185, 129, 0.15);
-                color: var(--success-light);
+                color: #00d4aa;
                 border: 1px solid rgba(16, 185, 129, 0.3);
             }
             
             .percentage-mobile.negative {
                 background: rgba(239, 68, 68, 0.15);
-                color: var(--error-light);
+                color: #ff6b6b;
                 border: 1px solid rgba(239, 68, 68, 0.3);
-            }
-            
-            .percentage-mobile:hover {
-                transform: scale(1.05);
-                box-shadow: var(--shadow-md);
             }
             
             /* Score de swing trade para mobile */
             .swing-trade-score-mobile {
-                margin-top: 8px;
+                margin-top: 10px;
+                padding: 10px;
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+                border-radius: var(--border-radius-lg);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                transition: all 0.3s ease;
+            }
+            
+            .swing-trade-score-mobile:hover {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
             }
             
             .score-bar-mobile {
                 width: 100%;
-                height: 6px;
+                height: 8px;
                 background: rgba(255, 255, 255, 0.1);
                 border-radius: var(--border-radius-md);
                 overflow: hidden;
-                margin-bottom: 6px;
+                margin-bottom: 8px;
                 position: relative;
                 box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.1);
             }
             
             .score-fill-mobile {
@@ -1710,13 +1771,30 @@
                 transition: width var(--transition-slow);
                 position: relative;
                 z-index: 1;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
             }
             
             .score-text-mobile {
-                font-size: 0.8rem;
-                font-weight: 600;
+                font-size: 0.85rem;
+                font-weight: 700;
                 text-align: center;
                 display: block;
+                padding: 5px 10px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: var(--border-radius-md);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                transition: all 0.3s ease;
+            }
+            
+            .score-text-mobile:hover {
+                background: rgba(255, 255, 255, 0.15);
+                transform: scale(1.05);
+            }
+            
+            .score-text-mobile i {
+                margin-right: 5px;
+                color: var(--accent-color);
+                animation: twinkle 1.5s infinite;
             }
             
             /* Animações para mobile */
@@ -1828,10 +1906,11 @@
                 transition: var(--transition-normal);
             }
             
-            .crypto-table tbody tr:hover {
-                background: var(--bg-glass-hover);
-                transform: scale(1.005);
-            }
+                    .crypto-table tbody tr:hover {
+            background: var(--bg-glass-hover);
+            transform: scale(1.002);
+            box-shadow: var(--shadow-md);
+        }
             
             /* Otimizar células para mobile */
             .crypto-table th,
@@ -2835,6 +2914,484 @@
                 animation: fadeInUp 1.6s ease;
             }
         }
+        
+
+
+            /* Header Desktop */
+            .crypto-header-desktop {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 40px;
+                gap: 40px;
+            }
+            
+            .crypto-hero-desktop {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+                flex: 1;
+            }
+            
+            .crypto-avatar-container-desktop {
+                position: relative;
+                flex-shrink: 0;
+            }
+            
+            .crypto-avatar-desktop {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                border: 4px solid var(--primary-color);
+                box-shadow: 0 0 35px rgba(0, 212, 170, 0.5);
+                transition: all 0.3s ease;
+            }
+            
+            .crypto-avatar-desktop:hover {
+                transform: scale(1.05);
+                box-shadow: 0 0 45px rgba(0, 212, 170, 0.7);
+            }
+            
+            .crypto-status-indicator-desktop {
+                position: absolute;
+                bottom: 8px;
+                right: 8px;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                border: 4px solid var(--bg-secondary);
+            }
+            
+            .crypto-status-indicator-desktop.positive {
+                background: var(--primary-color);
+                box-shadow: 0 0 15px rgba(0, 212, 170, 0.7);
+            }
+            
+            .crypto-status-indicator-desktop.negative {
+                background: var(--secondary-color);
+                box-shadow: 0 0 15px rgba(255, 107, 53, 0.7);
+            }
+            
+            .crypto-title-section-desktop {
+                flex: 1;
+            }
+            
+            .crypto-name-desktop {
+                font-size: 2.5rem;
+                font-weight: 800;
+                color: var(--text-primary);
+                margin-bottom: 12px;
+                background: linear-gradient(135deg, var(--text-primary), var(--primary-color));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            
+            .crypto-symbol-badge-desktop {
+                display: inline-block;
+                background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+                color: white;
+                padding: 8px 16px;
+                border-radius: 25px;
+                font-size: 1rem;
+                font-weight: 600;
+                margin-bottom: 12px;
+                box-shadow: 0 6px 20px rgba(0, 212, 170, 0.4);
+        }
+            
+            .crypto-rank-desktop {
+                color: var(--text-secondary);
+                font-size: 1rem;
+                font-weight: 500;
+            }
+            
+            /* Price Section Desktop */
+            .crypto-price-section-desktop {
+                text-align: right;
+                padding: 30px;
+                background: linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(255, 107, 53, 0.05));
+                border-radius: 25px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(20px);
+                min-width: 300px;
+            }
+            
+            .current-price-desktop {
+                font-size: 3rem;
+                font-weight: 800;
+                color: var(--text-primary);
+                margin-bottom: 20px;
+                text-shadow: 0 0 20px rgba(0, 212, 170, 0.3);
+            }
+            
+            .price-changes-desktop {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .price-change-item-desktop {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 20px;
+                border-radius: 15px;
+                font-weight: 600;
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+            }
+            
+            .price-change-item-desktop.positive {
+                background: rgba(0, 212, 170, 0.15);
+                color: var(--primary-color);
+                border: 1px solid rgba(0, 212, 170, 0.3);
+            }
+            
+            .price-change-item-desktop.negative {
+                background: rgba(255, 107, 53, 0.15);
+                color: var(--secondary-color);
+                border: 1px solid rgba(255, 107, 53, 0.3);
+            }
+            
+            .price-change-item-desktop:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            }
+            
+            /* Stats Desktop */
+            .crypto-stats-desktop {
+                margin-bottom: 40px;
+            }
+            
+            .stats-grid-desktop {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 25px;
+            }
+            
+            .stat-card-desktop {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+                padding: 30px;
+                border-radius: 20px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(20px);
+                transition: all 0.3s ease;
+                text-align: center;
+            }
+            
+            .stat-card-desktop:hover {
+                transform: translateY(-5px);
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            }
+            
+            .stat-icon-desktop {
+                width: 60px;
+                height: 60px;
+                margin: 0 auto 20px;
+                background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                color: white;
+                box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
+            }
+            
+            .stat-label-desktop {
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+                font-weight: 500;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            
+            .stat-value-desktop {
+                font-size: 1.4rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                margin-bottom: 5px;
+            }
+            
+            .stat-symbol-desktop {
+                color: var(--primary-color);
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+            
+            /* Chart Desktop */
+            .crypto-chart-desktop {
+                margin-bottom: 40px;
+            }
+            
+            .chart-header-desktop {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 25px;
+            }
+            
+            .chart-title-desktop {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .chart-period-selector-desktop {
+                display: flex;
+                gap: 10px;
+            }
+            
+            .period-btn-desktop {
+                padding: 10px 20px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                background: rgba(255, 255, 255, 0.05);
+                color: var(--text-secondary);
+                border-radius: 12px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .period-btn-desktop:hover,
+            .period-btn-desktop.active {
+                background: var(--primary-color);
+                color: white;
+                border-color: var(--primary-color);
+                transform: translateY(-2px);
+            }
+            
+            .chart-container-desktop {
+                height: 500px;
+                background: rgba(255, 255, 255, 0.02);
+                border-radius: 20px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                overflow: hidden;
+            }
+            
+            .tradingview-widget-desktop {
+                width: 100%;
+                height: 100%;
+            }
+            
+            .chart-actions-desktop {
+                display: flex;
+                gap: 15px;
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            .action-btn-desktop {
+                padding: 12px 24px;
+                border: none;
+                border-radius: 15px;
+                font-weight: 600;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .action-btn-desktop.primary {
+                background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+                color: white;
+            }
+            
+            .action-btn-desktop.secondary {
+                background: rgba(255, 255, 255, 0.1);
+                color: var(--text-primary);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            
+            .action-btn-desktop:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+            
+            /* Swing Trade Desktop */
+            .swing-trade-desktop {
+                margin-bottom: 40px;
+            }
+            
+            .analysis-header-desktop {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 30px;
+            }
+            
+            .analysis-title-desktop {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .overall-score-desktop {
+                text-align: center;
+            }
+            
+            .score-circle-desktop {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 10px;
+                font-size: 1.2rem;
+                font-weight: 800;
+                color: white;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            }
+            
+            .score-circle-desktop.excellent { background: linear-gradient(135deg, #10b981, #34d399); }
+            .score-circle-desktop.good { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+            .score-circle-desktop.average { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+            .score-circle-desktop.below-average { background: linear-gradient(135deg, #f97316, #fb923c); }
+            .score-circle-desktop.poor { background: linear-gradient(135deg, #ef4444, #f87171); }
+            
+            .score-label-desktop {
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+            
+            .metrics-grid-desktop {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 20px;
+            }
+            
+            .metric-card-desktop {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+                padding: 25px;
+                border-radius: 18px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(20px);
+                transition: all 0.3s ease;
+            }
+            
+            .metric-card-desktop:hover {
+                transform: translateY(-3px);
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+            }
+            
+            .metric-header-desktop {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 15px;
+                color: var(--text-secondary);
+                font-weight: 600;
+            }
+            
+            .metric-score-desktop {
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                margin-bottom: 12px;
+            }
+            
+            .metric-bar-desktop {
+                height: 8px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 4px;
+                overflow: hidden;
+            }
+            
+            .metric-fill-desktop {
+                height: 100%;
+                background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+                border-radius: 4px;
+                transition: width 0.8s ease;
+            }
+            
+            /* Additional Info Desktop */
+            .additional-info-desktop {
+                margin-bottom: 40px;
+            }
+            
+            .info-card-desktop {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+                padding: 30px;
+                border-radius: 20px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(20px);
+            }
+            
+            .info-header-desktop {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 25px;
+                font-size: 1.3rem;
+                font-weight: 700;
+                color: var(--text-primary);
+            }
+            
+            .info-content-desktop {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            
+            .info-row-desktop {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .info-label-desktop {
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+            
+            .info-value-desktop {
+                color: var(--text-primary);
+                font-size: 1.1rem;
+                font-weight: 600;
+            }
+            
+            /* Animações Desktop */
+            .crypto-header-desktop {
+                animation: fadeInUp 0.6s ease;
+            }
+            
+            .crypto-stats-desktop {
+                animation: fadeInUp 0.8s ease;
+            }
+            
+            .stat-card-desktop {
+                animation: fadeInUp 1s ease;
+                animation-fill-mode: both;
+            }
+            
+            .stat-card-desktop:nth-child(1) { animation-delay: 0.1s; }
+            .stat-card-desktop:nth-child(2) { animation-delay: 0.2s; }
+            .stat-card-desktop:nth-child(3) { animation-delay: 0.3s; }
+            .stat-card-desktop:nth-child(4) { animation-delay: 0.4s; }
+            
+            .crypto-chart-desktop {
+                animation: fadeInUp 1.2s ease;
+            }
+            
+            .swing-trade-desktop {
+                animation: fadeInUp 1.4s ease;
+            }
+            
+
     }
         </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -2912,6 +3469,8 @@
                     </div>
                 </div>
             </div>
+            
+
 
             <!-- Crypto Table (Desktop) -->
             <div class="crypto-table-container">
@@ -3223,6 +3782,17 @@
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     currentFilter = this.dataset.filter;
+                    
+                    // Efeito especial para Swing Trade
+                    if (currentFilter === 'swing-trade') {
+                        this.style.animation = 'none';
+                        this.offsetHeight; // Trigger reflow
+                        this.style.animation = 'pulse 0.6s ease';
+                        
+                        // Mostrar mensagem de carregamento
+                        showSwingTradeLoading();
+                    }
+                    
                     filterAndDisplayData();
                 });
             });
@@ -3587,8 +4157,8 @@
             if (currentFilter === 'swing-trade') {
                 tableHeader = `
                     <tr class="sorting-header">
-                        <td colspan="9" style="text-align: center; padding: 15px; background: rgba(255, 107, 53, 0.1); border-radius: 8px; margin-bottom: 10px;">
-                            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; color: #ff6b35; font-weight: 600;">
+                        <td colspan="9">
+                            <div>
                                 <i class="fas fa-sort-amount-down"></i>
                                 <span>Ordenado por Score de Swing Trade (Maior para Menor)</span>
                             </div>
@@ -3606,13 +4176,14 @@
                 let swingTradeInfo = '';
                 if (currentFilter === 'swing-trade') {
                     const score = getSwingTradeScore(crypto);
+                    const scoreClass = getScoreColorClass(score.percentage);
                     swingTradeInfo = `
                         <div class="swing-trade-score" style="margin-top: 8px;">
                             <div class="score-bar">
                                 <div class="score-fill" style="width: ${score.percentage}%; background: ${getScoreColor(score.percentage)};"></div>
                             </div>
-                            <span class="score-text" style="font-size: 0.8rem; color: ${getScoreColor(score.percentage)};">
-                                Score: ${score.percentage}%
+                            <span class="score-text" style="font-size: 0.8rem; color: ${getScoreColor(score.percentage)}; font-weight: 700;">
+                                <i class="fas fa-star"></i> Score: ${score.percentage}%
                             </span>
                         </div>
                     `;
@@ -3666,13 +4237,14 @@
                     let swingTradeInfo = '';
                     if (currentFilter === 'swing-trade') {
                         const score = getSwingTradeScore(crypto);
+                        const scoreClass = getScoreColorClass(score.percentage);
                         swingTradeInfo = `
                             <div class="swing-trade-score-mobile">
                                 <div class="score-bar-mobile">
                                     <div class="score-fill-mobile" style="width: ${score.percentage}%; background: ${getScoreColor(score.percentage)};"></div>
                                 </div>
-                                <span class="score-text-mobile" style="color: ${getScoreColor(score.percentage)};">
-                                    Score: ${score.percentage}%
+                                <span class="score-text-mobile" style="color: ${getScoreColor(score.percentage)}; font-weight: 700;">
+                                    <i class="fas fa-star"></i> Score: ${score.percentage}%
                                 </span>
                             </div>
                         `;
@@ -4009,218 +4581,438 @@
             const priceChange24h = crypto.price_change_percentage_24h;
             const priceChange7d = crypto.price_change_percentage_7d_in_currency;
             
-            modalBody.innerHTML = `
-                <div class="crypto-details">
-                    <!-- Header com informações principais -->
-                    <div class="crypto-header-mobile">
-                        <div class="crypto-hero-section">
-                            <div class="crypto-avatar-container">
-                                <img src="${crypto.image}" alt="${crypto.name}" class="crypto-avatar">
-                                <div class="crypto-status-indicator ${priceChange24h >= 0 ? 'positive' : 'negative'}"></div>
+            // Detectar se é desktop ou mobile
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                // Layout Mobile (mantém o design atual)
+                modalBody.innerHTML = `
+                    <div class="crypto-details">
+                        <!-- Header com informações principais -->
+                        <div class="crypto-header-mobile">
+                            <div class="crypto-hero-section">
+                                <div class="crypto-avatar-container">
+                                    <img src="${crypto.image}" alt="${crypto.name}" class="crypto-avatar">
+                                    <div class="crypto-status-indicator ${priceChange24h >= 0 ? 'positive' : 'negative'}"></div>
+                                </div>
+                                <div class="crypto-title-section">
+                                    <h1 class="crypto-name">${crypto.name}</h1>
+                                    <div class="crypto-symbol-badge">${crypto.symbol.toUpperCase()}</div>
+                                    <div class="crypto-rank">#${crypto.market_cap_rank || 'N/A'} no ranking</div>
+                                </div>
                             </div>
-                            <div class="crypto-title-section">
-                                <h1 class="crypto-name">${crypto.name}</h1>
-                                <div class="crypto-symbol-badge">${crypto.symbol.toUpperCase()}</div>
-                                <div class="crypto-rank">#${crypto.market_cap_rank || 'N/A'} no ranking</div>
+                            
+                            <div class="crypto-price-section">
+                                <div class="current-price">${formatCurrency(crypto.current_price)}</div>
+                                <div class="price-changes">
+                                    <div class="price-change-item ${priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                        <i class="fas ${priceChange24h >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+                                        <span class="change-value">${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%</span>
+                                        <span class="change-period">24h</span>
+                                    </div>
+                                    <div class="price-change-item ${priceChange7d >= 0 ? 'positive' : 'negative'}">
+                                        <i class="fas ${priceChange7d >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+                                        <span class="change-value">${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%</span>
+                                        <span class="change-period">7d</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="crypto-price-section">
-                            <div class="current-price">${formatCurrency(crypto.current_price)}</div>
-                            <div class="price-changes">
-                                <div class="price-change-item ${priceChange24h >= 0 ? 'positive' : 'negative'}">
-                                    <i class="fas ${priceChange24h >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
-                                    <span class="change-value">${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%</span>
-                                    <span class="change-period">24h</span>
+                        <!-- Cards de estatísticas principais -->
+                        <div class="crypto-stats-mobile">
+                            <div class="stats-grid">
+                                <div class="stat-card-mobile market-cap">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">Cap. de Mercado</div>
+                                        <div class="stat-value">${formatCurrency(crypto.market_cap)}</div>
+                                    </div>
                                 </div>
-                                <div class="price-change-item ${priceChange7d >= 0 ? 'positive' : 'negative'}">
-                                    <i class="fas ${priceChange7d >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
-                                    <span class="change-value">${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%</span>
-                                    <span class="change-period">7d</span>
+                                
+                                <div class="stat-card-mobile volume">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">Volume 24h</div>
+                                        <div class="stat-value">${formatCurrency(crypto.total_volume)}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Cards de estatísticas principais -->
-                    <div class="crypto-stats-mobile">
-                        <div class="stats-grid">
-                            <div class="stat-card-mobile market-cap">
-                                <div class="stat-icon">
-                                    <i class="fas fa-chart-pie"></i>
+                                
+                                <div class="stat-card-mobile supply">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-coins"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">Circulação</div>
+                                        <div class="stat-value">${formatNumber(crypto.circulating_supply)}</div>
+                                        <div class="stat-symbol">${crypto.symbol.toUpperCase()}</div>
+                                    </div>
                                 </div>
-                                <div class="stat-content">
-                                    <div class="stat-label">Cap. de Mercado</div>
-                                    <div class="stat-value">${formatCurrency(crypto.market_cap)}</div>
+                                
+                                <div class="stat-card-mobile ath">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-label">ATH</div>
+                                        <div class="stat-value">${formatCurrency(crypto.ath || 0)}</div>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="stat-card-mobile volume">
-                                <div class="stat-icon">
-                                    <i class="fas fa-chart-bar"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <div class="stat-label">Volume 24h</div>
-                                    <div class="stat-value">${formatCurrency(crypto.total_volume)}</div>
-                                </div>
-                            </div>
-                            
-                            <div class="stat-card-mobile supply">
-                                <div class="stat-icon">
-                                    <i class="fas fa-coins"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <div class="stat-label">Circulação</div>
-                                    <div class="stat-value">${formatNumber(crypto.circulating_supply)}</div>
-                                    <div class="stat-symbol">${crypto.symbol.toUpperCase()}</div>
-                                </div>
-                            </div>
-                            
-                            <div class="stat-card-mobile ath">
-                                <div class="stat-icon">
-                                    <i class="fas fa-trophy"></i>
-                                </div>
-                                <div class="stat-content">
-                                    <div class="stat-label">ATH</div>
-                                    <div class="stat-value">${formatCurrency(crypto.ath || 0)}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Seção do gráfico -->
-                    <div class="crypto-chart-mobile">
-                        <div class="chart-header">
-                            <h3 class="chart-title">
-                                <i class="fas fa-chart-line"></i>
-                                Gráfico ${crypto.symbol.toUpperCase()}/USD
-                            </h3>
-                            <div class="chart-period-selector">
-                                <button class="period-btn active" data-period="1D">1D</button>
-                                <button class="period-btn" data-period="1W">1W</button>
-                                <button class="period-btn" data-period="1M">1M</button>
-                                <button class="period-btn" data-period="1Y">1Y</button>
                             </div>
                         </div>
                         
-                        <div class="chart-container">
-                            <div id="tradingview-chart-${crypto.id}" class="tradingview-widget">
-                                <!-- Gráfico TradingView será carregado aqui -->
+                        <!-- Seção do gráfico -->
+                        <div class="crypto-chart-mobile">
+                            <div class="chart-header">
+                                <h3 class="chart-title">
+                                    <i class="fas fa-chart-line"></i>
+                                    Gráfico ${crypto.symbol.toUpperCase()}/USD
+                                </h3>
+                                <div class="chart-period-selector">
+                                    <button class="period-btn active" data-period="1D">1D</button>
+                                    <button class="period-btn" data-period="1W">1W</button>
+                                    <button class="period-btn" data-period="1M">1M</button>
+                                    <button class="period-btn" data-period="1Y">1Y</button>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-container">
+                                <div id="tradingview-chart-${crypto.id}" class="tradingview-widget">
+                                    <!-- Gráfico TradingView será carregado aqui -->
+                                </div>
+                            </div>
+                            
+                            <div class="chart-actions">
+                                <a href="https://www.tradingview.com/symbols/${crypto.symbol.toUpperCase()}USD/" target="_blank" class="action-btn primary">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    <span>Ver no TradingView</span>
+                                </a>
+                                <button onclick="openTradingViewFullscreen('${crypto.symbol.toUpperCase()}USD')" class="action-btn secondary">
+                                    <i class="fas fa-expand"></i>
+                                    <span>Tela Cheia</span>
+                                </button>
                             </div>
                         </div>
                         
-                        <div class="chart-actions">
-                            <a href="https://www.tradingview.com/symbols/${crypto.symbol.toUpperCase()}USD/" target="_blank" class="action-btn primary">
-                                <i class="fas fa-external-link-alt"></i>
-                                <span>Ver no TradingView</span>
-                            </a>
-                            <button onclick="openTradingViewFullscreen('${crypto.symbol.toUpperCase()}USD')" class="action-btn secondary">
-                                <i class="fas fa-expand"></i>
-                                <span>Tela Cheia</span>
-                            </button>
+                        <!-- Análise de Swing Trade (se ativo) -->
+                        ${currentFilter === 'swing-trade' ? `
+                        <div class="swing-trade-mobile">
+                            <div class="analysis-header">
+                                <h3 class="analysis-title">
+                                    <i class="fas fa-brain"></i>
+                                    Análise de Swing Trade
+                                </h3>
+                                <div class="overall-score">
+                                    <div class="score-circle ${getScoreColorClass(getSwingTradeScore(crypto).percentage)}">
+                                        <span class="score-number">${getSwingTradeScore(crypto).percentage}%</span>
+                                    </div>
+                                    <span class="score-label">Score Total</span>
+                                </div>
+                            </div>
+                            
+                            <div class="metrics-grid">
+                                <div class="metric-card volume-metric">
+                                    <div class="metric-header">
+                                        <i class="fas fa-chart-bar"></i>
+                                        <span>Volume</span>
+                                    </div>
+                                    <div class="metric-score">${getSwingTradeScore(crypto).volume}/25</div>
+                                    <div class="metric-bar">
+                                        <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).volume/25)*100}%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-card momentum-metric">
+                                    <div class="metric-header">
+                                        <i class="fas fa-rocket"></i>
+                                        <span>Momentum</span>
+                                    </div>
+                                    <div class="metric-score">${getSwingTradeScore(crypto).momentum}/30</div>
+                                    <div class="metric-bar">
+                                        <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).momentum/30)*100}%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-card marketcap-metric">
+                                    <div class="metric-header">
+                                        <i class="fas fa-chart-pie"></i>
+                                        <span>Market Cap</span>
+                                    </div>
+                                    <div class="metric-score">${getSwingTradeScore(crypto).marketCap}/20</div>
+                                    <div class="metric-bar">
+                                        <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).marketCap/20)*100}%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-card volatility-metric">
+                                    <div class="metric-header">
+                                        <i class="fas fa-bolt"></i>
+                                        <span>Volatilidade</span>
+                                    </div>
+                                    <div class="metric-score">${getSwingTradeScore(crypto).volatility}/15</div>
+                                    <div class="metric-bar">
+                                        <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).volatility/15)*100}%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-card stability-metric">
+                                    <div class="metric-header">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <span>Estabilidade</span>
+                                    </div>
+                                    <div class="metric-score">${getSwingTradeScore(crypto).stability}/10</div>
+                                    <div class="metric-bar">
+                                        <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).stability/10)*100}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- Informações adicionais -->
+                        <div class="additional-info">
+                            <div class="info-card">
+                                <div class="info-header">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Informações Técnicas</span>
+                                </div>
+                                <div class="info-content">
+                                    <div class="info-row">
+                                        <span class="info-label">Preço Máximo Histórico:</span>
+                                        <span class="info-value">${formatCurrency(crypto.ath || 0)}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Data do ATH:</span>
+                                        <span class="info-value">${crypto.ath_date ? new Date(crypto.ath_date).toLocaleDateString('pt-BR') : 'N/A'}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Fornecimento Total:</span>
+                                        <span class="info-value">${formatNumber(crypto.total_supply || 0)} ${crypto.symbol.toUpperCase()}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    
-                    <!-- Análise de Swing Trade (se ativo) -->
-                    ${currentFilter === 'swing-trade' ? `
-                    <div class="swing-trade-mobile">
-                        <div class="analysis-header">
-                            <h3 class="analysis-title">
-                                <i class="fas fa-brain"></i>
-                                Análise de Swing Trade
-                            </h3>
-                            <div class="overall-score">
-                                <div class="score-circle ${getScoreColorClass(getSwingTradeScore(crypto).percentage)}">
-                                    <span class="score-number">${getSwingTradeScore(crypto).percentage}%</span>
+                `;
+            } else {
+                // Layout Desktop (novo design baseado no mobile, mas adaptado para desktop)
+                modalBody.innerHTML = `
+                    <div class="crypto-details">
+                        <!-- Header Desktop -->
+                        <div class="crypto-header-desktop">
+                            <div class="crypto-hero-desktop">
+                                <div class="crypto-avatar-container-desktop">
+                                    <img src="${crypto.image}" alt="${crypto.name}" class="crypto-avatar-desktop">
+                                    <div class="crypto-status-indicator-desktop ${priceChange24h >= 0 ? 'positive' : 'negative'}"></div>
                                 </div>
-                                <span class="score-label">Score Total</span>
+                                <div class="crypto-title-section-desktop">
+                                    <h1 class="crypto-name-desktop">${crypto.name}</h1>
+                                    <div class="crypto-symbol-badge-desktop">${crypto.symbol.toUpperCase()}</div>
+                                    <div class="crypto-rank-desktop">#${crypto.market_cap_rank || 'N/A'} no ranking</div>
+                                </div>
+                            </div>
+                            
+                            <div class="crypto-price-section-desktop">
+                                <div class="current-price-desktop">${formatCurrency(crypto.current_price)}</div>
+                                <div class="price-changes-desktop">
+                                    <div class="price-change-item-desktop ${priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                        <i class="fas ${priceChange24h >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+                                        <span class="change-value">${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%</span>
+                                        <span class="change-period">24h</span>
+                                    </div>
+                                    <div class="price-change-item-desktop ${priceChange7d >= 0 ? 'positive' : 'negative'}">
+                                        <i class="fas ${priceChange7d >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+                                        <span class="change-value">${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%</span>
+                                        <span class="change-period">7d</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="metrics-grid">
-                            <div class="metric-card volume-metric">
-                                <div class="metric-header">
-                                    <i class="fas fa-chart-bar"></i>
-                                    <span>Volume</span>
+                        <!-- Estatísticas Desktop -->
+                        <div class="crypto-stats-desktop">
+                            <div class="stats-grid-desktop">
+                                <div class="stat-card-desktop market-cap">
+                                    <div class="stat-icon-desktop">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                    <div class="stat-content-desktop">
+                                        <div class="stat-label-desktop">Cap. de Mercado</div>
+                                        <div class="stat-value-desktop">${formatCurrency(crypto.market_cap)}</div>
+                                    </div>
                                 </div>
-                                <div class="metric-score">${getSwingTradeScore(crypto).volume}/25</div>
-                                <div class="metric-bar">
-                                    <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).volume/25)*100}%"></div>
+                                
+                                <div class="stat-card-desktop volume">
+                                    <div class="stat-icon-desktop">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <div class="stat-content-desktop">
+                                        <div class="stat-label-desktop">Volume 24h</div>
+                                        <div class="stat-value-desktop">${formatCurrency(crypto.total_volume)}</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card-desktop supply">
+                                    <div class="stat-icon-desktop">
+                                        <i class="fas fa-coins"></i>
+                                    </div>
+                                    <div class="stat-content-desktop">
+                                        <div class="stat-label-desktop">Circulação</div>
+                                        <div class="stat-value-desktop">${formatNumber(crypto.circulating_supply)}</div>
+                                        <div class="stat-symbol-desktop">${crypto.symbol.toUpperCase()}</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card-desktop ath">
+                                    <div class="stat-icon-desktop">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                    <div class="stat-content-desktop">
+                                        <div class="stat-label-desktop">ATH</div>
+                                        <div class="stat-value-desktop">${formatCurrency(crypto.ath || 0)}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Gráfico Desktop -->
+                        <div class="crypto-chart-desktop">
+                            <div class="chart-header-desktop">
+                                <h3 class="chart-title-desktop">
+                                    <i class="fas fa-chart-line"></i>
+                                    Gráfico ${crypto.symbol.toUpperCase()}/USD
+                                </h3>
+                                <div class="chart-period-selector-desktop">
+                                    <button class="period-btn-desktop active" data-period="1D">1D</button>
+                                    <button class="period-btn-desktop" data-period="1W">1W</button>
+                                    <button class="period-btn-desktop" data-period="1M">1M</button>
+                                    <button class="period-btn-desktop" data-period="1Y">1Y</button>
                                 </div>
                             </div>
                             
-                            <div class="metric-card momentum-metric">
-                                <div class="metric-header">
-                                    <i class="fas fa-rocket"></i>
-                                    <span>Momentum</span>
-                                </div>
-                                <div class="metric-score">${getSwingTradeScore(crypto).momentum}/30</div>
-                                <div class="metric-bar">
-                                    <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).momentum/30)*100}%"></div>
+                            <div class="chart-container-desktop">
+                                <div id="tradingview-chart-${crypto.id}" class="tradingview-widget-desktop">
+                                    <!-- Gráfico TradingView será carregado aqui -->
                                 </div>
                             </div>
                             
-                            <div class="metric-card marketcap-metric">
-                                <div class="metric-header">
-                                    <i class="fas fa-chart-pie"></i>
-                                    <span>Market Cap</span>
-                                </div>
-                                <div class="metric-score">${getSwingTradeScore(crypto).marketCap}/20</div>
-                                <div class="metric-bar">
-                                    <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).marketCap/20)*100}%"></div>
+                            <div class="chart-actions-desktop">
+                                <a href="https://www.tradingview.com/symbols/${crypto.symbol.toUpperCase()}USD/" target="_blank" class="action-btn-desktop primary">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    <span>Ver no TradingView</span>
+                                </a>
+                                <button onclick="openTradingViewFullscreen('${crypto.symbol.toUpperCase()}USD')" class="action-btn-desktop secondary">
+                                    <i class="fas fa-expand"></i>
+                                    <span>Tela Cheia</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Análise de Swing Trade Desktop -->
+                        ${currentFilter === 'swing-trade' ? `
+                        <div class="swing-trade-desktop">
+                            <div class="analysis-header-desktop">
+                                <h3 class="analysis-title-desktop">
+                                    <i class="fas fa-brain"></i>
+                                    Análise de Swing Trade
+                                </h3>
+                                <div class="overall-score-desktop">
+                                    <div class="score-circle-desktop ${getScoreColorClass(getSwingTradeScore(crypto).percentage)}">
+                                        <span class="score-number-desktop">${getSwingTradeScore(crypto).percentage}%</span>
+                                    </div>
+                                    <span class="score-label-desktop">Score Total</span>
                                 </div>
                             </div>
                             
-                            <div class="metric-card volatility-metric">
-                                <div class="metric-header">
-                                    <i class="fas fa-bolt"></i>
-                                    <span>Volatilidade</span>
+                            <div class="metrics-grid-desktop">
+                                <div class="metric-card-desktop volume-metric">
+                                    <div class="metric-header-desktop">
+                                        <i class="fas fa-chart-bar"></i>
+                                        <span>Volume</span>
+                                    </div>
+                                    <div class="metric-score-desktop">${getSwingTradeScore(crypto).volume}/25</div>
+                                    <div class="metric-bar-desktop">
+                                        <div class="metric-fill-desktop" style="width: ${(getSwingTradeScore(crypto).volume/25)*100}%"></div>
+                                    </div>
                                 </div>
-                                <div class="metric-score">${getSwingTradeScore(crypto).volatility}/15</div>
-                                <div class="metric-bar">
-                                    <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).volatility/15)*100}%"></div>
+                                
+                                <div class="metric-card-desktop momentum-metric">
+                                    <div class="metric-header-desktop">
+                                        <i class="fas fa-rocket"></i>
+                                        <span>Momentum</span>
+                                    </div>
+                                    <div class="metric-score-desktop">${getSwingTradeScore(crypto).momentum}/30</div>
+                                    <div class="metric-bar-desktop">
+                                        <div class="metric-fill-desktop" style="width: ${(getSwingTradeScore(crypto).momentum/30)*100}%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-card-desktop marketcap-metric">
+                                    <div class="metric-header-desktop">
+                                        <i class="fas fa-chart-pie"></i>
+                                        <span>Market Cap</span>
+                                    </div>
+                                    <div class="metric-score-desktop">${getSwingTradeScore(crypto).marketCap}/20</div>
+                                    <div class="metric-bar-desktop">
+                                        <div class="metric-fill-desktop" style="width: ${(getSwingTradeScore(crypto).marketCap/20)*100}%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-card-desktop volatility-metric">
+                                    <div class="metric-header-desktop">
+                                        <i class="fas fa-bolt"></i>
+                                        <span>Volatilidade</span>
+                                    </div>
+                                    <div class="metric-score-desktop">${getSwingTradeScore(crypto).volatility}/15</div>
+                                    <div class="metric-bar-desktop">
+                                        <div class="metric-fill-desktop" style="width: ${(getSwingTradeScore(crypto).volatility/15)*100}%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-card-desktop stability-metric">
+                                    <div class="metric-header-desktop">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <span>Estabilidade</span>
+                                    </div>
+                                    <div class="metric-score-desktop">${getSwingTradeScore(crypto).stability}/10</div>
+                                    <div class="metric-bar-desktop">
+                                        <div class="metric-fill-desktop" style="width: ${(getSwingTradeScore(crypto).stability/10)*100}%"></div>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div class="metric-card stability-metric">
-                                <div class="metric-header">
-                                    <i class="fas fa-shield-alt"></i>
-                                    <span>Estabilidade</span>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- Informações adicionais Desktop -->
+                        <div class="additional-info-desktop">
+                            <div class="info-card-desktop">
+                                <div class="info-header-desktop">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Informações Técnicas</span>
                                 </div>
-                                <div class="metric-score">${getSwingTradeScore(crypto).stability}/10</div>
-                                <div class="metric-bar">
-                                    <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).stability/10)*100}%"></div>
+                                <div class="info-content-desktop">
+                                    <div class="info-row-desktop">
+                                        <span class="info-label-desktop">Preço Máximo Histórico:</span>
+                                        <span class="info-value-desktop">${formatCurrency(crypto.ath || 0)}</span>
+                                    </div>
+                                    <div class="info-row-desktop">
+                                        <span class="info-label-desktop">Data do ATH:</span>
+                                        <span class="info-value-desktop">${crypto.ath_date ? new Date(crypto.ath_date).toLocaleDateString('pt-BR') : 'N/A'}</span>
+                                    </div>
+                                    <div class="info-row-desktop">
+                                        <span class="info-label-desktop">Fornecimento Total:</span>
+                                        <span class="info-value-desktop">${formatNumber(crypto.total_supply || 0)} ${crypto.symbol.toUpperCase()}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    ` : ''}
-                    
-                    <!-- Informações adicionais -->
-                    <div class="additional-info">
-                        <div class="info-card">
-                            <div class="info-header">
-                                <i class="fas fa-info-circle"></i>
-                                <span>Informações Técnicas</span>
-                            </div>
-                            <div class="info-content">
-                                <div class="info-row">
-                                    <span class="info-label">Preço Máximo Histórico:</span>
-                                    <span class="info-value">${formatCurrency(crypto.ath || 0)}</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">Data do ATH:</span>
-                                    <span class="info-value">${crypto.ath_date ? new Date(crypto.ath_date).toLocaleDateString('pt-BR') : 'N/A'}</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-label">Fornecimento Total:</span>
-                                    <span class="info-value">${formatNumber(crypto.total_supply || 0)} ${crypto.symbol.toUpperCase()}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+                `;
+            }
             
             modal.style.display = 'block';
             
@@ -4525,35 +5317,58 @@
                 banner.id = 'swing-trade-banner';
                 banner.className = 'swing-trade-banner';
                 banner.innerHTML = `
-                    <div class="banner-content">
-                        <div class="banner-header">
-                            <i class="fas fa-chart-line"></i>
-                            <h3>🎯 Oportunidades de Swing Trade</h3>
+                    <!-- Elementos decorativos -->
+                    <div class="swing-trade-decoration decoration-1"></div>
+                    <div class="swing-trade-decoration decoration-2"></div>
+                    <div class="swing-trade-decoration decoration-3"></div>
+                    
+                    <!-- Indicador de status -->
+                    <div class="swing-trade-status">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Sistema de Swing Trade Ativo - Analisando ${filteredData.length}+ criptomoedas em tempo real</span>
+                    </div>
+                    
+                    <div class="banner-header">
+                        <i class="fas fa-brain"></i>
+                        <h3>🎯 Swing Trade Inteligente</h3>
+                    </div>
+                    
+                    <div class="banner-description">
+                        <p>Descubra as melhores oportunidades de swing trade com nossa análise inteligente baseada em algoritmos avançados e machine learning:</p>
+                        <ul>
+                            <li><span>📊 Volume e Liquidez do Mercado</span></li>
+                            <li><span>🚀 Momentum e Tendência de Preços</span></li>
+                            <li><span>💰 Capitalização de Mercado</span></li>
+                            <li><span>⚡ Volatilidade Controlada</span></li>
+                            <li><span>🛡️ Estabilidade do Ranking</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="banner-stats">
+                        <div class="stat">
+                            <span class="stat-number">${filteredData.length}</span>
+                            <span class="stat-label">Moedas Selecionadas</span>
                         </div>
-                        <div class="banner-description">
-                            <p>Moedas selecionadas com base em critérios técnicos para swing trade de curto prazo (1-7 dias):</p>
-                            <ul>
-                                <li><strong>Volume:</strong> Liquidez adequada ($5M+ em 24h)</li>
-                                <li><strong>Momentum:</strong> Movimento positivo controlado (3-15% em 24h)</li>
-                                <li><strong>Market Cap:</strong> Tamanho ideal ($100M - $5B)</li>
-                                <li><strong>Volatilidade:</strong> Controle de risco (evita pump & dump)</li>
-                                <li><strong>Estabilidade:</strong> Ranking equilibrado (posição 20-100)</li>
-                            </ul>
+                        <div class="stat">
+                            <span class="stat-number">${Math.round(filteredData.reduce((acc, crypto) => acc + getSwingTradeScore(crypto).percentage, 0) / filteredData.length)}%</span>
+                            <span class="stat-label">Score Médio</span>
                         </div>
-                        <div class="banner-stats">
-                            <div class="stat">
-                                <span class="stat-number">${filteredData.length}</span>
-                                <span class="stat-label">Moedas Selecionadas</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-number">${Math.round(filteredData.reduce((acc, crypto) => acc + getSwingTradeScore(crypto).percentage, 0) / filteredData.length)}%</span>
-                                <span class="stat-label">Score Médio</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-number">🎯</span>
-                                <span class="stat-label">Ordenado por Score</span>
-                            </div>
+                        <div class="stat">
+                            <span class="stat-number">🎯</span>
+                            <span class="stat-label">Ordenado por Score</span>
                         </div>
+                        <div class="stat">
+                            <span class="stat-number">AI</span>
+                            <span class="stat-label">Análise Inteligente</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Botão de ação -->
+                    <div class="swing-trade-action">
+                        <button class="swing-trade-btn-large" onclick="scrollToTable()">
+                            <i class="fas fa-rocket"></i>
+                            <span>Ver Resultados da Análise</span>
+                        </button>
                     </div>
                 `;
                 
@@ -4562,6 +5377,9 @@
                 tableContainer.parentNode.insertBefore(banner, tableContainer);
             }
             banner.style.display = 'block';
+            
+            // Mostrar indicador flutuante
+            showSwingTradeFloatingIndicator();
         }
         
         function hideSwingTradeInfo() {
@@ -4569,6 +5387,115 @@
             if (banner) {
                 banner.style.display = 'none';
             }
+            
+            // Ocultar indicador flutuante
+            hideSwingTradeFloatingIndicator();
+        }
+        
+        // Função para rolar até a tabela
+        function scrollToTable() {
+            const tableContainer = document.querySelector('.crypto-table-container');
+            if (tableContainer) {
+                tableContainer.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        }
+        
+        // Função para mostrar indicador flutuante do Swing Trade
+        function showSwingTradeFloatingIndicator() {
+            let indicator = document.getElementById('swing-trade-floating-indicator');
+            if (!indicator) {
+                indicator = document.createElement('div');
+                indicator.id = 'swing-trade-floating-indicator';
+                indicator.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: var(--border-radius-xl);
+                    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    border: 2px solid rgba(255, 255, 255, 0.2);
+                    backdrop-filter: blur(15px);
+                    animation: slideInRight 0.5s ease;
+                `;
+                
+                indicator.innerHTML = `
+                    <i class="fas fa-brain" style="font-size: 1.2rem; animation: pulse 2s infinite;"></i>
+                    <span>🎯 Modo Swing Trade Ativo</span>
+                `;
+                
+                document.body.appendChild(indicator);
+            }
+            
+            indicator.style.display = 'flex';
+        }
+        
+        // Função para ocultar indicador flutuante do Swing Trade
+        function hideSwingTradeFloatingIndicator() {
+            const indicator = document.getElementById('swing-trade-floating-indicator');
+            if (indicator) {
+                indicator.style.display = 'none';
+            }
+        }
+        
+
+        
+        // Função para mostrar carregamento do Swing Trade
+        function showSwingTradeLoading() {
+            // Criar overlay de carregamento
+            let loadingOverlay = document.getElementById('swing-trade-loading');
+            if (!loadingOverlay) {
+                loadingOverlay = document.createElement('div');
+                loadingOverlay.id = 'swing-trade-loading';
+                loadingOverlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    backdrop-filter: blur(10px);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 9999;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                `;
+                
+                loadingOverlay.innerHTML = `
+                    <div style="text-align: center; color: white;">
+                        <div style="width: 80px; height: 80px; border: 4px solid rgba(245, 158, 11, 0.3); border-top: 4px solid var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 10px; background: linear-gradient(135deg, var(--accent-color), var(--primary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Analisando Criptomoedas...</h3>
+                        <p style="color: var(--text-secondary); font-size: 1.1rem;">Calculando scores de Swing Trade com IA</p>
+                    </div>
+                `;
+                
+                document.body.appendChild(loadingOverlay);
+            }
+            
+            // Mostrar overlay
+            loadingOverlay.style.opacity = '1';
+            
+            // Remover após 2 segundos
+            setTimeout(() => {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    if (loadingOverlay.parentNode) {
+                        loadingOverlay.parentNode.removeChild(loadingOverlay);
+                    }
+                }, 300);
+            }, 2000);
         }
         
         // ===== FUNÇÕES DE ATUALIZAÇÃO EM TEMPO REAL =====
@@ -6416,3 +7343,4 @@
         </script>
 </body>
 </html>
+        
