@@ -200,6 +200,42 @@
             background-clip: text;
         }
         
+        /* Currency Switcher */
+        .currency-switcher {
+            cursor: pointer;
+        }
+        
+        .currency-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: var(--transition-normal);
+        }
+        
+        .currency-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .currency-btn i {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .currency-symbol {
+            font-size: 1.5rem;
+        }
+        
         /* Status de conexão */
         .connection-status {
             position: fixed;
@@ -2052,8 +2088,21 @@
             }
             
                     .score-text-mobile {
-            font-size: 0.7rem;
-        }
+                font-size: 0.7rem;
+            }
+            
+            .currency-switcher {
+                order: -1;
+                margin-bottom: 8px;
+            }
+            
+            .currency-btn {
+                font-size: 1.2rem;
+            }
+            
+            .currency-symbol {
+                font-size: 1.2rem;
+            }
         
         /* Estilos para o gráfico TradingView */
         .tradingview-widget-container {
@@ -2137,6 +2186,13 @@
                     <div class="stat-item">
                         <span class="stat-label">Dominância BTC</span>
                         <span class="stat-value" id="btc-dominance">0%</span>
+                    </div>
+                    <div class="stat-item currency-switcher" id="currency-switcher">
+                        <span class="stat-label">Moeda</span>
+                        <button class="currency-btn" id="currency-btn">
+                            <span class="currency-symbol">R$</span>
+                            <i class="fas fa-exchange-alt"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -2438,6 +2494,9 @@
             // Configurar exibição mobile/desktop
             setupMobileDesktopDisplay();
             
+            // Carregar moeda salva
+            loadSavedCurrency();
+            
             // Adicionar indicador de scroll horizontal para mobile
             if (isMobile) {
                 addScrollIndicator();
@@ -2592,6 +2651,12 @@
                     console.log('📱 Tamanho de tela mudou, ajustando layout para:', isMobile ? 'Mobile' : 'Desktop');
                 }
             });
+            
+            // Currency switcher
+            const currencyBtn = document.getElementById('currency-btn');
+            if (currencyBtn) {
+                currencyBtn.addEventListener('click', toggleCurrency);
+            }
         }
         
         // Sistema de Cache Local
@@ -2790,8 +2855,14 @@
                     const globalData = await response.json();
                     const data = globalData.data;
                     
-                    totalMarketCap.textContent = formatCurrency(data.total_market_cap.usd);
-                    totalVolume.textContent = formatCurrency(data.total_volume.usd);
+                    // Use current currency for global stats
+                    if (currentCurrency === 'BRL') {
+                        totalMarketCap.textContent = formatCurrency(data.total_market_cap.brl || data.total_market_cap.usd * 5.5);
+                        totalVolume.textContent = formatCurrency(data.total_volume.brl || data.total_volume.usd * 5.5);
+                    } else {
+                        totalMarketCap.textContent = formatCurrency(data.total_market_cap.usd);
+                        totalVolume.textContent = formatCurrency(data.total_volume.usd);
+                    }
                     btcDominance.textContent = `${data.market_cap_percentage.btc.toFixed(1)}%`;
                     
                     console.log('✅ Dados globais carregados com sucesso usando chave API');
@@ -2883,7 +2954,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="price">${formatCurrency(crypto.current_price)}</td>
+                        <td class="price">${formatCurrency(getCurrentPrice(crypto))}</td>
                         <td>
                             <span class="percentage ${priceChange24h >= 0 ? 'positive' : 'negative'}">
                                 ${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%
@@ -2894,8 +2965,8 @@
                                 ${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%
                             </span>
                         </td>
-                        <td class="market-cap">${formatCurrency(crypto.market_cap)}</td>
-                        <td class="volume">${formatCurrency(crypto.total_volume)}</td>
+                        <td class="market-cap">${formatCurrency(getCurrentMarketCap(crypto))}</td>
+                        <td class="volume">${formatCurrency(getCurrentVolume(crypto))}</td>
                         <td class="circulation">${formatNumber(crypto.circulating_supply)} ${crypto.symbol.toUpperCase()}</td>
                         <td>
                             <div class="sparkline-chart" data-sparkline="${crypto.sparkline_in_7d?.price?.join(',') || ''}">
@@ -2937,7 +3008,7 @@
                                 <div class="crypto-info-mobile">
                                     <h3>${crypto.name}</h3>
                                     <span class="crypto-symbol-mobile">${crypto.symbol.toUpperCase()}</span>
-                                    <div class="crypto-price-mobile">${formatCurrency(crypto.current_price)}</div>
+                                    <div class="crypto-price-mobile">${formatCurrency(getCurrentPrice(crypto))}</div>
                                     ${swingTradeInfo}
                                 </div>
                                 <button class="buy-btn">Buy</button>
@@ -3478,16 +3549,19 @@
         function formatCurrency(amount) {
             if (amount === null || amount === undefined) return 'N/A';
             
+            const currency = getCurrentCurrency();
+            const symbol = currency === 'BRL' ? 'R$' : '$';
+            
             if (amount >= 1e12) {
-                return `$${(amount / 1e12).toFixed(2)}T`;
+                return `${symbol}${(amount / 1e12).toFixed(2)}T`;
             } else if (amount >= 1e9) {
-                return `$${(amount / 1e9).toFixed(2)}B`;
+                return `${symbol}${(amount / 1e9).toFixed(2)}B`;
             } else if (amount >= 1e6) {
-                return `$${(amount / 1e6).toFixed(2)}M`;
+                return `${symbol}${(amount / 1e6).toFixed(2)}M`;
             } else if (amount >= 1e3) {
-                return `$${(amount / 1e3).toFixed(2)}K`;
+                return `${symbol}${(amount / 1e3).toFixed(2)}K`;
             } else {
-                return `$${amount.toFixed(2)}`;
+                return `${symbol}${amount.toFixed(2)}`;
             }
         }
         
@@ -3504,6 +3578,118 @@
                 return `${(num / 1e3).toFixed(2)}K`;
             } else {
                 return num.toLocaleString();
+            }
+        }
+        
+        // Currency management functions
+        let currentCurrency = 'BRL'; // Default to BRL
+        
+        function getCurrentCurrency() {
+            return currentCurrency;
+        }
+        
+        function setCurrency(currency) {
+            currentCurrency = currency;
+            localStorage.setItem('selectedCurrency', currency);
+            updateCurrencyDisplay();
+            refreshAllPrices();
+        }
+        
+        function toggleCurrency() {
+            const newCurrency = currentCurrency === 'BRL' ? 'USD' : 'BRL';
+            setCurrency(newCurrency);
+        }
+        
+        function updateCurrencyDisplay() {
+            const currencySymbol = document.querySelector('.currency-symbol');
+            if (currencySymbol) {
+                currencySymbol.textContent = currentCurrency === 'BRL' ? 'R$' : '$';
+            }
+        }
+        
+        function loadSavedCurrency() {
+            const saved = localStorage.getItem('selectedCurrency');
+            if (saved && (saved === 'BRL' || saved === 'USD')) {
+                currentCurrency = saved;
+            }
+            updateCurrencyDisplay();
+        }
+        
+        function refreshAllPrices() {
+            // Refresh all price displays
+            if (cryptoData && cryptoData.length > 0) {
+                displayCryptoData();
+            }
+        }
+        
+        // Function to get the appropriate price based on selected currency
+        function getCurrentPrice(crypto) {
+            if (!crypto) return 0;
+            
+            if (currentCurrency === 'BRL') {
+                return crypto.current_price_brl || crypto.current_price * 5.5; // Fallback conversion
+            } else {
+                return crypto.current_price_usd || crypto.current_price;
+            }
+        }
+        
+        // Function to get the appropriate market cap based on selected currency
+        function getCurrentMarketCap(crypto) {
+            if (!crypto) return 0;
+            
+            if (currentCurrency === 'BRL') {
+                return crypto.market_cap_brl || crypto.market_cap * 5.5; // Fallback conversion
+            } else {
+                return crypto.market_cap_usd || crypto.market_cap;
+            }
+        }
+        
+        // Function to get the appropriate volume based on selected currency
+        function getCurrentVolume(crypto) {
+            if (!crypto) return 0;
+            
+            if (currentCurrency === 'BRL') {
+                return crypto.total_volume_brl || crypto.total_volume * 5.5; // Fallback conversion
+            } else {
+                return crypto.total_volume_usd || crypto.total_volume;
+            }
+        }
+        
+        // Function to fetch data for both currencies
+        async function fetchDataForBothCurrencies() {
+            try {
+                const [usdResponse, brlResponse] = await Promise.all([
+                    fetch(`${COINGECKO_API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en&x_cg_demo_api_key=${COINGECKO_API_KEY}`),
+                    fetch(`${COINGECKO_API_BASE}/coins/markets?vs_currency=brl&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en&x_cg_demo_api_key=${COINGECKO_API_KEY}`)
+                ]);
+                
+                if (!usdResponse.ok || !brlResponse.ok) {
+                    throw new Error('Failed to fetch data for both currencies');
+                }
+                
+                const [usdData, brlData] = await Promise.all([
+                    usdResponse.json(),
+                    brlResponse.json()
+                ]);
+                
+                // Merge the data to include both USD and BRL prices
+                const mergedData = usdData.map(usdCoin => {
+                    const brlCoin = brlData.find(b => b.id === usdCoin.id);
+                    return {
+                        ...usdCoin,
+                        current_price_usd: usdCoin.current_price,
+                        current_price_brl: brlCoin ? brlCoin.current_price : usdCoin.current_price * 5.5, // Fallback conversion
+                        market_cap_usd: usdCoin.market_cap,
+                        market_cap_brl: brlCoin ? brlCoin.market_cap : usdCoin.market_cap * 5.5,
+                        total_volume_usd: usdCoin.total_volume,
+                        total_volume_brl: brlCoin ? brlCoin.total_volume : usdCoin.total_volume * 5.5
+                    };
+                });
+                
+                return mergedData;
+            } catch (error) {
+                console.error('Error fetching data for both currencies:', error);
+                return null;
             }
         }
         
@@ -3709,9 +3895,9 @@
         }
         
         function updateGlobalStatsInRealTime(newData) {
-            // Calcular novos totais
-            const totalMarketCap = newData.reduce((sum, crypto) => sum + crypto.market_cap, 0);
-            const totalVolume = newData.reduce((sum, crypto) => sum + crypto.total_volume, 0);
+            // Calcular novos totais baseados na moeda atual
+            const totalMarketCap = newData.reduce((sum, crypto) => sum + getCurrentMarketCap(crypto), 0);
+            const totalVolume = newData.reduce((sum, crypto) => sum + getCurrentVolume(crypto), 0);
             
             // Atualizar elementos do header
             const marketCapElement = document.getElementById('total-market-cap');
@@ -4670,17 +4856,37 @@
                 // Usar sua chave API do CoinGecko para melhor confiabilidade
                 const COINGECKO_API_KEY = 'CG-QGmu3Fbqu6bCfsY2Ntrnq8rK';
                 
-                const response = await fetch(`${COINGECKO_API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en&x_cg_demo_api_key=${COINGECKO_API_KEY}`, {
-                    method: 'GET',
-                    signal: controller.signal,
-                    headers: { 
-                        'Accept': 'application/json',
-                        'X-CG-Demo-API-Key': COINGECKO_API_KEY,
-                        'Cache-Control': 'no-cache'
-                    },
-                    mode: 'cors',
-                    credentials: 'omit'
-                });
+                let response;
+                let data;
+                
+                // Try to fetch data for both currencies first
+                const dualCurrencyData = await fetchDataForBothCurrencies();
+                if (dualCurrencyData) {
+                    response = { ok: true, status: 200, statusText: 'OK' };
+                    data = dualCurrencyData;
+                } else {
+                    // Fallback to single currency if dual currency fetch fails
+                    console.log('🔄 Fallback para moeda única...');
+                    response = await fetch(`${COINGECKO_API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en&x_cg_demo_api_key=${COINGECKO_API_KEY}`, {
+                        method: 'GET',
+                        signal: controller.signal,
+                        headers: { 
+                            'Accept': 'application/json',
+                            'X-CG-Demo-API-Key': COINGECKO_API_KEY,
+                            'Cache-Control': 'no-cache'
+                        },
+                        mode: 'cors',
+                        credentials: 'omit'
+                    });
+                    
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('❌ Erro na resposta da CoinGecko:', errorText);
+                        throw new Error(`Erro na API da CoinGecko: ${response.status} - ${errorText}`);
+                    }
+                    
+                    data = await response.json();
+                }
                 
                 const endTime = Date.now();
                 const responseTime = endTime - startTime;
@@ -4688,13 +4894,9 @@
                 
                 console.log(`📡 Resposta da CoinGecko recebida em ${responseTime}ms:`, response.status, response.statusText);
                 
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error('❌ Erro na resposta da CoinGecko:', errorText);
-                    throw new Error(`Erro na API da CoinGecko: ${response.status} - ${errorText}`);
+                if (!data || data.length === 0) {
+                    throw new Error('Dados inválidos recebidos da CoinGecko');
                 }
-                
-                const data = await response.json();
                 if (!data || data.length === 0) {
                     throw new Error('Dados inválidos recebidos da CoinGecko');
                 }
