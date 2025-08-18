@@ -348,6 +348,17 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-secondary);
+            font-size: 1.1rem;
+            z-index: 2;
+            transition: color 0.3s ease;
+        }
+        
+        .search-box input:focus + i {
+            color: var(--primary-color);
+        }
+        
+        .search-box:hover i {
+            color: var(--primary-color);
         }
         
         .search-box input {
@@ -480,6 +491,8 @@
             box-shadow: 0 12px 30px rgba(245, 158, 11, 0.5);
             border-color: rgba(255, 255, 255, 0.3);
         }
+        
+
         
         /* Ajustes específicos para mobile */
         @media (max-width: 768px) {
@@ -794,7 +807,6 @@
             align-items: center;
             justify-content: center;
         }
-        
         /* Swing Trade Score */
         .swing-trade-score {
             margin-top: 12px;
@@ -1204,27 +1216,7 @@
             animation: fadeInUp 0.5s ease;
         }
         
-        .modal-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border-radius: var(--border-radius-2xl) var(--border-radius-2xl) 0 0;
-        }
-        
-        .modal-content::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-            border-radius: 0 0 var(--border-radius-2xl) var(--border-radius-2xl);
-        }
+
         
         .modal-header {
             display: flex;
@@ -1563,7 +1555,6 @@
             }
             
                     /* ===== NOVO LAYOUT MOBILE EM LISTA VERTICAL ===== */
-        
         /* Layout mobile completamente reorganizado para lista vertical */
         @media (max-width: 768px) {
             /* Ocultar elementos desktop */
@@ -2258,8 +2249,476 @@
             background: linear-gradient(135deg, var(--accent-light), var(--accent-color));
         }
         
-        /* ===== MODAL RESPONSIVO PARA MOBILE ===== */
+
         
+
+        
+        .oversold-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.05) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        .oversold-banner-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .oversold-banner-header i {
+            font-size: 2rem;
+            color: #ef4444;
+            filter: drop-shadow(0 4px 8px rgba(239, 68, 68, 0.3));
+        }
+        
+        .oversold-banner-header h3 {
+            font-size: 1.75rem;
+            color: var(--text-primary);
+            font-weight: 800;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .oversold-banner-description {
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .oversold-banner-description p {
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            line-height: 1.7;
+        }
+        
+        .oversold-banner-description ul {
+            list-style: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        
+        .oversold-banner-description li {
+            margin-bottom: 0;
+            padding: 16px 20px;
+            background: var(--bg-glass);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            position: relative;
+            transition: var(--transition-normal);
+        }
+        
+        .oversold-banner-description li:hover {
+            background: var(--bg-glass-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .oversold-banner-description li:before {
+            content: "📉";
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.25rem;
+        }
+        
+        .oversold-banner-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .oversold-stat-card {
+            background: var(--bg-glass);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: var(--transition-normal);
+        }
+        .oversold-stat-card:hover {
+            background: var(--bg-glass-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .oversold-stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ef4444;
+            margin-bottom: 8px;
+        }
+        
+        .oversold-stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        /* Lista de Sobrevenda - Estilo Premium */
+        .oversold-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .oversold-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px;
+            background: var(--bg-glass);
+            border-radius: var(--border-radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .oversold-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .oversold-item:hover::before {
+            left: 100%;
+        }
+        
+        .oversold-item:hover {
+            background: var(--bg-glass-hover);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .oversold-rank {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            min-width: 60px;
+            text-align: center;
+            padding: 12px;
+            border-radius: var(--border-radius-lg);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .oversold-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .oversold-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .oversold-details h4 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .oversold-symbol {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        
+        .oversold-price {
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .oversold-price .current-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+        
+        .oversold-price .price-change {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .oversold-price .price-change.positive {
+            color: #00d4aa;
+        }
+        
+        .oversold-price .price-change.negative {
+            color: #ef4444;
+        }
+        
+        .oversold-rsi {
+            text-align: center;
+            min-width: 80px;
+        }
+        
+        .rsi-value {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid;
+        }
+        
+        .rsi-value.rsi-extreme {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.4);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
+        }
+        
+        .rsi-value.rsi-strong {
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+        }
+        
+        .rsi-value.rsi-moderate {
+            color: #3b82f6;
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+        }
+        
+        /* Estilos para RSI na tabela de sobrevenda */
+        .crypto-table .rsi-value {
+            display: inline-block;
+            min-width: 60px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            padding: 8px 12px;
+            border: 2px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .crypto-table .rsi-value:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .rsi-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .oversold-action {
+            min-width: 120px;
+        }
+        
+        .oversold-action .chart-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .oversold-action .chart-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .oversold-action .chart-btn:hover::before {
+            left: 100%;
+        }
+        
+        .oversold-action .chart-btn:hover {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        }
+        
+        .oversold-footer {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+            border-radius: 16px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .oversold-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+            animation: shimmer 4s infinite;
+        }
+        
+        .oversold-footer p {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* ===== GRÁFICO DE CRIPTO ===== */
+        
+        .chart-container {
+            width: 100%;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .crypto-info-chart {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .crypto-icon-chart {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .crypto-info-chart h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .crypto-symbol-chart {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        
+        .price-info-chart {
+            text-align: right;
+        }
+        
+        .current-price-chart {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+        
+        .price-change-chart {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .price-change-chart.positive {
+            color: #00d4aa;
+        }
+        
+        .price-change-chart.negative {
+            color: #ef4444;
+        }
+        
+        .tradingview-chart {
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chart-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .chart-controls .chart-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+        }
+        
+        .chart-controls .chart-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+        
+        .chart-controls .chart-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        /* ===== MODAL RESPONSIVO PARA MOBILE ===== */
         /* ===== DESIGN MODERNO PARA MODAL MOBILE ===== */
         
         @media (max-width: 768px) {
@@ -2273,10 +2732,16 @@
                 background: linear-gradient(135deg, #0f172a, #1e293b);
             }
             
-            .modal-content::before,
-            .modal-content::after {
-                display: none;
+            /* Mostrar lista mobile e ocultar tabela desktop no modal de sobrevenda */
+            .modal-content .crypto-table-container {
+                display: none !important;
             }
+            
+            .modal-content .crypto-list-mobile {
+                display: block !important;
+            }
+            
+
             
             .modal-header {
                 padding: 20px;
@@ -3042,7 +3507,6 @@
                 margin-bottom: 12px;
                 box-shadow: 0 6px 20px rgba(0, 212, 170, 0.4);
         }
-            
             .crypto-rank-desktop {
                 color: var(--text-secondary);
                 font-size: 1rem;
@@ -3531,7 +3995,7 @@
             <!-- Search and Filters -->
             <div class="controls">
                 <div class="search-box">
-                    <i class="fas fa-search"></i>
+                    <i class="fas fa-magnifying-glass"></i>
                     <input type="text" id="search-input" placeholder="Buscar criptomoeda...">
                 </div>
                 <div class="filters">
@@ -3542,6 +4006,7 @@
                         <i class="fas fa-chart-line"></i>
                         Swing Trade
                     </button>
+
                     
                     <!-- Controles de Tempo Real -->
                     <div class="real-time-controls">
@@ -4205,8 +4670,9 @@
                 // Usar dados do cache se disponível
             }
         }
-        
         function displayCryptoData() {
+            
+            
             // Mostrar informações específicas para Swing Trade
             if (currentFilter === 'swing-trade') {
                 showSwingTradeInfo();
@@ -4237,7 +4703,7 @@
                 return;
             }
             
-            // Adicionar cabeçalho de ordenação para Swing Trade (desktop)
+                        // Adicionar cabeçalho de ordenação para Swing Trade (desktop)
             let tableHeader = '';
             if (currentFilter === 'swing-trade') {
                 tableHeader = `
@@ -4259,6 +4725,7 @@
                 
                 // Calcular score de swing trade se necessário
                 let swingTradeInfo = '';
+                
                 if (currentFilter === 'swing-trade') {
                     const score = getSwingTradeScore(crypto);
                     const scoreClass = getScoreColorClass(score.percentage);
@@ -4320,6 +4787,7 @@
                     
                     // Calcular score de swing trade se necessário
                     let swingTradeInfo = '';
+                    
                     if (currentFilter === 'swing-trade') {
                         const score = getSwingTradeScore(crypto);
                         const scoreClass = getScoreColorClass(score.percentage);
@@ -4373,6 +4841,7 @@
 
         
         function filterAndDisplayData() {
+            
             filteredData = cryptoData.filter(crypto => {
                 const matchesSearch = crypto.name.toLowerCase().includes(searchTerm) || 
                                     crypto.symbol.toLowerCase().includes(searchTerm);
@@ -4386,6 +4855,7 @@
                         return crypto.price_change_percentage_24h < 0;
                     case 'swing-trade':
                         return isGoodSwingTrade(crypto);
+
                     default:
                         return true;
                 }
@@ -4422,6 +4892,8 @@
                         return a.price_change_percentage_24h - b.price_change_percentage_24h;
                     });
                     break;
+                    
+
                     
                 default:
                     // Manter ordem original por market cap rank
@@ -4653,6 +5125,643 @@
             `;
         }
         
+        // Função para mostrar criptos em sobrevenda
+        function showOversoldCrypto() {
+            console.log('🔍 Analisando criptos em sobrevenda...');
+            console.log('📊 Dados disponíveis:', cryptoData.length);
+            
+            // Verificar se temos dados válidos
+            if (!cryptoData || cryptoData.length === 0) {
+                console.log('⚠️ Nenhum dado disponível, tentando carregar...');
+                loadCryptoData();
+                setTimeout(() => {
+                    if (cryptoData && cryptoData.length > 0) {
+                        showOversoldCrypto(); // Tentar novamente
+                    } else {
+                        alert('Erro ao carregar dados. Tente novamente em alguns segundos.');
+                    }
+                }, 2000);
+                return;
+            }
+            
+            // Verificar se os dados têm as propriedades necessárias
+            const sampleCrypto = cryptoData[0];
+            console.log('🔍 Amostra de dados:', {
+                symbol: sampleCrypto.symbol,
+                priceChange24h: sampleCrypto.price_change_percentage_24h,
+                priceChange7d: sampleCrypto.price_change_percentage_7d_in_currency,
+                hasData: !!sampleCrypto.price_change_percentage_24h
+            });
+            
+
+            
+            // Calcular RSI para cada cripto
+            console.log('🔍 Iniciando cálculo de RSI para todas as criptos...');
+            console.log('📊 Total de criptos para analisar:', cryptoData.length);
+            
+            const oversoldCoins = cryptoData.filter(crypto => {
+                const rsi = calculateRSI(crypto);
+                const isOversold = rsi < 35;
+                if (isOversold) {
+                    console.log(`📉 SOBREVENDA: ${crypto.symbol}: RSI ${rsi} (24h: ${crypto.price_change_percentage_24h}%, 7d: ${crypto.price_change_percentage_7d_in_currency}%)`);
+                }
+                return isOversold; // RSI abaixo de 35 indica sobrevenda (mais realista)
+            });
+            
+            console.log('🔍 Filtro concluído. Criptos em sobrevenda encontradas:', oversoldCoins.length);
+            console.log('🔍 Símbolos das criptos em sobrevenda:', oversoldCoins.map(c => c.symbol));
+            
+            console.log(`🔍 Análise RSI concluída:`);
+            console.log(`📊 Total de criptos analisadas: ${cryptoData.length}`);
+            console.log(`📉 Criptos em sobrevenda encontradas: ${oversoldCoins.length}`);
+            
+            // Mostrar algumas criptos com RSI mais baixo para debug
+            const allCoinsWithRSI = cryptoData.map(crypto => ({
+                ...crypto,
+                rsi: calculateRSI(crypto)
+            })).sort((a, b) => a.rsi - b.rsi);
+            
+            console.log('🔍 Top 10 criptos com RSI mais baixo:');
+            allCoinsWithRSI.slice(0, 10).forEach((coin, index) => {
+                console.log(`${index + 1}. ${coin.symbol}: RSI ${coin.rsi} (24h: ${coin.price_change_percentage_24h}%)`);
+            });
+            
+            if (oversoldCoins.length === 0) {
+                console.log('⚠️ Nenhuma cripto em sobrevenda encontrada, procurando próximas da sobrevenda...');
+                // Mostrar criptos próximas da sobrevenda na tela principal
+                const nearOversold = allCoinsWithRSI.filter(coin => coin.rsi < 45);
+                console.log('🔍 Criptos próximas da sobrevenda:', nearOversold.length);
+                if (nearOversold.length > 0) {
+                    showNearOversoldInMainScreen(nearOversold);
+                } else {
+                    // Se não há nenhuma, mostrar as 10 com RSI mais baixo para debug
+                    console.log('⚠️ Nenhuma cripto próxima da sobrevenda, mostrando as 10 com RSI mais baixo:');
+                    const top10LowestRSI = allCoinsWithRSI.slice(0, 10);
+                    showNearOversoldInMainScreen(top10LowestRSI);
+                }
+                return;
+            }
+            
+            // Ordenar por RSI (menor primeiro)
+            oversoldCoins.sort((a, b) => calculateRSI(a) - calculateRSI(b));
+            
+            console.log('🎯 Mostrando sobrevenda na tela principal com', oversoldCoins.length, 'criptos');
+            console.log('🔍 Últimas 5 criptos antes de chamar showOversoldInMainScreen:', oversoldCoins.slice(-5).map(c => `${c.symbol}: RSI ${calculateRSI(c).toFixed(1)}`));
+            
+            // Mostrar criptos em sobrevenda na tela principal
+            showOversoldInMainScreen(oversoldCoins);
+            
+            console.log('✅ showOversoldCrypto concluída com sucesso!');
+            console.log('🔍 Verificando se o filtro foi aplicado corretamente...');
+            console.log('🔍 currentFilter atual:', currentFilter);
+            console.log('🔍 Verificando se o botão de sobrevenda está ativo...');
+            const oversoldBtn = document.querySelector('.oversold-btn');
+            if (oversoldBtn) {
+                console.log('🔍 Botão de sobrevenda ativo:', oversoldBtn.classList.contains('active'));
+            }
+            console.log('🔍 Verificando se o banner de sobrevenda foi criado...');
+            const oversoldBanner = document.querySelector('.oversold-banner');
+            if (oversoldBanner) {
+                console.log('🔍 Banner de sobrevenda encontrado:', oversoldBanner.textContent.substring(0, 50) + '...');
+            } else {
+                console.log('⚠️ Banner de sobrevenda não encontrado');
+            }
+            console.log('🔍 Verificando se a tabela foi atualizada...');
+            const cryptoTableBody = document.getElementById('crypto-table-body');
+            if (cryptoTableBody) {
+                const rows = cryptoTableBody.querySelectorAll('tr');
+                console.log('🔍 Número de linhas na tabela:', rows.length);
+                if (rows.length > 1) {
+                    const firstDataRow = rows[1];
+                    const cryptoName = firstDataRow.querySelector('.crypto-name h3');
+                    if (cryptoName) {
+                        console.log('🔍 Primeira cripto na tabela:', cryptoName.textContent);
+                    }
+                }
+            }
+        }
+        
+        // Função para renderizar tabela de sobrevenda diretamente
+        function renderOversoldTable(oversoldCoins) {
+            console.log('🎨 Renderizando tabela de sobrevenda com', oversoldCoins.length, 'criptos');
+            console.log('🔍 Primeiras 5 criptos para renderizar:', oversoldCoins.slice(0, 5).map(c => `${c.symbol}: RSI ${calculateRSI(c).toFixed(1)}`));
+            
+            const cryptoTableBody = document.getElementById('crypto-table-body');
+            const cryptoListBody = document.getElementById('crypto-list-body');
+            
+            if (!cryptoTableBody) {
+                console.error('❌ Elemento crypto-table-body não encontrado');
+                return;
+            }
+            
+            // Renderizar tabela desktop
+            const tableHeader = `
+                <tr class="sorting-header">
+                    <td colspan="9">
+                        <div>
+                            <i class="fas fa-arrow-down"></i>
+                            <span>Ordenado por RSI (Menor para Maior)</span>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            
+            cryptoTableBody.innerHTML = tableHeader + oversoldCoins.map((crypto, index) => {
+                const priceChange24h = crypto.price_change_percentage_24h;
+                const priceChange7d = crypto.price_change_percentage_7d_in_currency;
+                const rsi = calculateRSI(crypto);
+                const rsiClass = rsi < 20 ? 'extreme' : rsi < 25 ? 'strong' : 'moderate';
+                
+                return `
+                    <tr onclick="showCryptoChart('${crypto.id}', '4h')">
+                        <td>${crypto.market_cap_rank || 'N/A'}</td>
+                        <td>
+                            <div class="crypto-name">
+                                <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPC9zdmc+';">
+                                <div class="crypto-info">
+                                    <h3>${crypto.name}</h3>
+                                    <span class="crypto-symbol">${crypto.symbol.toUpperCase()}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="price">${formatCurrency(getCurrentPrice(crypto))}</td>
+                        <td>
+                            <span class="percentage ${priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                ${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%
+                            </span>
+                        </td>
+                        <td>
+                            <span class="percentage ${priceChange7d >= 0 ? 'positive' : 'negative'}">
+                                ${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%
+                            </span>
+                        </td>
+                        <td class="market-cap">${formatCurrency(getCurrentMarketCap(crypto))}</td>
+                        <td class="volume">${formatCurrency(getCurrentVolume(crypto))}</td>
+                        <td class="circulation">${formatNumber(crypto.circulating_supply)} ${crypto.symbol.toUpperCase()}</td>
+                        <td>
+                            <div class="rsi-value rsi-${rsiClass}" style="text-align: center; padding: 8px 12px; border-radius: 10px; font-weight: 700; font-size: 1.1rem; border: 2px solid;">
+                                ${rsi.toFixed(1)}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            
+            // Renderizar lista mobile
+            if (cryptoListBody) {
+                cryptoListBody.innerHTML = oversoldCoins.map((crypto, index) => {
+                    const priceChange24h = crypto.price_change_percentage_24h;
+                    const priceChange7d = crypto.price_change_percentage_7d_in_currency;
+                    const rsi = calculateRSI(crypto);
+                    const rsiClass = rsi < 20 ? 'extreme' : rsi < 25 ? 'strong' : 'moderate';
+                    
+                    return `
+                        <div class="crypto-card" onclick="showCryptoChart('${crypto.id}', '4h')">
+                            <div class="col-name">
+                                <i class="fas fa-star favorite-star" onclick="event.stopPropagation(); toggleFavorite('${crypto.id}')"></i>
+                                <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMGQ0YWEiLz4KPC9zdmc+';">
+                                <div class="crypto-info-mobile">
+                                    <h3>${crypto.name}</h3>
+                                    <span class="crypto-symbol-mobile">${crypto.symbol.toUpperCase()}</span>
+                                    <div class="crypto-price-mobile">${formatCurrency(getCurrentPrice(crypto))}</div>
+                                    <div class="rsi-value rsi-${rsiClass}" style="text-align: center; padding: 6px 10px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; border: 2px solid; margin-top: 8px;">
+                                        RSI: ${rsi.toFixed(1)}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-24h">
+                                <span class="percentage-mobile ${priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                    ${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%
+                                </span>
+                            </div>
+                            <div class="col-7d">
+                                <span class="percentage-mobile ${priceChange7d >= 0 ? 'positive' : 'negative'}">
+                                    ${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            console.log('✅ Tabela de sobrevenda renderizada com sucesso!');
+            console.log('🔍 Verificando se a tabela foi realmente atualizada...');
+            
+            // Verificar se o conteúdo foi realmente atualizado
+            const updatedRows = cryptoTableBody.querySelectorAll('tr');
+            console.log('🔍 Número de linhas na tabela após renderização:', updatedRows.length);
+            
+            if (updatedRows.length > 1) {
+                const firstDataRow = updatedRows[1]; // Primeira linha de dados (após o header)
+                const cryptoName = firstDataRow.querySelector('.crypto-name h3');
+                if (cryptoName) {
+                    console.log('🔍 Primeira cripto na tabela renderizada:', cryptoName.textContent);
+                }
+            }
+        }
+        
+        // Função para calcular RSI REAL baseado em dados de mercado
+        function calculateRSI(crypto) {
+            // Usar dados reais para calcular RSI mais preciso
+            const priceChange24h = crypto.price_change_percentage_24h || 0;
+            const priceChange7d = crypto.price_change_percentage_7d_in_currency || crypto.price_change_percentage_7d || 0;
+            const volumeRatio = (crypto.total_volume || 0) / (crypto.market_cap || 1);
+            
+            let rsi = 50; // RSI base
+            
+            // Debug para algumas criptos específicas
+            if (crypto.symbol === 'bitcoin' || crypto.symbol === 'ethereum' || crypto.symbol === 'binancecoin') {
+                console.log(`🔍 RSI Debug - ${crypto.symbol}: 24h=${priceChange24h}%, 7d=${priceChange7d}%, volumeRatio=${volumeRatio.toFixed(3)}`);
+            }
+            
+            // Análise de tendência de queda (sobrevenda) - MAIS AGRESSIVA
+            if (priceChange24h < -2) {
+                rsi -= 10; // Sobrevenda leve
+            }
+            if (priceChange24h < -5) {
+                rsi -= 20; // Sobrevenda moderada
+            }
+            if (priceChange24h < -10) {
+                rsi -= 30; // Sobrevenda forte
+            }
+            if (priceChange24h < -15) {
+                rsi -= 40; // Sobrevenda extrema
+            }
+            if (priceChange24h < -25) {
+                rsi -= 50; // Sobrevenda crítica
+            }
+            
+            // Análise de tendência semanal
+            if (priceChange7d < -5) {
+                rsi -= 5; // Tendência de queda semanal
+            }
+            if (priceChange7d < -15) {
+                rsi -= 10; // Queda forte semanal
+            }
+            if (priceChange7d < -30) {
+                rsi -= 15; // Queda extrema semanal
+            }
+            
+            // Análise de volume (volume alto + queda = sobrevenda)
+            if (volumeRatio > 0.2 && priceChange24h < -3) {
+                rsi -= 5; // Volume alto com queda
+            }
+            if (volumeRatio > 0.4 && priceChange24h < -8) {
+                rsi -= 10; // Volume muito alto com queda forte
+            }
+            
+            // Análise de posição relativa ao ATH
+            if (crypto.ath && crypto.current_price) {
+            const athDistance = ((crypto.ath - crypto.current_price) / crypto.ath) * 100;
+                if (athDistance > 60) {
+                    rsi -= 5; // Abaixo do ATH
+                }
+                if (athDistance > 80) {
+                rsi -= 10; // Muito abaixo do ATH
+            }
+                if (athDistance > 90) {
+                rsi -= 15; // Extremamente abaixo do ATH
+                }
+            }
+            
+            // Garantir que RSI fique entre 0 e 100
+            const finalRSI = Math.max(0, Math.min(100, Math.round(rsi)));
+            
+            // Debug para criptos com RSI baixo
+            if (finalRSI < 40) {
+                console.log(`🔍 RSI Debug - ${crypto.symbol}: RSI ${finalRSI} (24h: ${priceChange24h}%, 7d: ${priceChange7d}%)`);
+            }
+            
+            return finalRSI;
+        }
+        // Função para mostrar criptos próximas da sobrevenda na tela principal
+        function showNearOversoldInMainScreen(nearOversoldCoins) {
+            console.log('🎯 showNearOversoldInMainScreen chamada com', nearOversoldCoins.length, 'criptos');
+            console.log('🔍 Primeiras 5 criptos recebidas:', nearOversoldCoins.slice(0, 5).map(c => `${c.symbol}: RSI ${calculateRSI(c).toFixed(1)}`));
+            
+            // Atualizar o filtro ativo
+            currentFilter = 'near-oversold';
+            
+            // Atualizar botões de filtro
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.oversold-btn').classList.add('active');
+            
+            // Limpar banner existente se houver
+            const existingBanner = document.querySelector('.oversold-banner');
+            if (existingBanner) {
+                existingBanner.remove();
+            }
+            
+            // Criar banner de oportunidades emergentes
+            const nearOversoldBanner = `
+                <div class="oversold-banner" style="margin-bottom: 30px;">
+                    <div class="oversold-banner-header">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Análise de Sobrevenda - Oportunidades Emergentes</h3>
+                    </div>
+                    
+                    <div class="oversold-banner-description">
+                        <p>Estas criptomoedas estão próximas da sobrevenda (RSI < 45) e podem apresentar oportunidades de compra em breve. Monitore de perto para identificar o momento ideal de entrada.</p>
+                        
+                        <ul>
+                            <li>Análise técnica avançada com RSI e indicadores de volume</li>
+                            <li>Identificação de oportunidades de compra em níveis de suporte</li>
+                            <li>Monitoramento em tempo real com gráficos de 4 horas</li>
+                            <li>Alertas automáticos quando condições melhoram</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="oversold-banner-stats">
+                        <div class="oversold-stat-card">
+                            <div class="oversold-stat-value">${nearOversoldCoins.length}</div>
+                            <div class="oversold-stat-label">Oportunidades</div>
+                        </div>
+                        <div class="oversold-stat-card">
+                            <div class="oversold-stat-value">4H</div>
+                            <div class="oversold-stat-label">Timeframe</div>
+                        </div>
+                        <div class="oversold-stat-card">
+                            <div class="oversold-stat-value">RSI</div>
+                            <div class="oversold-stat-label">Indicador</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Ordenar por RSI (menor para maior)
+            const sortedNearOversoldCoins = [...nearOversoldCoins].sort((a, b) => {
+                const rsiA = calculateRSI(a);
+                const rsiB = calculateRSI(b);
+                return rsiA - rsiB;
+            });
+            
+            // RENDERIZAR DIRETAMENTE - NÃO USAR displayCryptoData()
+            renderOversoldTable(sortedNearOversoldCoins);
+            
+            // Adicionar banner antes da tabela
+            const tableContainer = document.querySelector('.crypto-table-container');
+            if (tableContainer) {
+                tableContainer.insertAdjacentHTML('beforebegin', nearOversoldBanner);
+            }
+            
+            console.log('✅ Oportunidades emergentes exibidas na tela principal com sucesso!');
+            console.log('📊 Criptos próximas da sobrevenda:', sortedNearOversoldCoins.map(c => `${c.symbol}: RSI ${calculateRSI(c).toFixed(1)}`));
+        }
+        
+        // Função para mostrar sobrevenda na tela principal
+        function showOversoldInMainScreen(oversoldCoins) {
+            console.log('🎯 showOversoldInMainScreen chamada com', oversoldCoins.length, 'criptos');
+            console.log('🔍 Primeiras 5 criptos recebidas:', oversoldCoins.slice(0, 5).map(c => `${c.symbol}: RSI ${calculateRSI(c).toFixed(1)}`));
+            
+            // Atualizar o filtro ativo
+            currentFilter = 'oversold';
+            
+            // Atualizar botões de filtro
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.oversold-btn').classList.add('active');
+            
+            // Limpar banner existente se houver
+            const existingBanner = document.querySelector('.oversold-banner');
+            if (existingBanner) {
+                existingBanner.remove();
+            }
+            
+            // Criar banner de sobrevenda
+            const oversoldBanner = `
+                <div class="oversold-banner" style="margin-bottom: 30px;">
+                    <div class="oversold-banner-header">
+                        <i class="fas fa-arrow-down"></i>
+                        <h3>Análise de Sobrevenda - Gráfico 4H</h3>
+                    </div>
+                    
+                    <div class="oversold-banner-description">
+                        <p>Estas criptomoedas estão em sobrevenda (RSI < 35) e podem apresentar excelentes oportunidades de compra. Analise os gráficos de 4 horas para identificar os melhores pontos de entrada.</p>
+                        
+                        <ul>
+                            <li>Identificação precisa de criptos em sobrevenda com RSI</li>
+                            <li>Análise técnica avançada com múltiplos indicadores</li>
+                            <li>Gráficos interativos de 4 horas para timing perfeito</li>
+                            <li>Oportunidades de compra em níveis de suporte</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="oversold-banner-stats">
+                        <div class="oversold-stat-card">
+                            <div class="oversold-stat-value">${oversoldCoins.length}</div>
+                            <div class="oversold-stat-label">Em Sobrevenda</div>
+                        </div>
+                        <div class="oversold-stat-card">
+                            <div class="oversold-stat-value">4H</div>
+                            <div class="oversold-stat-label">Timeframe</div>
+                        </div>
+                        <div class="oversold-stat-card">
+                            <div class="oversold-stat-value">RSI</div>
+                            <div class="oversold-stat-label">Indicador</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Ordenar por RSI (menor para maior)
+            const sortedOversoldCoins = [...oversoldCoins].sort((a, b) => {
+                const rsiA = calculateRSI(a);
+                const rsiB = calculateRSI(b);
+                return rsiA - rsiB;
+            });
+            
+            // RENDERIZAR DIRETAMENTE - NÃO USAR displayCryptoData()
+            renderOversoldTable(sortedOversoldCoins);
+            
+            // Adicionar banner antes da tabela
+            const tableContainer = document.querySelector('.crypto-table-container');
+            if (tableContainer) {
+                tableContainer.insertAdjacentHTML('beforebegin', oversoldBanner);
+            }
+            
+            console.log('✅ Sobrevenda exibida na tela principal com sucesso!');
+            console.log('📊 Criptos em sobrevenda:', sortedOversoldCoins.map(c => `${c.symbol}: RSI ${calculateRSI(c).toFixed(1)}`));
+        }
+        
+        // Função para mostrar gráfico de uma cripto específica
+        function showCryptoChart(cryptoId, timeframe = '4h') {
+            const crypto = cryptoData.find(c => c.id === cryptoId);
+            if (!crypto) return;
+            
+            // Fechar modal atual
+            closeModal();
+            
+            // Mostrar modal com gráfico
+            const modal = document.getElementById('crypto-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            
+            modalTitle.innerHTML = `
+                <i class="fas fa-chart-line" style="color: var(--primary-color); margin-right: 10px;"></i>
+                ${crypto.name} (${crypto.symbol.toUpperCase()}) - Gráfico ${timeframe.toUpperCase()}
+            `;
+            
+            // Métricas rápidas
+            const rsiChart = calculateRSI(crypto);
+            const rsiChartClass = rsiChart < 20 ? 'extreme' : rsiChart < 25 ? 'strong' : 'moderate';
+            const athDistanceChart = (crypto.ath && crypto.current_price) ? ((crypto.ath - crypto.current_price) / crypto.ath) * 100 : null;
+            const high24Chart = (typeof crypto.high_24h === 'number') ? crypto.high_24h : null;
+            const low24Chart = (typeof crypto.low_24h === 'number') ? crypto.low_24h : null;
+            const rangePercentChart = (high24Chart !== null && low24Chart !== null && high24Chart !== low24Chart)
+                ? ((crypto.current_price - low24Chart) / (high24Chart - low24Chart)) * 100
+                : null;
+            const volumeDominanceChart = (crypto.market_cap && crypto.total_volume)
+                ? (crypto.total_volume / crypto.market_cap) * 100
+                : null;
+            
+            modalBody.innerHTML = `
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="crypto-info-chart">
+                            <img src="${crypto.image}" alt="${crypto.name}" class="crypto-icon-chart">
+                            <div>
+                                <h3>${crypto.name}</h3>
+                                <span class="crypto-symbol-chart">${crypto.symbol.toUpperCase()}</span>
+                            </div>
+                        </div>
+                        <div class="price-info-chart">
+                            <div class="current-price-chart">$${crypto.current_price.toLocaleString()}</div>
+                            <div class="price-change-chart ${crypto.price_change_percentage_24h >= 0 ? 'positive' : 'negative'}">
+                                ${crypto.price_change_percentage_24h >= 0 ? '+' : ''}${crypto.price_change_percentage_24h.toFixed(2)}%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Métricas rápidas inseridas via JS -->
+                    
+                    <div class="tradingview-chart">
+                        <div id="tradingview-chart-${cryptoId}"></div>
+                    </div>
+                    
+                    <div class="chart-controls">
+                        <button class="chart-btn" onclick="showCryptoChart('${cryptoId}', '1h')">1H</button>
+                        <button class="chart-btn active" onclick="showCryptoChart('${cryptoId}', '4h')">4H</button>
+                        <button class="chart-btn" onclick="showCryptoChart('${cryptoId}', '1d')">1D</button>
+                        <button class="chart-btn" onclick="showCryptoChart('${cryptoId}', '1w')">1W</button>
+                    </div>
+                    
+                    <!-- Ações rápidas inseridas via JS -->
+                </div>
+            `;
+            
+            modal.style.display = 'flex';
+            
+            // Inserir métricas rápidas abaixo do header
+            try {
+                const headerEl = modalBody.querySelector('.chart-header');
+                if (headerEl) {
+                    const metricsHTML = `
+                        <div class="chart-metrics" style="display:flex; gap:12px; flex-wrap:wrap; margin: 12px 0 6px 0; align-items:center;">
+                            <div class="rsi-value rsi-${rsiChartClass}" style="text-align:center; padding: 6px 10px; border-radius: 10px; font-weight:700; font-size: 0.95rem; border: 2px solid;">
+                                RSI: ${rsiChart.toFixed(1)}
+                            </div>
+                            <div class="metric-chip" style="background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); padding:8px 12px; border-radius:10px;">
+                                <i class="fas fa-mountain" style="opacity:0.8; margin-right:6px;"></i>
+                                Dist. do ATH: ${athDistanceChart !== null ? `${athDistanceChart.toFixed(1)}%` : 'N/A'}
+                            </div>
+                            <div class="metric-chip" style="background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); padding:8px 12px; border-radius:10px; display:flex; align-items:center; gap:10px;">
+                                <span>Faixa 24h:</span>
+                                <span>${low24Chart !== null ? `${(low24Chart).toLocaleString('en-US',{style:'currency',currency:'USD'})}` : 'N/A'}</span>
+                                <div class="range-bar" style="width:120px; height:8px; background: rgba(255,255,255,0.08); border-radius: 6px; overflow:hidden;">
+                                    ${rangePercentChart !== null ? `<div class="range-fill" style="height:100%; width:${Math.max(0, Math.min(100, rangePercentChart)).toFixed(0)}%; background: linear-gradient(90deg, var(--primary-color), var(--accent-color));"></div>` : ''}
+                                </div>
+                                <span>${high24Chart !== null ? `${(high24Chart).toLocaleString('en-US',{style:'currency',currency:'USD'})}` : 'N/A'}</span>
+                            </div>
+                            <div class="metric-chip" style="background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); padding:8px 12px; border-radius:10px;">
+                                <i class="fas fa-balance-scale" style="opacity:0.8; margin-right:6px;"></i>
+                                Vol/MC: ${volumeDominanceChart !== null ? `${volumeDominanceChart.toFixed(1)}%` : 'N/A'}
+                            </div>
+                        </div>
+                    `;
+                    headerEl.insertAdjacentHTML('afterend', metricsHTML);
+                }
+            } catch (e) { console.warn('Falha ao inserir métricas no modal do gráfico', e); }
+            
+            // Inserir ações rápidas abaixo dos controles
+            try {
+                const controlsEl = modalBody.querySelector('.chart-controls');
+                if (controlsEl) {
+                    const actionsHTML = `
+                        <div class="quick-actions" style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+                            <button class="chart-btn" onclick="toggleFavorite && toggleFavorite('${crypto.id}')"><i class="fas fa-star"></i> Favoritar</button>
+                            <a class="chart-btn" href="https://www.coingecko.com/pt/moedas/${crypto.id}" target="_blank"><i class="fas fa-external-link-alt"></i> CoinGecko</a>
+                            <button class="chart-btn" onclick="copyToClipboard('${crypto.symbol.toUpperCase()}USD')"><i class="fas fa-copy"></i> Copiar Símbolo</button>
+                        </div>
+                    `;
+                    controlsEl.insertAdjacentHTML('afterend', actionsHTML);
+                }
+            } catch (e) { console.warn('Falha ao inserir ações rápidas', e); }
+            
+            // Carregar gráfico TradingView
+            setTimeout(() => {
+                loadTradingViewChart(cryptoId, timeframe);
+            }, 100);
+            
+            // Utilitário para copiar texto
+            if (!window.copyToClipboard) {
+                window.copyToClipboard = function(text) {
+                    try {
+                        navigator.clipboard.writeText(text);
+                        console.log('Copiado:', text);
+                    } catch (e) {
+                        const area = document.createElement('textarea');
+                        area.value = text;
+                        document.body.appendChild(area);
+                        area.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(area);
+                        console.log('Copiado (fallback):', text);
+                    }
+                }
+            }
+        }
+        
+        // Função para carregar gráfico TradingView
+        function loadTradingViewChart(cryptoId, timeframe) {
+            const crypto = cryptoData.find(c => c.id === cryptoId);
+            if (!crypto) return;
+            
+            const container = document.getElementById(`tradingview-chart-${cryptoId}`);
+            if (!container) return;
+            
+            // Mapear timeframe para TradingView
+            const tvTimeframe = {
+                '1h': '60',
+                '4h': '240',
+                '1d': '1D',
+                '1w': '1W'
+            }[timeframe] || '240';
+            
+            // Criar widget TradingView
+            new TradingView.widget({
+                "width": "100%",
+                "height": 500,
+                "symbol": `BINANCE:${crypto.symbol.toUpperCase()}USD`,
+                "interval": tvTimeframe,
+                "timezone": "America/Sao_Paulo",
+                "theme": "dark",
+                "style": "1",
+                "locale": "br",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": false,
+                "hide_side_toolbar": false,
+                "allow_symbol_change": true,
+                "container_id": `tradingview-chart-${cryptoId}`,
+                "studies": [
+                    "RSI@tv-basicstudies",
+                    "MACD@tv-basicstudies",
+                    "BB@tv-basicstudies"
+                ]
+            });
+        }
         function showCryptoDetails(cryptoId) {
             const crypto = cryptoData.find(c => c.id === cryptoId);
             if (!crypto) return;
@@ -4670,428 +5779,1641 @@
             const isMobile = window.innerWidth <= 768;
             
             if (isMobile) {
-                // Layout Mobile (mantém o design atual)
+                // Layout Mobile - Design Moderno e Organizado
+                const rsi = calculateRSI(crypto);
+                const rsiClass = rsi < 20 ? 'extreme' : rsi < 25 ? 'strong' : 'moderate';
+                const athDistance = (crypto.ath && crypto.current_price) ? ((crypto.ath - crypto.current_price) / crypto.ath) * 100 : null;
+                const high24h = crypto.high_24h || null;
+                const low24h = crypto.low_24h || null;
+                const volumeRatio = (crypto.total_volume && crypto.market_cap) ? (crypto.total_volume / crypto.market_cap) * 100 : null;
+                
                 modalBody.innerHTML = `
-                    <div class="crypto-details">
-                        <!-- Header com informações principais -->
-                        <div class="crypto-header-mobile">
-                            <div class="crypto-hero-section">
-                                <div class="crypto-avatar-container">
-                                    <img src="${crypto.image}" alt="${crypto.name}" class="crypto-avatar">
-                                    <div class="crypto-status-indicator ${priceChange24h >= 0 ? 'positive' : 'negative'}"></div>
+                    <div class="crypto-details-mobile">
+                        <!-- Hero Section Mobile -->
+                        <div style="
+                            background: linear-gradient(135deg, 
+                                ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.1)' : 'rgba(255, 107, 107, 0.1)'}, 
+                                rgba(0, 0, 0, 0.05));
+                            border-radius: 15px;
+                            padding: 20px;
+                            margin-bottom: 20px;
+                            border: 1px solid ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.2)' : 'rgba(255, 107, 107, 0.2)'};
+                            position: relative;
+                            overflow: hidden;
+                        ">
+                            <!-- Elemento decorativo -->
+                            <div style="
+                                position: absolute;
+                                top: -30px;
+                                right: -30px;
+                                width: 60px;
+                                height: 60px;
+                                background: ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.1)' : 'rgba(255, 107, 107, 0.1)'};
+                                border-radius: 50%;
+                                z-index: 0;
+                            "></div>
+                            
+                            <div style="display: flex; align-items: center; gap: 15px; position: relative; z-index: 1;">
+                                <!-- Avatar da Cripto -->
+                                <div style="position: relative;">
+                                    <img src="${crypto.image}" alt="${crypto.name}" style="
+                                        width: 60px;
+                                        height: 60px;
+                                        border-radius: 15px;
+                                        border: 3px solid ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.3)' : 'rgba(255, 107, 107, 0.3)'};
+                                        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+                                    ">
+                                    <div style="
+                                        position: absolute;
+                                        top: -3px;
+                                        right: -3px;
+                                        width: 16px;
+                                        height: 16px;
+                                        background: ${priceChange24h >= 0 ? '#00d4aa' : '#ff6b6b'};
+                                        border-radius: 50%;
+                                        border: 2px solid #1a1a1a;
+                                    "></div>
                                 </div>
-                                <div class="crypto-title-section">
-                                    <h1 class="crypto-name">${crypto.name}</h1>
-                                    <div class="crypto-symbol-badge">${crypto.symbol.toUpperCase()}</div>
-                                    <div class="crypto-rank">#${crypto.market_cap_rank || 'N/A'} no ranking</div>
+                                
+                                <!-- Info da Cripto -->
+                                <div style="flex: 1;">
+                                    <h1 style="
+                                        font-size: 1.8rem;
+                                        font-weight: 800;
+                                        margin: 0 0 6px 0;
+                                        background: linear-gradient(135deg, #ffffff, #e0e0e0);
+                                        -webkit-background-clip: text;
+                                        -webkit-text-fill-color: transparent;
+                                        background-clip: text;
+                                    ">${crypto.name}</h1>
+                                    
+                                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                        <span style="
+                                            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                                            color: white;
+                                            padding: 6px 12px;
+                                            border-radius: 20px;
+                                            font-weight: 700;
+                                            font-size: 0.9rem;
+                                            box-shadow: 0 3px 10px rgba(0, 212, 170, 0.3);
+                                        ">${crypto.symbol.toUpperCase()}</span>
+                                        
+                                        <span style="
+                                            background: rgba(255, 255, 255, 0.1);
+                                            color: #a0a0a0;
+                                            padding: 4px 8px;
+                                            border-radius: 12px;
+                                            font-size: 0.8rem;
+                                            border: 1px solid rgba(255, 255, 255, 0.1);
+                                        ">#${crypto.market_cap_rank || 'N/A'}</span>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="crypto-price-section">
-                                <div class="current-price">${formatCurrency(crypto.current_price)}</div>
-                                <div class="price-changes">
-                                    <div class="price-change-item ${priceChange24h >= 0 ? 'positive' : 'negative'}">
+                            <!-- Preço e Mudanças -->
+                            <div style="margin-top: 15px; text-align: center;">
+                                <div style="
+                                    font-size: 2.2rem;
+                                    font-weight: 900;
+                                    margin-bottom: 8px;
+                                    background: linear-gradient(135deg, #ffffff, #e0e0e0);
+                                    -webkit-background-clip: text;
+                                    -webkit-text-fill-color: transparent;
+                                    background-clip: text;
+                                ">${formatCurrency(crypto.current_price)}</div>
+                                
+                                <div style="display: flex; gap: 10px; justify-content: center;">
+                                    <div style="
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 6px;
+                                        padding: 8px 12px;
+                                        border-radius: 12px;
+                                        background: ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.15)' : 'rgba(255, 107, 107, 0.15)'};
+                                        border: 1px solid ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.3)' : 'rgba(255, 107, 107, 0.3)'};
+                                        color: ${priceChange24h >= 0 ? '#00d4aa' : '#ff6b6b'};
+                                        font-weight: 700;
+                                        font-size: 0.9rem;
+                                    ">
                                         <i class="fas ${priceChange24h >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
-                                        <span class="change-value">${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%</span>
-                                        <span class="change-period">24h</span>
+                                        <span>${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%</span>
+                                        <span style="font-size: 0.8rem; opacity: 0.8;">24h</span>
                                     </div>
-                                    <div class="price-change-item ${priceChange7d >= 0 ? 'positive' : 'negative'}">
+                                    
+                                    <div style="
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 6px;
+                                        padding: 8px 12px;
+                                        border-radius: 12px;
+                                        background: ${priceChange7d >= 0 ? 'rgba(0, 212, 170, 0.15)' : 'rgba(255, 107, 107, 0.15)'};
+                                        border: 1px solid ${priceChange7d >= 0 ? 'rgba(0, 212, 170, 0.3)' : 'rgba(255, 107, 107, 0.3)'};
+                                        color: ${priceChange7d >= 0 ? '#00d4aa' : '#ff6b6b'};
+                                        font-weight: 700;
+                                        font-size: 0.9rem;
+                                    ">
                                         <i class="fas ${priceChange7d >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
-                                        <span class="change-value">${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%</span>
-                                        <span class="change-period">7d</span>
+                                        <span>${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%</span>
+                                        <span style="font-size: 0.8rem; opacity: 0.8;">7d</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Cards de estatísticas principais -->
-                        <div class="crypto-stats-mobile">
-                            <div class="stats-grid">
-                                <div class="stat-card-mobile market-cap">
-                                    <div class="stat-icon">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-label">Cap. de Mercado</div>
-                                        <div class="stat-value">${formatCurrency(crypto.market_cap)}</div>
-                                    </div>
+                        <!-- Métricas Rápidas Mobile -->
+                        <div style="
+                            display: grid;
+                            grid-template-columns: repeat(2, 1fr);
+                            gap: 12px;
+                            margin-bottom: 20px;
+                        ">
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 12px;
+                                padding: 15px;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    width: 40px;
+                                    height: 40px;
+                                    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                                    border-radius: 10px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    margin: 0 auto 10px;
+                                    font-size: 1.2rem;
+                                    color: white;
+                                ">
+                                    <i class="fas fa-chart-pie"></i>
                                 </div>
-                                
-                                <div class="stat-card-mobile volume">
-                                    <div class="stat-icon">
-                                        <i class="fas fa-chart-bar"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-label">Volume 24h</div>
-                                        <div class="stat-value">${formatCurrency(crypto.total_volume)}</div>
-                                    </div>
+                                <div style="font-size: 0.8rem; color: #a0a0a0; margin-bottom: 5px;">Cap. de Mercado</div>
+                                <div style="font-size: 1rem; font-weight: 700; color: white;">${formatCurrency(crypto.market_cap)}</div>
+                            </div>
+                            
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 12px;
+                                padding: 15px;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    width: 40px;
+                                    height: 40px;
+                                    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+                                    border-radius: 10px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    margin: 0 auto 10px;
+                                    font-size: 1.2rem;
+                                    color: white;
+                                ">
+                                    <i class="fas fa-chart-bar"></i>
                                 </div>
-                                
-                                <div class="stat-card-mobile supply">
-                                    <div class="stat-icon">
-                                        <i class="fas fa-coins"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-label">Circulação</div>
-                                        <div class="stat-value">${formatNumber(crypto.circulating_supply)}</div>
-                                        <div class="stat-symbol">${crypto.symbol.toUpperCase()}</div>
-                                    </div>
+                                <div style="font-size: 0.8rem; color: #a0a0a0; margin-bottom: 5px;">Volume 24h</div>
+                                <div style="font-size: 1rem; font-weight: 700; color: white;">${formatCurrency(crypto.total_volume)}</div>
+                            </div>
+                            
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 12px;
+                                padding: 15px;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    width: 40px;
+                                    height: 40px;
+                                    background: linear-gradient(135deg, #00d4aa, #00f5d4);
+                                    border-radius: 10px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    margin: 0 auto 10px;
+                                    font-size: 1.2rem;
+                                    color: white;
+                                ">
+                                    <i class="fas fa-coins"></i>
                                 </div>
-                                
-                                <div class="stat-card-mobile ath">
-                                    <div class="stat-icon">
-                                        <i class="fas fa-trophy"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-label">ATH</div>
-                                        <div class="stat-value">${formatCurrency(crypto.ath || 0)}</div>
-                                    </div>
+                                <div style="font-size: 0.8rem; color: #a0a0a0; margin-bottom: 5px;">Circulação</div>
+                                <div style="font-size: 1rem; font-weight: 700; color: white;">${formatNumber(crypto.circulating_supply)}</div>
+                                <div style="font-size: 0.7rem; color: #a0a0a0; margin-top: 3px;">${crypto.symbol.toUpperCase()}</div>
+                            </div>
+                            
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 12px;
+                                padding: 15px;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    width: 40px;
+                                    height: 40px;
+                                    background: linear-gradient(135deg, #ffd700, #ffed4e);
+                                    border-radius: 10px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    margin: 0 auto 10px;
+                                    font-size: 1.2rem;
+                                    color: white;
+                                ">
+                                    <i class="fas fa-trophy"></i>
                                 </div>
+                                <div style="font-size: 0.8rem; color: #a0a0a0; margin-bottom: 5px;">ATH</div>
+                                <div style="font-size: 1rem; font-weight: 700; color: white;">${formatCurrency(crypto.ath || 0)}</div>
                             </div>
                         </div>
                         
-                        <!-- Seção do gráfico -->
-                        <div class="crypto-chart-mobile">
-                            <div class="chart-header">
-                                <h3 class="chart-title">
-                                    <i class="fas fa-chart-line"></i>
-                                    Gráfico ${crypto.symbol.toUpperCase()}/USD
-                                </h3>
-                                <div class="chart-period-selector">
-                                    <button class="period-btn active" data-period="1D">1D</button>
-                                    <button class="period-btn" data-period="1W">1W</button>
-                                    <button class="period-btn" data-period="1M">1M</button>
-                                    <button class="period-btn" data-period="1Y">1Y</button>
+                        <!-- Métricas Técnicas Mobile -->
+                        <div style="
+                            display: grid;
+                            grid-template-columns: repeat(2, 1fr);
+                            gap: 12px;
+                            margin-bottom: 20px;
+                        ">
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 12px;
+                                padding: 15px;
+                                text-align: center;
+                            ">
+                                <div class="rsi-value rsi-${rsiClass}" style="
+                                    text-align: center;
+                                    padding: 8px 12px;
+                                    border-radius: 8px;
+                                    font-weight: 700;
+                                    font-size: 1rem;
+                                    border: 2px solid;
+                                    margin-bottom: 8px;
+                                    display: inline-block;
+                                ">RSI: ${rsi.toFixed(1)}</div>
+                                <div style="font-size: 0.8rem; color: #a0a0a0;">Índice de Força</div>
+                            </div>
+                            
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 12px;
+                                padding: 15px;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    font-size: 1.2rem;
+                                    font-weight: 700;
+                                    color: ${athDistance !== null && athDistance > 50 ? '#ff6b6b' : '#00d4aa'};
+                                    margin-bottom: 8px;
+                                ">${athDistance !== null ? `${athDistance.toFixed(1)}%` : 'N/A'}</div>
+                                <div style="font-size: 0.8rem; color: #a0a0a0;">Dist. do ATH</div>
+                            </div>
+                            
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 12px;
+                                padding: 15px;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    font-size: 1.2rem;
+                                    font-weight: 700;
+                                    color: white;
+                                    margin-bottom: 8px;
+                                ">${volumeRatio !== null ? `${volumeRatio.toFixed(1)}%` : 'N/A'}</div>
+                                <div style="font-size: 0.8rem; color: #a0a0a0;">Vol/Market Cap</div>
+                            </div>
+                            
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 12px;
+                                padding: 15px;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    font-size: 1.2rem;
+                                    font-weight: 700;
+                                    color: white;
+                                    margin-bottom: 8px;
+                                ">${high24h !== null ? formatCurrency(high24h) : 'N/A'}</div>
+                                <div style="font-size: 0.8rem; color: #a0a0a0;">Máximo 24h</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Seção do Gráfico Mobile -->
+                        <div style="
+                            background: rgba(255, 255, 255, 0.02);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 15px;
+                            padding: 20px;
+                            margin-bottom: 20px;
+                        ">
+                            <div style="
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-bottom: 15px;
+                                flex-wrap: wrap;
+                                gap: 10px;
+                            ">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="
+                                        width: 35px;
+                                        height: 35px;
+                                        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                                        border-radius: 10px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        font-size: 1rem;
+                                        color: white;
+                                    ">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <h3 style="
+                                        font-size: 1.3rem;
+                                        font-weight: 700;
+                                        margin: 0;
+                                        background: linear-gradient(135deg, #ffffff, #e0e0e0);
+                                        -webkit-background-clip: text;
+                                        -webkit-text-fill-color: transparent;
+                                        background-clip: text;
+                                    ">Gráfico ${crypto.symbol.toUpperCase()}/USD</h3>
+                                </div>
+                                
+                                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                    <button style="
+                                        padding: 8px 12px;
+                                        border: 1px solid rgba(255, 255, 255, 0.2);
+                                        background: rgba(255, 255, 255, 0.05);
+                                        color: white;
+                                        border-radius: 8px;
+                                        font-weight: 600;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-size: 0.8rem;
+                                    " onmouseover="this.style.background='rgba(0, 212, 170, 0.2)'; this.style.borderColor='rgba(0, 212, 170, 0.5)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'" onclick="showCryptoChart('${crypto.id}', '1h')">1H</button>
+                                    <button style="
+                                        padding: 8px 12px;
+                                        border: 1px solid rgba(0, 212, 170, 0.5);
+                                        background: rgba(0, 212, 170, 0.2);
+                                        color: #00d4aa;
+                                        border-radius: 8px;
+                                        font-weight: 600;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-size: 0.8rem;
+                                    " onclick="showCryptoChart('${crypto.id}', '4h')">4H</button>
+                                    <button style="
+                                        padding: 8px 12px;
+                                        border: 1px solid rgba(255, 255, 255, 0.2);
+                                        background: rgba(255, 255, 255, 0.05);
+                                        color: white;
+                                        border-radius: 8px;
+                                        font-weight: 600;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-size: 0.8rem;
+                                    " onmouseover="this.style.background='rgba(0, 212, 170, 0.2)'; this.style.borderColor='rgba(0, 212, 170, 0.5)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'" onclick="showCryptoChart('${crypto.id}', '1d')">1D</button>
+                                    <button style="
+                                        padding: 8px 12px;
+                                        border: 1px solid rgba(255, 255, 255, 0.2);
+                                        background: rgba(255, 255, 255, 0.05);
+                                        color: white;
+                                        border-radius: 8px;
+                                        font-weight: 600;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-size: 0.8rem;
+                                    " onmouseover="this.style.background='rgba(0, 212, 170, 0.2)'; this.style.borderColor='rgba(0, 212, 170, 0.5)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'" onclick="showCryptoChart('${crypto.id}', '1w')">1W</button>
                                 </div>
                             </div>
                             
-                            <div class="chart-container">
-                                <div id="tradingview-chart-${crypto.id}" class="tradingview-widget">
-                                    <!-- Gráfico TradingView será carregado aqui -->
+                            <div style="
+                                background: rgba(0, 0, 0, 0.3);
+                                border-radius: 12px;
+                                padding: 15px;
+                                margin-bottom: 15px;
+                                min-height: 300px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                            ">
+                                <div id="tradingview-chart-${crypto.id}" style="width: 100%; height: 300px;">
+                                    <div style="
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: center;
+                                        justify-content: center;
+                                        height: 100%;
+                                        color: #a0a0a0;
+                                    ">
+                                        <i class="fas fa-chart-line" style="font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5;"></i>
+                                        <p style="margin: 0; font-size: 1rem;">Carregando gráfico...</p>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="chart-actions">
-                                <a href="https://www.tradingview.com/symbols/${crypto.symbol.toUpperCase()}USD/" target="_blank" class="action-btn primary">
+                            <!-- Ações Rápidas Mobile -->
+                            <div style="
+                                display: flex;
+                                gap: 8px;
+                                flex-wrap: wrap;
+                                justify-content: center;
+                            ">
+                                <a href="https://www.tradingview.com/symbols/${crypto.symbol.toUpperCase()}USD/" target="_blank" style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 6px;
+                                    padding: 10px 16px;
+                                    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                                    color: white;
+                                    text-decoration: none;
+                                    border-radius: 10px;
+                                    font-weight: 600;
+                                    transition: all 0.3s ease;
+                                    font-size: 0.9rem;
+                                    box-shadow: 0 3px 10px rgba(0, 212, 170, 0.3);
+                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 15px rgba(0, 212, 170, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 10px rgba(0, 212, 170, 0.3)'">
                                     <i class="fas fa-external-link-alt"></i>
-                                    <span>Ver no TradingView</span>
+                                    <span>TradingView</span>
                                 </a>
-                                <button onclick="openTradingViewFullscreen('${crypto.symbol.toUpperCase()}USD')" class="action-btn secondary">
+                                
+                                <button onclick="openTradingViewFullscreen('${crypto.symbol.toUpperCase()}USD')" style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 6px;
+                                    padding: 10px 16px;
+                                    background: rgba(255, 255, 255, 0.1);
+                                    color: white;
+                                    border: 1px solid rgba(255, 255, 255, 0.2);
+                                    border-radius: 10px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                    font-size: 0.9rem;
+                                " onmouseover="this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'">
                                     <i class="fas fa-expand"></i>
                                     <span>Tela Cheia</span>
+                                </button>
+                                
+                                <button onclick="toggleFavorite && toggleFavorite('${crypto.id}')" style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 6px;
+                                    padding: 10px 16px;
+                                    background: rgba(255, 255, 255, 0.1);
+                                    color: white;
+                                    border: 1px solid rgba(255, 255, 255, 0.2);
+                                    border-radius: 10px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                    font-size: 0.9rem;
+                                " onmouseover="this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'">
+                                    <i class="fas fa-star"></i>
+                                    <span>Favoritar</span>
+                                </button>
+                                
+                                <button onclick="copyToClipboard('${crypto.symbol.toUpperCase()}USD')" style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 6px;
+                                    padding: 10px 16px;
+                                    background: rgba(255, 255, 255, 0.1);
+                                    color: white;
+                                    border: 1px solid rgba(255, 255, 255, 0.2);
+                                    border-radius: 10px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                    font-size: 0.9rem;
+                                " onmouseover="this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'">
+                                    <i class="fas fa-copy"></i>
+                                    <span>Copiar</span>
                                 </button>
                             </div>
                         </div>
                         
-                        <!-- Análise de Swing Trade (se ativo) -->
+                        <!-- Análise de Swing Trade Mobile (se ativo) -->
                         ${currentFilter === 'swing-trade' ? `
-                        <div class="swing-trade-mobile">
-                            <div class="analysis-header">
-                                <h3 class="analysis-title">
-                                    <i class="fas fa-brain"></i>
-                                    Análise de Swing Trade
-                                </h3>
-                                <div class="overall-score">
-                                    <div class="score-circle ${getScoreColorClass(getSwingTradeScore(crypto).percentage)}">
-                                        <span class="score-number">${getSwingTradeScore(crypto).percentage}%</span>
+                        <div style="
+                            background: rgba(255, 255, 255, 0.02);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 15px;
+                            padding: 20px;
+                            margin-bottom: 20px;
+                        ">
+                            <div style="
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-bottom: 20px;
+                                flex-wrap: wrap;
+                                gap: 15px;
+                            ">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="
+                                        width: 35px;
+                                        height: 35px;
+                                        background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+                                        border-radius: 10px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        font-size: 1rem;
+                                        color: white;
+                                    ">
+                                        <i class="fas fa-brain"></i>
                                     </div>
-                                    <span class="score-label">Score Total</span>
+                                    <h3 style="
+                                        font-size: 1.3rem;
+                                        font-weight: 700;
+                                        margin: 0;
+                                        background: linear-gradient(135deg, #ffffff, #e0e0e0);
+                                        -webkit-background-clip: text;
+                                        -webkit-text-fill-color: transparent;
+                                        background-clip: text;
+                                    ">Análise de Swing Trade</h3>
+                                </div>
+                                
+                                <div style="text-align: center;">
+                                    <div style="
+                                        width: 60px;
+                                        height: 60px;
+                                        border-radius: 50%;
+                                        background: conic-gradient(${getScoreColor(getSwingTradeScore(crypto).percentage)} 0deg, ${getScoreColor(getSwingTradeScore(crypto).percentage)} ${(getSwingTradeScore(crypto).percentage/100)*360}deg, rgba(255,255,255,0.1) ${(getSwingTradeScore(crypto).percentage/100)*360}deg, rgba(255,255,255,0.1) 360deg);
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        margin: 0 auto 8px;
+                                        position: relative;
+                                    ">
+                                        <div style="
+                                            width: 45px;
+                                            height: 45px;
+                                            background: #1a1a1a;
+                                            border-radius: 50%;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            font-weight: 800;
+                                            font-size: 1rem;
+                                            color: ${getScoreColor(getSwingTradeScore(crypto).percentage)};
+                                        ">${getSwingTradeScore(crypto).percentage}%</div>
+                                    </div>
+                                    <div style="font-size: 0.8rem; color: #a0a0a0;">Score Total</div>
                                 </div>
                             </div>
                             
-                            <div class="metrics-grid">
-                                <div class="metric-card volume-metric">
-                                    <div class="metric-header">
-                                        <i class="fas fa-chart-bar"></i>
-                                        <span>Volume</span>
+                            <div style="
+                                display: grid;
+                                grid-template-columns: repeat(2, 1fr);
+                                gap: 12px;
+                            ">
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 15px;
+                                ">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                        <i class="fas fa-chart-bar" style="color: #00d4aa; font-size: 1rem;"></i>
+                                        <span style="font-size: 0.9rem; font-weight: 600; color: white;">Volume</span>
                                     </div>
-                                    <div class="metric-score">${getSwingTradeScore(crypto).volume}/25</div>
-                                    <div class="metric-bar">
-                                        <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).volume/25)*100}%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="metric-card momentum-metric">
-                                    <div class="metric-header">
-                                        <i class="fas fa-rocket"></i>
-                                        <span>Momentum</span>
-                                    </div>
-                                    <div class="metric-score">${getSwingTradeScore(crypto).momentum}/30</div>
-                                    <div class="metric-bar">
-                                        <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).momentum/30)*100}%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="metric-card marketcap-metric">
-                                    <div class="metric-header">
-                                        <i class="fas fa-chart-pie"></i>
-                                        <span>Market Cap</span>
-                                    </div>
-                                    <div class="metric-score">${getSwingTradeScore(crypto).marketCap}/20</div>
-                                    <div class="metric-bar">
-                                        <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).marketCap/20)*100}%"></div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 8px;">${getSwingTradeScore(crypto).volume}/25</div>
+                                    <div style="
+                                        width: 100%;
+                                        height: 6px;
+                                        background: rgba(255, 255, 255, 0.1);
+                                        border-radius: 3px;
+                                        overflow: hidden;
+                                    ">
+                                        <div style="
+                                            width: ${(getSwingTradeScore(crypto).volume/25)*100}%;
+                                            height: 100%;
+                                            background: linear-gradient(90deg, #00d4aa, #00f5d4);
+                                            border-radius: 3px;
+                                        "></div>
                                     </div>
                                 </div>
                                 
-                                <div class="metric-card volatility-metric">
-                                    <div class="metric-header">
-                                        <i class="fas fa-bolt"></i>
-                                        <span>Volatilidade</span>
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 15px;
+                                ">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                        <i class="fas fa-rocket" style="color: #ff6b6b; font-size: 1rem;"></i>
+                                        <span style="font-size: 0.9rem; font-weight: 600; color: white;">Momentum</span>
                                     </div>
-                                    <div class="metric-score">${getSwingTradeScore(crypto).volatility}/15</div>
-                                    <div class="metric-bar">
-                                        <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).volatility/15)*100}%"></div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 8px;">${getSwingTradeScore(crypto).momentum}/30</div>
+                                    <div style="
+                                        width: 100%;
+                                        height: 6px;
+                                        background: rgba(255, 255, 255, 0.1);
+                                        border-radius: 3px;
+                                        overflow: hidden;
+                                    ">
+                                        <div style="
+                                            width: ${(getSwingTradeScore(crypto).momentum/30)*100}%;
+                                            height: 100%;
+                                            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+                                            border-radius: 3px;
+                                        "></div>
                                     </div>
                                 </div>
                                 
-                                <div class="metric-card stability-metric">
-                                    <div class="metric-header">
-                                        <i class="fas fa-shield-alt"></i>
-                                        <span>Estabilidade</span>
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 15px;
+                                ">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                        <i class="fas fa-chart-pie" style="color: #ffd700; font-size: 1rem;"></i>
+                                        <span style="font-size: 0.9rem; font-weight: 600; color: white;">Market Cap</span>
                                     </div>
-                                    <div class="metric-score">${getSwingTradeScore(crypto).stability}/10</div>
-                                    <div class="metric-bar">
-                                        <div class="metric-fill" style="width: ${(getSwingTradeScore(crypto).stability/10)*100}%"></div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 8px;">${getSwingTradeScore(crypto).marketCap}/20</div>
+                                    <div style="
+                                        width: 100%;
+                                        height: 6px;
+                                        background: rgba(255, 255, 255, 0.1);
+                                        border-radius: 3px;
+                                        overflow: hidden;
+                                    ">
+                                        <div style="
+                                            width: ${(getSwingTradeScore(crypto).marketCap/20)*100}%;
+                                            height: 100%;
+                                            background: linear-gradient(90deg, #ffd700, #ffed4e);
+                                            border-radius: 3px;
+                                        "></div>
+                                    </div>
+                                </div>
+                                
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 15px;
+                                ">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                        <i class="fas fa-bolt" style="color: #9c27b0; font-size: 1rem;"></i>
+                                        <span style="font-size: 0.9rem; font-weight: 600; color: white;">Volatilidade</span>
+                                    </div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 8px;">${getSwingTradeScore(crypto).volatility}/15</div>
+                                    <div style="
+                                        width: 100%;
+                                        height: 6px;
+                                        background: rgba(255, 255, 255, 0.1);
+                                        border-radius: 3px;
+                                        overflow: hidden;
+                                    ">
+                                        <div style="
+                                            width: ${(getSwingTradeScore(crypto).volatility/15)*100}%;
+                                            height: 100%;
+                                            background: linear-gradient(90deg, #9c27b0, #ba68c8);
+                                            border-radius: 3px;
+                                        "></div>
+                                    </div>
+                                </div>
+                                
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 15px;
+                                ">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                        <i class="fas fa-shield-alt" style="color: #4caf50; font-size: 1rem;"></i>
+                                        <span style="font-size: 0.9rem; font-weight: 600; color: white;">Estabilidade</span>
+                                    </div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 8px;">${getSwingTradeScore(crypto).stability}/10</div>
+                                    <div style="
+                                        width: 100%;
+                                        height: 6px;
+                                        background: rgba(255, 255, 255, 0.1);
+                                        border-radius: 3px;
+                                        overflow: hidden;
+                                    ">
+                                        <div style="
+                                            width: ${(getSwingTradeScore(crypto).stability/10)*100}%;
+                                            height: 100%;
+                                            background: linear-gradient(90deg, #4caf50, #66bb6a);
+                                            border-radius: 3px;
+                                        "></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         ` : ''}
                         
-                        <!-- Informações adicionais -->
-                        <div class="additional-info">
-                            <div class="info-card">
-                                <div class="info-header">
+                        <!-- Informações Técnicas Mobile -->
+                        <div style="
+                            background: rgba(255, 255, 255, 0.02);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 15px;
+                            padding: 20px;
+                            margin-bottom: 20px;
+                        ">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                <div style="
+                                    width: 35px;
+                                    height: 35px;
+                                    background: linear-gradient(135deg, #9c27b0, #ba68c8);
+                                    border-radius: 10px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-size: 1rem;
+                                    color: white;
+                                ">
                                     <i class="fas fa-info-circle"></i>
-                                    <span>Informações Técnicas</span>
                                 </div>
-                                <div class="info-content">
-                                    <div class="info-row">
-                                        <span class="info-label">Preço Máximo Histórico:</span>
-                                        <span class="info-value">${formatCurrency(crypto.ath || 0)}</span>
-                                    </div>
-                                    <div class="info-row">
-                                        <span class="info-label">Data do ATH:</span>
-                                        <span class="info-value">${crypto.ath_date ? new Date(crypto.ath_date).toLocaleDateString('pt-BR') : 'N/A'}</span>
-                                    </div>
-                                    <div class="info-row">
-                                        <span class="info-label">Fornecimento Total:</span>
-                                        <span class="info-value">${formatNumber(crypto.total_supply || 0)} ${crypto.symbol.toUpperCase()}</span>
-                                    </div>
+                                <h3 style="
+                                    font-size: 1.3rem;
+                                    font-weight: 700;
+                                    margin: 0;
+                                    background: linear-gradient(135deg, #ffffff, #e0e0e0);
+                                    -webkit-background-clip: text;
+                                    -webkit-text-fill-color: transparent;
+                                    background-clip: text;
+                                ">Informações Técnicas</h3>
+                            </div>
+                            
+                            <div style="
+                                display: grid;
+                                grid-template-columns: 1fr;
+                                gap: 12px;
+                            ">
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 15px;
+                                ">
+                                    <div style="font-size: 0.8rem; color: #a0a0a0; margin-bottom: 5px;">Preço Máximo Histórico</div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: white;">${formatCurrency(crypto.ath || 0)}</div>
+                                </div>
+                                
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 15px;
+                                ">
+                                    <div style="font-size: 0.8rem; color: #a0a0a0; margin-bottom: 5px;">Data do ATH</div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: white;">${crypto.ath_change_percentage ? new Date(crypto.ath_date).toLocaleDateString('pt-BR') : 'N/A'}</div>
+                                </div>
+                                
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 15px;
+                                ">
+                                    <div style="font-size: 0.8rem; color: #a0a0a0; margin-bottom: 5px;">Supply Total</div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: white;">${formatNumber(crypto.total_supply || 0)} ${crypto.symbol.toUpperCase()}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 `;
             } else {
-                // Layout Desktop (novo design baseado no mobile, mas adaptado para desktop)
+                // Layout Desktop - Design Moderno e Organizado
+                const rsi = calculateRSI(crypto);
+                const rsiClass = rsi < 20 ? 'extreme' : rsi < 25 ? 'strong' : 'moderate';
+                const athDistance = (crypto.ath && crypto.current_price) ? ((crypto.ath - crypto.current_price) / crypto.ath) * 100 : null;
+                const high24h = crypto.high_24h || null;
+                const low24h = crypto.low_24h || null;
+                const volumeRatio = (crypto.total_volume && crypto.market_cap) ? (crypto.total_volume / crypto.market_cap) * 100 : null;
+                
                 modalBody.innerHTML = `
-                    <div class="crypto-details">
-                        <!-- Header Desktop -->
-                        <div class="crypto-header-desktop">
-                            <div class="crypto-hero-desktop">
-                                <div class="crypto-avatar-container-desktop">
-                                    <img src="${crypto.image}" alt="${crypto.name}" class="crypto-avatar-desktop">
-                                    <div class="crypto-status-indicator-desktop ${priceChange24h >= 0 ? 'positive' : 'negative'}"></div>
+                    <div class="crypto-details-desktop">
+                        <!-- Hero Section com Gradiente -->
+                        <div class="crypto-hero-section" style="
+                            background: linear-gradient(135deg, 
+                                ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.1)' : 'rgba(255, 107, 107, 0.1)'}, 
+                                rgba(0, 0, 0, 0.05));
+                            border-radius: 20px;
+                            padding: 30px;
+                            margin-bottom: 25px;
+                            border: 1px solid ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.2)' : 'rgba(255, 107, 107, 0.2)'};
+                            position: relative;
+                            overflow: hidden;
+                        ">
+                            <!-- Elementos decorativos -->
+                            <div style="
+                                position: absolute;
+                                top: -50px;
+                                right: -50px;
+                                width: 100px;
+                                height: 100px;
+                                background: ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.1)' : 'rgba(255, 107, 107, 0.1)'};
+                                border-radius: 50%;
+                                z-index: 0;
+                            "></div>
+                            
+                            <div style="display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1;">
+                                <!-- Info da Cripto -->
+                                <div style="display: flex; align-items: center; gap: 20px;">
+                                    <div style="position: relative;">
+                                        <img src="${crypto.image}" alt="${crypto.name}" style="
+                                            width: 80px;
+                                            height: 80px;
+                                            border-radius: 20px;
+                                            border: 3px solid ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.3)' : 'rgba(255, 107, 107, 0.3)'};
+                                            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+                                        ">
+                                        <div style="
+                                            position: absolute;
+                                            top: -5px;
+                                            right: -5px;
+                                            width: 20px;
+                                            height: 20px;
+                                            background: ${priceChange24h >= 0 ? '#00d4aa' : '#ff6b6b'};
+                                            border-radius: 50%;
+                                            border: 3px solid #1a1a1a;
+                                        "></div>
                                 </div>
-                                <div class="crypto-title-section-desktop">
-                                    <h1 class="crypto-name-desktop">${crypto.name}</h1>
-                                    <div class="crypto-symbol-badge-desktop">${crypto.symbol.toUpperCase()}</div>
-                                    <div class="crypto-rank-desktop">#${crypto.market_cap_rank || 'N/A'} no ranking</div>
+                                    
+                                    <div>
+                                        <h1 style="
+                                            font-size: 2.5rem;
+                                            font-weight: 800;
+                                            margin: 0 0 8px 0;
+                                            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+                                            -webkit-background-clip: text;
+                                            -webkit-text-fill-color: transparent;
+                                            background-clip: text;
+                                        ">${crypto.name}</h1>
+                                        
+                                        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                                            <span style="
+                                                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                                                color: white;
+                                                padding: 8px 16px;
+                                                border-radius: 25px;
+                                                font-weight: 700;
+                                                font-size: 1.1rem;
+                                                box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+                                            ">${crypto.symbol.toUpperCase()}</span>
+                                            
+                                            <span style="
+                                                background: rgba(255, 255, 255, 0.1);
+                                                color: #a0a0a0;
+                                                padding: 6px 12px;
+                                                border-radius: 15px;
+                                                font-size: 0.9rem;
+                                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                            ">#${crypto.market_cap_rank || 'N/A'} no ranking</span>
+                                        </div>
                                 </div>
                             </div>
                             
-                            <div class="crypto-price-section-desktop">
-                                <div class="current-price-desktop">${formatCurrency(crypto.current_price)}</div>
-                                <div class="price-changes-desktop">
-                                    <div class="price-change-item-desktop ${priceChange24h >= 0 ? 'positive' : 'negative'}">
+                                <!-- Preço e Mudanças -->
+                                <div style="text-align: right;">
+                                    <div style="
+                                        font-size: 3rem;
+                                        font-weight: 900;
+                                        margin-bottom: 10px;
+                                        background: linear-gradient(135deg, #ffffff, #e0e0e0);
+                                        -webkit-background-clip: text;
+                                        -webkit-text-fill-color: transparent;
+                                        background-clip: text;
+                                    ">${formatCurrency(crypto.current_price)}</div>
+                                    
+                                    <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                                        <div style="
+                                            display: flex;
+                                            align-items: center;
+                                            gap: 8px;
+                                            padding: 10px 16px;
+                                            border-radius: 15px;
+                                            background: ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.15)' : 'rgba(255, 107, 107, 0.15)'};
+                                            border: 1px solid ${priceChange24h >= 0 ? 'rgba(0, 212, 170, 0.3)' : 'rgba(255, 107, 107, 0.3)'};
+                                            color: ${priceChange24h >= 0 ? '#00d4aa' : '#ff6b6b'};
+                                            font-weight: 700;
+                                        ">
                                         <i class="fas ${priceChange24h >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
-                                        <span class="change-value">${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%</span>
-                                        <span class="change-period">24h</span>
+                                            <span>${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%</span>
+                                            <span style="font-size: 0.8rem; opacity: 0.8;">24h</span>
                                     </div>
-                                    <div class="price-change-item-desktop ${priceChange7d >= 0 ? 'positive' : 'negative'}">
+                                        
+                                        <div style="
+                                            display: flex;
+                                            align-items: center;
+                                            gap: 8px;
+                                            padding: 10px 16px;
+                                            border-radius: 15px;
+                                            background: ${priceChange7d >= 0 ? 'rgba(0, 212, 170, 0.15)' : 'rgba(255, 107, 107, 0.15)'};
+                                            border: 1px solid ${priceChange7d >= 0 ? 'rgba(0, 212, 170, 0.3)' : 'rgba(255, 107, 107, 0.3)'};
+                                            color: ${priceChange7d >= 0 ? '#00d4aa' : '#ff6b6b'};
+                                            font-weight: 700;
+                                        ">
                                         <i class="fas ${priceChange7d >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
-                                        <span class="change-value">${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%</span>
-                                        <span class="change-period">7d</span>
+                                            <span>${priceChange7d >= 0 ? '+' : ''}${priceChange7d.toFixed(2)}%</span>
+                                            <span style="font-size: 0.8rem; opacity: 0.8;">7d</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Estatísticas Desktop -->
-                        <div class="crypto-stats-desktop">
-                            <div class="stats-grid-desktop">
-                                <div class="stat-card-desktop market-cap">
-                                    <div class="stat-icon-desktop">
+                        <!-- Métricas Rápidas -->
+                        <div style="
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                            gap: 15px;
+                            margin-bottom: 25px;
+                        ">
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                                transition: all 0.3s ease;
+                                cursor: pointer;
+                            " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="
+                                    width: 50px;
+                                    height: 50px;
+                                    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                                    border-radius: 15px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    margin: 0 auto 15px;
+                                    font-size: 1.5rem;
+                                    color: white;
+                                ">
                                         <i class="fas fa-chart-pie"></i>
                                     </div>
-                                    <div class="stat-content-desktop">
-                                        <div class="stat-label-desktop">Cap. de Mercado</div>
-                                        <div class="stat-value-desktop">${formatCurrency(crypto.market_cap)}</div>
-                                    </div>
+                                <div style="font-size: 0.9rem; color: #a0a0a0; margin-bottom: 8px;">Cap. de Mercado</div>
+                                <div style="font-size: 1.3rem; font-weight: 700; color: white;">${formatCurrency(crypto.market_cap)}</div>
                                 </div>
                                 
-                                <div class="stat-card-desktop volume">
-                                    <div class="stat-icon-desktop">
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                                transition: all 0.3s ease;
+                                cursor: pointer;
+                            " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="
+                                    width: 50px;
+                                    height: 50px;
+                                    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+                                    border-radius: 15px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    margin: 0 auto 15px;
+                                    font-size: 1.5rem;
+                                    color: white;
+                                ">
                                         <i class="fas fa-chart-bar"></i>
                                     </div>
-                                    <div class="stat-content-desktop">
-                                        <div class="stat-label-desktop">Volume 24h</div>
-                                        <div class="stat-value-desktop">${formatCurrency(crypto.total_volume)}</div>
-                                    </div>
+                                <div style="font-size: 0.9rem; color: #a0a0a0; margin-bottom: 8px;">Volume 24h</div>
+                                <div style="font-size: 1.3rem; font-weight: 700; color: white;">${formatCurrency(crypto.total_volume)}</div>
                                 </div>
                                 
-                                <div class="stat-card-desktop supply">
-                                    <div class="stat-icon-desktop">
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                                transition: all 0.3s ease;
+                                cursor: pointer;
+                            " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="
+                                    width: 50px;
+                                    height: 50px;
+                                    background: linear-gradient(135deg, #00d4aa, #00f5d4);
+                                    border-radius: 15px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    margin: 0 auto 15px;
+                                    font-size: 1.5rem;
+                                    color: white;
+                                ">
                                         <i class="fas fa-coins"></i>
                                     </div>
-                                    <div class="stat-content-desktop">
-                                        <div class="stat-label-desktop">Circulação</div>
-                                        <div class="stat-value-desktop">${formatNumber(crypto.circulating_supply)}</div>
-                                        <div class="stat-symbol-desktop">${crypto.symbol.toUpperCase()}</div>
-                                    </div>
+                                <div style="font-size: 0.9rem; color: #a0a0a0; margin-bottom: 8px;">Circulação</div>
+                                <div style="font-size: 1.3rem; font-weight: 700; color: white;">${formatNumber(crypto.circulating_supply)}</div>
+                                <div style="font-size: 0.8rem; color: #a0a0a0; margin-top: 5px;">${crypto.symbol.toUpperCase()}</div>
                                 </div>
                                 
-                                <div class="stat-card-desktop ath">
-                                    <div class="stat-icon-desktop">
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                                transition: all 0.3s ease;
+                                cursor: pointer;
+                            " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                                <div style="
+                                    width: 50px;
+                                    height: 50px;
+                                    background: linear-gradient(135deg, #ffd700, #ffed4e);
+                                    border-radius: 15px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    margin: 0 auto 15px;
+                                    font-size: 1.5rem;
+                                    color: white;
+                                ">
                                         <i class="fas fa-trophy"></i>
                                     </div>
-                                    <div class="stat-content-desktop">
-                                        <div class="stat-label-desktop">ATH</div>
-                                        <div class="stat-value-desktop">${formatCurrency(crypto.ath || 0)}</div>
+                                <div style="font-size: 0.9rem; color: #a0a0a0; margin-bottom: 8px;">ATH</div>
+                                <div style="font-size: 1.3rem; font-weight: 700; color: white;">${formatCurrency(crypto.ath || 0)}</div>
                                     </div>
                                 </div>
+                        
+                        <!-- Métricas Técnicas -->
+                        <div style="
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                            gap: 15px;
+                            margin-bottom: 25px;
+                        ">
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                            ">
+                                <div class="rsi-value rsi-${rsiClass}" style="
+                                    text-align: center;
+                                    padding: 12px 16px;
+                                    border-radius: 12px;
+                                    font-weight: 700;
+                                    font-size: 1.2rem;
+                                    border: 2px solid;
+                                    margin-bottom: 10px;
+                                    display: inline-block;
+                                ">RSI: ${rsi.toFixed(1)}</div>
+                                <div style="font-size: 0.9rem; color: #a0a0a0;">Índice de Força Relativa</div>
+                            </div>
+                            
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    font-size: 1.5rem;
+                                    font-weight: 700;
+                                    color: ${athDistance !== null && athDistance > 50 ? '#ff6b6b' : '#00d4aa'};
+                                    margin-bottom: 10px;
+                                ">${athDistance !== null ? `${athDistance.toFixed(1)}%` : 'N/A'}</div>
+                                <div style="font-size: 0.9rem; color: #a0a0a0;">Distância do ATH</div>
+                        </div>
+                        
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    font-size: 1.5rem;
+                                    font-weight: 700;
+                                    color: white;
+                                    margin-bottom: 10px;
+                                ">${volumeRatio !== null ? `${volumeRatio.toFixed(1)}%` : 'N/A'}</div>
+                                <div style="font-size: 0.9rem; color: #a0a0a0;">Vol/Market Cap</div>
+                            </div>
+                            
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    font-size: 1.5rem;
+                                    font-weight: 700;
+                                    color: white;
+                                    margin-bottom: 10px;
+                                ">${high24h !== null ? formatCurrency(high24h) : 'N/A'}</div>
+                                <div style="font-size: 0.9rem; color: #a0a0a0;">Máximo 24h</div>
+                            </div>
+                            
+                            <div style="
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                border-radius: 15px;
+                                padding: 20px;
+                                text-align: center;
+                            ">
+                                <div style="
+                                    font-size: 1.5rem;
+                                    font-weight: 700;
+                                    color: white;
+                                    margin-bottom: 10px;
+                                ">${low24h !== null ? formatCurrency(low24h) : 'N/A'}</div>
+                                <div style="font-size: 0.9rem; color: #a0a0a0;">Mínimo 24h</div>
                             </div>
                         </div>
                         
-                        <!-- Gráfico Desktop -->
-                        <div class="crypto-chart-desktop">
-                            <div class="chart-header-desktop">
-                                <h3 class="chart-title-desktop">
+                        <!-- Seção do Gráfico -->
+                        <div style="
+                            background: rgba(255, 255, 255, 0.02);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 20px;
+                            padding: 25px;
+                            margin-bottom: 25px;
+                        ">
+                            <div style="
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-bottom: 20px;
+                                flex-wrap: wrap;
+                                gap: 15px;
+                            ">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="
+                                        width: 40px;
+                                        height: 40px;
+                                        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                                        border-radius: 12px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        font-size: 1.2rem;
+                                        color: white;
+                                    ">
                                     <i class="fas fa-chart-line"></i>
-                                    Gráfico ${crypto.symbol.toUpperCase()}/USD
-                                </h3>
-                                <div class="chart-period-selector-desktop">
-                                    <button class="period-btn-desktop active" data-period="1D">1D</button>
-                                    <button class="period-btn-desktop" data-period="1W">1W</button>
-                                    <button class="period-btn-desktop" data-period="1M">1M</button>
-                                    <button class="period-btn-desktop" data-period="1Y">1Y</button>
+                                </div>
+                                    <h3 style="
+                                        font-size: 1.5rem;
+                                        font-weight: 700;
+                                        margin: 0;
+                                        background: linear-gradient(135deg, #ffffff, #e0e0e0);
+                                        -webkit-background-clip: text;
+                                        -webkit-text-fill-color: transparent;
+                                        background-clip: text;
+                                    ">Gráfico ${crypto.symbol.toUpperCase()}/USD</h3>
+                            </div>
+                            
+                                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                    <button style="
+                                        padding: 10px 16px;
+                                        border: 1px solid rgba(255, 255, 255, 0.2);
+                                        background: rgba(255, 255, 255, 0.05);
+                                        color: white;
+                                        border-radius: 10px;
+                                        font-weight: 600;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-size: 0.9rem;
+                                    " onmouseover="this.style.background='rgba(0, 212, 170, 0.2)'; this.style.borderColor='rgba(0, 212, 170, 0.5)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'" onclick="showCryptoChart('${crypto.id}', '1h')">1H</button>
+                                    <button style="
+                                        padding: 10px 16px;
+                                        border: 1px solid rgba(0, 212, 170, 0.5);
+                                        background: rgba(0, 212, 170, 0.2);
+                                        color: #00d4aa;
+                                        border-radius: 10px;
+                                        font-weight: 600;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-size: 0.9rem;
+                                    " onclick="showCryptoChart('${crypto.id}', '4h')">4H</button>
+                                    <button style="
+                                        padding: 10px 16px;
+                                        border: 1px solid rgba(255, 255, 255, 0.2);
+                                        background: rgba(255, 255, 255, 0.05);
+                                        color: white;
+                                        border-radius: 10px;
+                                        font-weight: 600;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-size: 0.9rem;
+                                    " onmouseover="this.style.background='rgba(0, 212, 170, 0.2)'; this.style.borderColor='rgba(0, 212, 170, 0.5)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'" onclick="showCryptoChart('${crypto.id}', '1d')">1D</button>
+                                    <button style="
+                                        padding: 10px 16px;
+                                        border: 1px solid rgba(255, 255, 255, 0.2);
+                                        background: rgba(255, 255, 255, 0.05);
+                                        color: white;
+                                        border-radius: 10px;
+                                        font-weight: 600;
+                                        cursor: pointer;
+                                        transition: all 0.3s ease;
+                                        font-size: 0.9rem;
+                                    " onmouseover="this.style.background='rgba(0, 212, 170, 0.2)'; this.style.borderColor='rgba(0, 212, 170, 0.5)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.2)'" onclick="showCryptoChart('${crypto.id}', '1w')">1W</button>
                                 </div>
                             </div>
                             
-                            <div class="chart-container-desktop">
-                                <div id="tradingview-chart-${crypto.id}" class="tradingview-widget-desktop">
-                                    <!-- Gráfico TradingView será carregado aqui -->
+                            <div style="
+                                background: rgba(0, 0, 0, 0.3);
+                                border-radius: 15px;
+                                padding: 20px;
+                                margin-bottom: 20px;
+                                min-height: 400px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                border: 1px solid rgba(255, 255, 255, 0.1);
+                            ">
+                                <div id="tradingview-chart-${crypto.id}" style="width: 100%; height: 400px;">
+                                    <div style="
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: center;
+                                        justify-content: center;
+                                        height: 100%;
+                                        color: #a0a0a0;
+                                    ">
+                                        <i class="fas fa-chart-line" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+                                        <p style="margin: 0; font-size: 1.1rem;">Carregando gráfico...</p>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="chart-actions-desktop">
-                                <a href="https://www.tradingview.com/symbols/${crypto.symbol.toUpperCase()}USD/" target="_blank" class="action-btn-desktop primary">
+                            <!-- Ações Rápidas -->
+                            <div style="
+                                display: flex;
+                                gap: 12px;
+                                flex-wrap: wrap;
+                                justify-content: center;
+                            ">
+                                <a href="https://www.tradingview.com/symbols/${crypto.symbol.toUpperCase()}USD/" target="_blank" style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                    padding: 12px 20px;
+                                    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                                    color: white;
+                                    text-decoration: none;
+                                    border-radius: 12px;
+                                    font-weight: 600;
+                                    transition: all 0.3s ease;
+                                    box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+                                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0, 212, 170, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 212, 170, 0.3)'">
                                     <i class="fas fa-external-link-alt"></i>
                                     <span>Ver no TradingView</span>
                                 </a>
-                                <button onclick="openTradingViewFullscreen('${crypto.symbol.toUpperCase()}USD')" class="action-btn-desktop secondary">
+                                
+                                <button onclick="openTradingViewFullscreen('${crypto.symbol.toUpperCase()}USD')" style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                    padding: 12px 20px;
+                                    background: rgba(255, 255, 255, 0.1);
+                                    color: white;
+                                    border: 1px solid rgba(255, 255, 255, 0.2);
+                                    border-radius: 12px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                " onmouseover="this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'">
                                     <i class="fas fa-expand"></i>
                                     <span>Tela Cheia</span>
                                 </button>
+                                
+                                <button onclick="toggleFavorite && toggleFavorite('${crypto.id}')" style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                    padding: 12px 20px;
+                                    background: rgba(255, 255, 255, 0.1);
+                                    color: white;
+                                    border: 1px solid rgba(255, 255, 255, 0.2);
+                                    border-radius: 12px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                " onmouseover="this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'">
+                                    <i class="fas fa-star"></i>
+                                    <span>Favoritar</span>
+                                </button>
+                                
+                                <button onclick="copyToClipboard('${crypto.symbol.toUpperCase()}USD')" style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                    padding: 12px 20px;
+                                    background: rgba(255, 255, 255, 0.1);
+                                    color: white;
+                                    border: 1px solid rgba(255, 255, 255, 0.2);
+                                    border-radius: 12px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                " onmouseover="this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'">
+                                    <i class="fas fa-copy"></i>
+                                    <span>Copiar Símbolo</span>
+                                </button>
+                                
+                                <a href="https://www.coingecko.com/pt/moedas/${crypto.id}" target="_blank" style="
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                    padding: 12px 20px;
+                                    background: rgba(255, 255, 255, 0.1);
+                                    color: white;
+                                    text-decoration: none;
+                                    border: 1px solid rgba(255, 255, 255, 0.2);
+                                    border-radius: 12px;
+                                    font-weight: 600;
+                                    transition: all 0.3s ease;
+                                " onmouseover="this.style.background='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>CoinGecko</span>
+                                </a>
                             </div>
                         </div>
                         
-                        <!-- Análise de Swing Trade Desktop -->
+                        <!-- Análise de Swing Trade (se ativo) -->
                         ${currentFilter === 'swing-trade' ? `
-                        <div class="swing-trade-desktop">
-                            <div class="analysis-header-desktop">
-                                <h3 class="analysis-title-desktop">
+                        <div style="
+                            background: rgba(255, 255, 255, 0.02);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 20px;
+                            padding: 25px;
+                            margin-bottom: 25px;
+                        ">
+                            <div style="
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-bottom: 25px;
+                                flex-wrap: wrap;
+                                gap: 15px;
+                            ">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="
+                                        width: 40px;
+                                        height: 40px;
+                                        background: linear-gradient(135deg, #ff6b35, #ff8e8e);
+                                        border-radius: 12px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        font-size: 1.2rem;
+                                        color: white;
+                                    ">
                                     <i class="fas fa-brain"></i>
-                                    Análise de Swing Trade
-                                </h3>
-                                <div class="overall-score-desktop">
-                                    <div class="score-circle-desktop ${getScoreColorClass(getSwingTradeScore(crypto).percentage)}">
-                                        <span class="score-number-desktop">${getSwingTradeScore(crypto).percentage}%</span>
                                     </div>
-                                    <span class="score-label-desktop">Score Total</span>
+                                    <h3 style="
+                                        font-size: 1.5rem;
+                                        font-weight: 700;
+                                        margin: 0;
+                                        background: linear-gradient(135deg, #ffffff, #e0e0e0);
+                                        -webkit-background-clip: text;
+                                        -webkit-text-fill-color: transparent;
+                                        background-clip: text;
+                                    ">Análise de Swing Trade</h3>
+                                </div>
+                                
+                                <div style="text-align: center;">
+                                    <div style="
+                                        width: 80px;
+                                        height: 80px;
+                                        border-radius: 50%;
+                                        background: ${getScoreColor(getSwingTradeScore(crypto).percentage)};
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        margin: 0 auto 8px;
+                                        font-size: 1.5rem;
+                                        font-weight: 800;
+                                        color: white;
+                                        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                                    ">${getSwingTradeScore(crypto).percentage}%</div>
+                                    <div style="font-size: 0.9rem; color: #a0a0a0;">Score Total</div>
                                 </div>
                             </div>
                             
-                            <div class="metrics-grid-desktop">
-                                <div class="metric-card-desktop volume-metric">
-                                    <div class="metric-header-desktop">
-                                        <i class="fas fa-chart-bar"></i>
-                                        <span>Volume</span>
+                            <div style="
+                                display: grid;
+                                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                                gap: 15px;
+                            ">
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 15px;
+                                    padding: 20px;
+                                ">
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                        <i class="fas fa-chart-bar" style="color: #00d4aa; font-size: 1.2rem;"></i>
+                                        <span style="font-weight: 600; color: white;">Volume</span>
                                     </div>
-                                    <div class="metric-score-desktop">${getSwingTradeScore(crypto).volume}/25</div>
-                                    <div class="metric-bar-desktop">
-                                        <div class="metric-fill-desktop" style="width: ${(getSwingTradeScore(crypto).volume/25)*100}%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="metric-card-desktop momentum-metric">
-                                    <div class="metric-header-desktop">
-                                        <i class="fas fa-rocket"></i>
-                                        <span>Momentum</span>
-                                    </div>
-                                    <div class="metric-score-desktop">${getSwingTradeScore(crypto).momentum}/30</div>
-                                    <div class="metric-bar-desktop">
-                                        <div class="metric-fill-desktop" style="width: ${(getSwingTradeScore(crypto).momentum/30)*100}%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="metric-card-desktop marketcap-metric">
-                                    <div class="metric-header-desktop">
-                                        <i class="fas fa-chart-pie"></i>
-                                        <span>Market Cap</span>
-                                    </div>
-                                    <div class="metric-score-desktop">${getSwingTradeScore(crypto).marketCap}/20</div>
-                                    <div class="metric-bar-desktop">
-                                        <div class="metric-fill-desktop" style="width: ${(getSwingTradeScore(crypto).marketCap/20)*100}%"></div>
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 10px;">${getSwingTradeScore(crypto).volume}/25</div>
+                                    <div style="
+                                        width: 100%;
+                                        height: 8px;
+                                        background: rgba(255, 255, 255, 0.1);
+                                        border-radius: 4px;
+                                        overflow: hidden;
+                                    ">
+                                        <div style="
+                                            width: ${(getSwingTradeScore(crypto).volume/25)*100}%;
+                                            height: 100%;
+                                            background: linear-gradient(90deg, #00d4aa, #00f5d4);
+                                            border-radius: 4px;
+                                        "></div>
                                     </div>
                                 </div>
                                 
-                                <div class="metric-card-desktop volatility-metric">
-                                    <div class="metric-header-desktop">
-                                        <i class="fas fa-bolt"></i>
-                                        <span>Volatilidade</span>
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 15px;
+                                    padding: 20px;
+                                ">
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                        <i class="fas fa-rocket" style="color: #ff6b6b; font-size: 1.2rem;"></i>
+                                        <span style="font-weight: 600; color: white;">Momentum</span>
                                     </div>
-                                    <div class="metric-score-desktop">${getSwingTradeScore(crypto).volatility}/15</div>
-                                    <div class="metric-bar-desktop">
-                                        <div class="metric-fill-desktop" style="width: ${(getSwingTradeScore(crypto).volatility/15)*100}%"></div>
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 10px;">${getSwingTradeScore(crypto).momentum}/30</div>
+                                    <div style="
+                                        width: 100%;
+                                        height: 8px;
+                                        background: rgba(255, 255, 255, 0.1);
+                                        border-radius: 4px;
+                                        overflow: hidden;
+                                    ">
+                                        <div style="
+                                            width: ${(getSwingTradeScore(crypto).momentum/30)*100}%;
+                                            height: 100%;
+                                            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+                                            border-radius: 4px;
+                                        "></div>
                                     </div>
                                 </div>
                                 
-                                <div class="metric-card-desktop stability-metric">
-                                    <div class="metric-header-desktop">
-                                        <i class="fas fa-shield-alt"></i>
-                                        <span>Estabilidade</span>
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 15px;
+                                    padding: 20px;
+                                ">
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                        <i class="fas fa-chart-pie" style="color: #ffd700; font-size: 1.2rem;"></i>
+                                        <span style="font-weight: 600; color: white;">Market Cap</span>
                                     </div>
-                                    <div class="metric-score-desktop">${getSwingTradeScore(crypto).stability}/10</div>
-                                    <div class="metric-bar-desktop">
-                                        <div class="metric-fill-desktop" style="width: ${(getSwingTradeScore(crypto).stability/10)*100}%"></div>
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 10px;">${getSwingTradeScore(crypto).marketCap}/20</div>
+                                    <div style="
+                                        width: 100%;
+                                        height: 8px;
+                                        background: rgba(255, 255, 255, 0.1);
+                                        border-radius: 4px;
+                                        overflow: hidden;
+                                    ">
+                                        <div style="
+                                            width: ${(getSwingTradeScore(crypto).marketCap/20)*100}%;
+                                            height: 100%;
+                                            background: linear-gradient(90deg, #ffd700, #ffed4e);
+                                            border-radius: 4px;
+                                        "></div>
+                                    </div>
+                                </div>
+                                
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 15px;
+                                    padding: 20px;
+                                ">
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                        <i class="fas fa-bolt" style="color: #9c27b0; font-size: 1.2rem;"></i>
+                                        <span style="font-weight: 600; color: white;">Volatilidade</span>
+                                    </div>
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 10px;">${getSwingTradeScore(crypto).volatility}/15</div>
+                                    <div style="
+                                        width: 100%;
+                                        height: 8px;
+                                        background: rgba(255, 255, 255, 0.1);
+                                        border-radius: 4px;
+                                        overflow: hidden;
+                                    ">
+                                        <div style="
+                                            width: ${(getSwingTradeScore(crypto).volatility/15)*100}%;
+                                            height: 100%;
+                                            background: linear-gradient(90deg, #9c27b0, #ba68c8);
+                                            border-radius: 4px;
+                                        "></div>
+                                    </div>
+                                </div>
+                                
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 15px;
+                                    padding: 20px;
+                                ">
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                        <i class="fas fa-shield-alt" style="color: #4caf50; font-size: 1.2rem;"></i>
+                                        <span style="font-weight: 600; color: white;">Estabilidade</span>
+                                    </div>
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: white; margin-bottom: 10px;">${getSwingTradeScore(crypto).stability}/10</div>
+                                    <div style="
+                                        width: 100%;
+                                        height: 8px;
+                                        background: rgba(255, 255, 255, 0.1);
+                                        border-radius: 4px;
+                                        overflow: hidden;
+                                    ">
+                                        <div style="
+                                            width: ${(getSwingTradeScore(crypto).stability/10)*100}%;
+                                            height: 100%;
+                                            background: linear-gradient(90deg, #4caf50, #66bb6a);
+                                            border-radius: 4px;
+                                        "></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         ` : ''}
                         
-                        <!-- Informações adicionais Desktop -->
-                        <div class="additional-info-desktop">
-                            <div class="info-card-desktop">
-                                <div class="info-header-desktop">
+                        <!-- Informações Técnicas -->
+                        <div style="
+                            background: rgba(255, 255, 255, 0.02);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 20px;
+                            padding: 25px;
+                        ">
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                                <div style="
+                                    width: 40px;
+                                    height: 40px;
+                                    background: linear-gradient(135deg, #2196f3, #42a5f5);
+                                    border-radius: 12px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-size: 1.2rem;
+                                    color: white;
+                                ">
                                     <i class="fas fa-info-circle"></i>
-                                    <span>Informações Técnicas</span>
                                 </div>
-                                <div class="info-content-desktop">
-                                    <div class="info-row-desktop">
-                                        <span class="info-label-desktop">Preço Máximo Histórico:</span>
-                                        <span class="info-value-desktop">${formatCurrency(crypto.ath || 0)}</span>
+                                <h3 style="
+                                    font-size: 1.5rem;
+                                    font-weight: 700;
+                                    margin: 0;
+                                    background: linear-gradient(135deg, #ffffff, #e0e0e0);
+                                    -webkit-background-clip: text;
+                                    -webkit-text-fill-color: transparent;
+                                    background-clip: text;
+                                ">Informações Técnicas</h3>
                                     </div>
-                                    <div class="info-row-desktop">
-                                        <span class="info-label-desktop">Data do ATH:</span>
-                                        <span class="info-value-desktop">${crypto.ath_date ? new Date(crypto.ath_date).toLocaleDateString('pt-BR') : 'N/A'}</span>
+                            
+                            <div style="
+                                display: grid;
+                                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                                gap: 20px;
+                            ">
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 15px;
+                                ">
+                                    <div style="font-size: 0.9rem; color: #a0a0a0; margin-bottom: 5px;">Preço Máximo Histórico</div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: white;">${formatCurrency(crypto.ath || 0)}</div>
                                     </div>
-                                    <div class="info-row-desktop">
-                                        <span class="info-label-desktop">Fornecimento Total:</span>
-                                        <span class="info-value-desktop">${formatNumber(crypto.total_supply || 0)} ${crypto.symbol.toUpperCase()}</span>
+                                
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 15px;
+                                ">
+                                    <div style="font-size: 0.9rem; color: #a0a0a0; margin-bottom: 5px;">Data do ATH</div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: white;">${crypto.ath_date ? new Date(crypto.ath_date).toLocaleDateString('pt-BR') : 'N/A'}</div>
                                     </div>
+                                
+                                <div style="
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.1);
+                                    border-radius: 12px;
+                                    padding: 15px;
+                                ">
+                                    <div style="font-size: 0.9rem; color: #a0a0a0; margin-bottom: 5px;">Fornecimento Total</div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: white;">${formatNumber(crypto.total_supply || 0)} ${crypto.symbol.toUpperCase()}</div>
                                 </div>
                             </div>
                         </div>
@@ -5103,7 +7425,7 @@
             
             // Carregar gráfico do TradingView após o modal ser exibido
             setTimeout(() => {
-                loadTradingViewChart(crypto);
+                loadTradingViewChart(crypto.id, '4h');
             }, 100);
         }
         
@@ -5619,7 +7941,6 @@
                 // Não mostrar erro para o usuário, apenas log
             }
         }
-        
         function updatePricesInRealTime(newData) {
             newData.forEach(newCrypto => {
                 const oldCrypto = cryptoData.find(c => c.id === newCrypto.id);
@@ -6255,7 +8576,6 @@
                 }
             });
         }
-        
         // Função para buscar dados da API da Binance (otimizada para mobile)
         async function loadCryptoDataFromBinance() {
             try {
@@ -7003,7 +9323,6 @@
                 };
             }
         }
-
         // Função para testar especificamente a API da CoinMarketCap
         async function testCoinMarketCapAPI() {
             try {
@@ -7428,4 +9747,3 @@
         </script>
 </body>
 </html>
-        
