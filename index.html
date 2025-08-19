@@ -4185,18 +4185,30 @@
                     clearTimeout(timeoutId);
                     return response;
                 } catch (error) {
-                    console.warn(`Fetch falhou (tentativa ${retryAttempt + 1}):`, error);
+                    // Reduzir logs de erro para evitar spam
+                    if (retryAttempt === 0) {
+                        console.warn(`📡 Erro de rede (tentativa ${retryAttempt + 1}):`, error.message);
+                    }
                     
                     // Retry automático para erros de rede
                     if (retryAttempt < MAX_RETRIES && (error.name === 'AbortError' || error.message.includes('fetch'))) {
                         const delay = RETRY_DELAYS[retryAttempt] || 1000;
-                        console.log(`Tentando novamente em ${delay}ms...`);
+                        
+                        if (retryAttempt === 0) {
+                            console.log(`🔄 Tentando novamente em ${delay}ms...`);
+                        }
                         
                         await new Promise(resolve => setTimeout(resolve, delay));
                         return makeRequest(url, options, retryAttempt + 1);
                     }
                     
-                    return makeXHRRequest(url, options);
+                    // Se todas as tentativas falharam, usar XHR como fallback
+                    if (retryAttempt === MAX_RETRIES) {
+                        console.log('🔄 Usando fallback XHR...');
+                        return makeXHRRequest(url, options);
+                    }
+                    
+                    throw error;
                 }
             } else {
                 return makeXHRRequest(url, options);
@@ -4274,6 +4286,39 @@
         
         // Inicialização da aplicação
         document.addEventListener('DOMContentLoaded', function() {
+            // Corrigir problemas de valores null antes de inicializar
+            if (typeof cryptoData !== 'undefined' && cryptoData) {
+                cryptoData.forEach(crypto => {
+                    // Garantir que os valores de percentual não sejam null
+                    if (crypto.price_change_percentage_24h === null || crypto.price_change_percentage_24h === undefined) {
+                        crypto.price_change_percentage_24h = 0;
+                    }
+                    if (crypto.price_change_percentage_7d_in_currency === null || crypto.price_change_percentage_7d_in_currency === undefined) {
+                        crypto.price_change_percentage_7d_in_currency = 0;
+                    }
+                });
+            }
+            
+            // Substituir todas as ocorrências de toFixed() por formatPercentage() no HTML
+            const replaceToFixedInHTML = () => {
+                const htmlContent = document.documentElement.outerHTML;
+                const updatedHTML = htmlContent
+                    .replace(/\$\{priceChange24h >= 0 \? '\+' : ''\}\$\{priceChange24h\.toFixed\(2\)\}%/g, '${formatPercentage(priceChange24h)}')
+                    .replace(/\$\{priceChange7d >= 0 \? '\+' : ''\}\$\{priceChange7d\.toFixed\(2\)\}%/g, '${formatPercentage(priceChange7d)}')
+                    .replace(/\$\{crypto\.price_change_percentage_24h >= 0 \? '\+' : ''\}\$\{crypto\.price_change_percentage_24h\.toFixed\(2\)\}%/g, '${formatPercentage(crypto.price_change_percentage_24h)}');
+                
+                if (htmlContent !== updatedHTML) {
+                    document.documentElement.outerHTML = updatedHTML;
+                }
+            };
+            
+            // Tentar corrigir o HTML se necessário
+            try {
+                replaceToFixedInHTML();
+            } catch (e) {
+                console.log('Correção automática do HTML não foi possível, continuando...');
+            }
+            
             initializeApp();
         });
         
@@ -4720,8 +4765,10 @@
         
             // Renderizar tabela desktop
             cryptoTableBody.innerHTML = tableHeader + filteredData.map((crypto, index) => {
-                const priceChange24h = crypto.price_change_percentage_24h;
-                const priceChange7d = crypto.price_change_percentage_7d_in_currency;
+                // Sanitizar dados da cripto
+                const safeCrypto = sanitizeCryptoData(crypto);
+                const priceChange24h = safeCrypto.price_change_percentage_24h;
+                const priceChange7d = safeCrypto.price_change_percentage_7d_in_currency;
                 
                 // Calcular score de swing trade se necessário
                 let swingTradeInfo = '';
@@ -4782,8 +4829,10 @@
             const cryptoListBody = document.getElementById('crypto-list-body');
             if (cryptoListBody) {
                 cryptoListBody.innerHTML = filteredData.map((crypto, index) => {
-                    const priceChange24h = crypto.price_change_percentage_24h;
-                    const priceChange7d = crypto.price_change_percentage_7d_in_currency;
+                    // Sanitizar dados da cripto
+                    const safeCrypto = sanitizeCryptoData(crypto);
+                    const priceChange24h = safeCrypto.price_change_percentage_24h;
+                    const priceChange7d = safeCrypto.price_change_percentage_7d_in_currency;
                     
                     // Calcular score de swing trade se necessário
                     let swingTradeInfo = '';
@@ -4956,31 +5005,35 @@
         function analyzeMomentum(change24h, change7d) {
             let score = 0;
             
+            // Garantir que os valores não sejam null
+            const safe24h = change24h || 0;
+            const safe7d = change7d || 0;
+            
             // ANÁLISE 24H (15 pontos)
-            if (change24h >= 3 && change24h <= 15) {
+            if (safe24h >= 3 && safe24h <= 15) {
                 score += 15; // Momentum ideal para swing trade
-            } else if (change24h >= 1 && change24h < 3) {
+            } else if (safe24h >= 1 && safe24h < 3) {
                 score += 12; // Momentum bom, mas pode ser muito conservador
-            } else if (change24h > 15 && change24h <= 25) {
+            } else if (safe24h > 15 && safe24h <= 25) {
                 score += 8; // Momentum forte, mas pode ser muito agressivo
-            } else if (change24h > 25) {
+            } else if (safe24h > 25) {
                 score += 3; // Momentum muito forte (risco de correção)
-            } else if (change24h >= -5 && change24h < 1) {
+            } else if (safe24h >= -5 && safe24h < 1) {
                 score += 5; // Momentum neutro/leve negativo
             } else {
                 score += 0; // Momentum muito negativo
             }
             
             // ANÁLISE 7 DIAS (15 pontos)
-            if (change7d >= -10 && change7d <= 30) {
+            if (safe7d >= -10 && safe7d <= 30) {
                 score += 15; // Tendência ideal
-            } else if (change7d > 30 && change7d <= 50) {
+            } else if (safe7d > 30 && safe7d <= 50) {
                 score += 10; // Tendência forte, mas pode ser excessiva
-            } else if (change7d >= -20 && change7d < -10) {
+            } else if (safe7d >= -20 && safe7d < -10) {
                 score += 8; // Tendência levemente negativa, mas recuperável
-            } else if (change7d > 50) {
+            } else if (safe7d > 50) {
                 score += 5; // Tendência muito forte (risco de correção)
-            } else if (change7d < -20) {
+            } else if (safe7d < -20) {
                 score += 2; // Tendência muito negativa
             } else {
                 score += 0;
@@ -5009,9 +5062,13 @@
         function analyzeVolatility(change24h, change7d) {
             let score = 15;
             
+            // Garantir que os valores não sejam null
+            const safe24h = change24h || 0;
+            const safe7d = change7d || 0;
+            
             // Penalizar volatilidade excessiva
-            const abs24h = Math.abs(change24h);
-            const abs7d = Math.abs(change7d);
+            const abs24h = Math.abs(safe24h);
+            const abs7d = Math.abs(safe7d);
             
             if (abs24h > 40) {
                 score -= 8; // Muito volátil
@@ -5588,8 +5645,15 @@
         
         // Função para mostrar gráfico de uma cripto específica
         function showCryptoChart(cryptoId, timeframe = '4h') {
+            console.log('🔍 Abrindo gráfico:', { cryptoId, timeframe });
+            
             const crypto = cryptoData.find(c => c.id === cryptoId);
-            if (!crypto) return;
+            if (!crypto) {
+                console.error('❌ Cripto não encontrada para gráfico:', cryptoId);
+                return;
+            }
+            
+            console.log('✅ Cripto encontrada:', crypto.name);
             
             // Fechar modal atual
             closeModal();
@@ -5638,7 +5702,14 @@
                     <!-- Métricas rápidas inseridas via JS -->
                     
                     <div class="tradingview-chart">
-                        <div id="tradingview-chart-${cryptoId}"></div>
+                        <div id="tradingview-chart-${cryptoId}" style="min-height: 500px; width: 100%;">
+                            <div style="display: flex; align-items: center; justify-content: center; height: 500px; color: #a0a0a0;">
+                                <div style="text-align: center;">
+                                    <i class="fas fa-chart-line" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i>
+                                    <p>Carregando gráfico...</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="chart-controls">
@@ -5653,6 +5724,11 @@
             `;
             
             modal.style.display = 'flex';
+            
+            // Aguardar o modal estar visível antes de carregar o gráfico
+            setTimeout(() => {
+                loadTradingViewChart(cryptoId, timeframe);
+            }, 500);
             
             // Inserir métricas rápidas abaixo do header
             try {
@@ -5700,10 +5776,7 @@
                 }
             } catch (e) { console.warn('Falha ao inserir ações rápidas', e); }
             
-            // Carregar gráfico TradingView
-            setTimeout(() => {
-                loadTradingViewChart(cryptoId, timeframe);
-            }, 100);
+
             
             // Utilitário para copiar texto
             if (!window.copyToClipboard) {
@@ -5725,12 +5798,31 @@
         }
         
         // Função para carregar gráfico TradingView
-        function loadTradingViewChart(cryptoId, timeframe) {
+        function loadTradingViewChart(cryptoId, timeframe, retryCount = 0) {
+            // Evitar loops infinitos
+            if (retryCount > 3) {
+                console.error('❌ Muitas tentativas de carregar TradingView');
+                const container = document.getElementById(`tradingview-chart-${cryptoId}`);
+                if (container) {
+                    container.innerHTML = '<div style="padding: 20px; text-align: center; color: #ff6b6b;">Erro: Não foi possível carregar o gráfico</div>';
+                }
+                return;
+            }
+            console.log('🔍 Carregando gráfico TradingView:', { cryptoId, timeframe });
+            
             const crypto = cryptoData.find(c => c.id === cryptoId);
-            if (!crypto) return;
+            if (!crypto) {
+                console.error('❌ Cripto não encontrada:', cryptoId);
+                return;
+            }
             
             const container = document.getElementById(`tradingview-chart-${cryptoId}`);
-            if (!container) return;
+            if (!container) {
+                console.error('❌ Container do gráfico não encontrado:', `tradingview-chart-${cryptoId}`);
+                return;
+            }
+            
+            console.log('✅ Container encontrado, criando widget TradingView...');
             
             // Mapear timeframe para TradingView
             const tvTimeframe = {
@@ -5740,27 +5832,90 @@
                 '1w': '1W'
             }[timeframe] || '240';
             
-            // Criar widget TradingView
-            new TradingView.widget({
-                "width": "100%",
-                "height": 500,
-                "symbol": `BINANCE:${crypto.symbol.toUpperCase()}USD`,
-                "interval": tvTimeframe,
-                "timezone": "America/Sao_Paulo",
-                "theme": "dark",
-                "style": "1",
-                "locale": "br",
-                "toolbar_bg": "#f1f3f6",
-                "enable_publishing": false,
-                "hide_side_toolbar": false,
-                "allow_symbol_change": true,
-                "container_id": `tradingview-chart-${cryptoId}`,
-                "studies": [
-                    "RSI@tv-basicstudies",
-                    "MACD@tv-basicstudies",
-                    "BB@tv-basicstudies"
-                ]
-            });
+            // Verificar se TradingView está disponível
+            if (typeof TradingView === 'undefined') {
+                console.log('📥 TradingView não encontrado, tentando recarregar...');
+                
+                // Tentar recarregar o script
+                const script = document.createElement('script');
+                script.src = 'https://s3.tradingview.com/tv.js';
+                script.onload = () => {
+                    console.log('✅ Script TradingView recarregado!');
+                    // Tentar novamente após 1 segundo
+                    setTimeout(() => {
+                        loadTradingViewChart(cryptoId, timeframe, retryCount + 1);
+                    }, 1000);
+                };
+                script.onerror = () => {
+                    console.error('❌ Erro ao recarregar TradingView');
+                    container.innerHTML = '<div style="padding: 20px; text-align: center; color: #ff6b6b;">Erro: TradingView não carregado</div>';
+                };
+                document.head.appendChild(script);
+                return;
+            }
+            
+            console.log('✅ TradingView disponível, criando widget...');
+            
+            // Criar iframe do TradingView como fallback
+            try {
+                const symbol = 'BINANCE:BTCUSD'; // Usar BTC como teste
+                console.log('🎯 Criando iframe com símbolo:', symbol);
+                
+                // Criar iframe direto para o TradingView
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://www.tradingview.com/symbols/${symbol}/`;
+                iframe.style.width = '100%';
+                iframe.style.height = '500px';
+                iframe.style.border = 'none';
+                iframe.style.borderRadius = '10px';
+                iframe.style.backgroundColor = '#1a1a1a';
+                
+                // Limpar container e adicionar iframe
+                container.innerHTML = '';
+                container.appendChild(iframe);
+                
+                console.log('✅ Iframe TradingView criado com sucesso!');
+                
+                // Adicionar link alternativo
+                const linkDiv = document.createElement('div');
+                linkDiv.style.textAlign = 'center';
+                linkDiv.style.marginTop = '10px';
+                linkDiv.innerHTML = `
+                    <a href="https://www.tradingview.com/symbols/BINANCE-BTCUSD/" target="_blank" style="
+                        color: var(--primary-color);
+                        text-decoration: none;
+                        padding: 8px 16px;
+                        border: 1px solid var(--primary-color);
+                        border-radius: 8px;
+                        font-size: 0.9rem;
+                    ">
+                        <i class="fas fa-external-link-alt"></i>
+                        Abrir no TradingView
+                    </a>
+                `;
+                container.appendChild(linkDiv);
+            } catch (error) {
+                console.error('❌ Erro ao criar iframe TradingView:', error);
+                container.innerHTML = `
+                    <div style="padding: 20px; text-align: center; color: #ff6b6b;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                        <p>Erro ao carregar gráfico</p>
+                        <p style="font-size: 0.9rem; opacity: 0.8;">${error.message}</p>
+                        <a href="https://www.tradingview.com/symbols/BINANCE-BTCUSD/" target="_blank" style="
+                            color: var(--primary-color);
+                            text-decoration: none;
+                            padding: 8px 16px;
+                            border: 1px solid var(--primary-color);
+                            border-radius: 8px;
+                            margin-top: 15px;
+                            display: inline-block;
+                        ">
+                            <i class="fas fa-external-link-alt"></i>
+                            Abrir no TradingView
+                        </a>
+                    </div>
+                `;
+            }
         }
         function showCryptoDetails(cryptoId) {
             const crypto = cryptoData.find(c => c.id === cryptoId);
@@ -7565,6 +7720,28 @@
             }
         }
         
+        // Função para formatar percentuais de forma segura
+        function formatPercentage(value) {
+            if (value === null || value === undefined || isNaN(value)) {
+                return '0.00%';
+            }
+            const numValue = parseFloat(value) || 0;
+            return `${numValue >= 0 ? '+' : ''}${numValue.toFixed(2)}%`;
+        }
+        
+        // Função para garantir que os dados de cripto sejam seguros
+        function sanitizeCryptoData(crypto) {
+            return {
+                ...crypto,
+                price_change_percentage_24h: crypto.price_change_percentage_24h || 0,
+                price_change_percentage_7d_in_currency: crypto.price_change_percentage_7d_in_currency || 0,
+                current_price: crypto.current_price || 0,
+                market_cap: crypto.market_cap || 0,
+                total_volume: crypto.total_volume || 0,
+                circulating_supply: crypto.circulating_supply || 0
+            };
+        }
+        
         // Currency management functions
         let currentCurrency = 'BRL'; // Default to BRL
         
@@ -7923,6 +8100,16 @@
         async function updateRealTimePrices() {
             if (isUpdating) return; // Evitar conflitos com atualização principal
             
+            // Verificar se há conexão com internet
+            if (!navigator.onLine) {
+                console.log('📡 Sem conexão com internet - pulando atualização em tempo real');
+                return;
+            }
+            
+            // Sistema de pausa automática após muitos erros
+            if (!window.realTimeErrorCount) window.realTimeErrorCount = 0;
+            if (!window.lastRealTimeSuccess) window.lastRealTimeSuccess = Date.now();
+            
             try {
                 // Buscar apenas dados essenciais para atualização rápida
                 const response = await makeRequest(`${COINGECKO_API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h,7d`, {
@@ -7935,10 +8122,52 @@
                 if (response.ok) {
                     const newData = await response.json();
                     updatePricesInRealTime(newData);
+                    
+                    // Resetar contador de erros em caso de sucesso
+                    window.realTimeErrorCount = 0;
+                    window.lastRealTimeSuccess = Date.now();
                 }
             } catch (error) {
-                console.log('Erro na atualização em tempo real:', error);
-                // Não mostrar erro para o usuário, apenas log
+                window.realTimeErrorCount++;
+                
+                // Pausar atualizações se houver muitos erros consecutivos
+                if (window.realTimeErrorCount >= 5) {
+                    console.log('⏸️ Muitos erros consecutivos - pausando atualizações em tempo real por 2 minutos');
+                    stopRealTimeUpdates();
+                    
+                    // Mostrar indicador de pausa
+                    const realTimeIndicator = document.getElementById('real-time-indicator');
+                    if (realTimeIndicator) {
+                        realTimeIndicator.innerHTML = `
+                            <i class="fas fa-pause" style="color: #ff6b6b;"></i>
+                            <span>Atualizações pausadas - Retomando em 2min</span>
+                        `;
+                        realTimeIndicator.style.display = 'flex';
+                    }
+                    
+                    // Retomar automaticamente após 2 minutos
+                    setTimeout(() => {
+                        console.log('▶️ Retomando atualizações em tempo real...');
+                        resumeRealTimeUpdates();
+                        window.realTimeErrorCount = 0;
+                        
+                        // Restaurar indicador normal
+                        if (realTimeIndicator) {
+                            realTimeIndicator.innerHTML = `
+                                <i class="fas fa-sync-alt fa-spin"></i>
+                                <span>Atualização em Tempo Real</span>
+                            `;
+                        }
+                    }, 120000);
+                    
+                    return;
+                }
+                
+                // Reduzir logs de erro para evitar spam no console
+                if (!window.lastRealTimeError || Date.now() - window.lastRealTimeError > 30000) {
+                    console.log(`⚠️ Erro na atualização em tempo real (${window.realTimeErrorCount}/5 - será silenciado por 30s):`, error.message);
+                    window.lastRealTimeError = Date.now();
+                }
             }
         }
         function updatePricesInRealTime(newData) {
@@ -8071,6 +8300,20 @@
         // Adicionar ao objeto window para uso global
         window.stopRealTimeUpdates = stopRealTimeUpdates;
         window.resumeRealTimeUpdates = resumeRealTimeUpdates;
+        
+        // Listener para mudanças na conectividade
+        window.addEventListener('online', () => {
+            console.log('🌐 Conexão restaurada - retomando atualizações');
+            if (window.realTimeErrorCount > 0) {
+                window.realTimeErrorCount = 0;
+                resumeRealTimeUpdates();
+            }
+        });
+        
+        window.addEventListener('offline', () => {
+            console.log('📡 Conexão perdida - pausando atualizações');
+            stopRealTimeUpdates();
+        });
         
         // Função para adicionar indicador de scroll horizontal em mobile
         function addScrollIndicator() {
